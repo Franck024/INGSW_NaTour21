@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/textViewNomeItinerario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="Nome percorso"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeItinerario" />
+
+    <TextView
+        android:id="@+id/textViewDurata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Durata"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
+
+    <TextView
+        android:id="@+id/textViewDurataOre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Ore:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
+
+    <EditText
+        android:id="@+id/editViewDurataOre"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textViewDurataOre"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+
+    <TextView
+        android:id="@+id/textViewDurataMinuti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Minuti:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/editViewDurataOre"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
+
+    <EditText
+        android:id="@+id/editViewDurataMinuti"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textViewDurataMinuti"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+
+        <TextView
+            android:id="@+id/textViewPuntoIniziale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="25dp"
+            android:text="Punto di inizio"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editViewDurataOre" />
+
+        <EditText
+            android:id="@+id/editViewPuntoIniziale"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/btn_white_bord"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPuntoIniziale" />
+
+    <TextView
+        android:id="@+id/textViewDifficolta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Difficolta'"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editViewPuntoIniziale" />
+
+    <RadioButton
+        android:id="@+id/radioBtnFacile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:text="Facile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
+
+    <RadioButton
+        android:id="@+id/radioBtnMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Medio"
+        app:layout_constraintEnd_toStartOf="@+id/radioBtnDifficile"
+        app:layout_constraintStart_toEndOf="@+id/radioBtnFacile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
+
+    <RadioButton
+        android:id="@+id/radioBtnDifficile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:text="Difficile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
+
+    <TextView
+        android:id="@+id/textViewImmagine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Immagine"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioBtnFacile" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewImmagine"
+        app:srcCompat="@mipmap/addphoto"
+        android:scaleX=".3"
+        android:scaleY=".3"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,10 +9,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_login);
+      //  setContentView(R.layout.frame_login);
 
         /* TEST */
-     //   setContentView(R.layout.frame_registrazione);
+        setContentView(R.layout.frame_inserzione_itinerario);
         /* ------  */
     }
 }

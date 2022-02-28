@@ -24,6 +24,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
+        android:paddingLeft="10dp"
         android:background="@drawable/btn_white_bord"
         android:inputType="textPersonName"
         android:visibility="visible"

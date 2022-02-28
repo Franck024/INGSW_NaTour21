@@ -156,29 +156,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
 
-    <TextView
-        android:id="@+id/textViewImmagine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
-        android:text="Immagine"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnFacile" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="25dp"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewImmagine"
-        app:srcCompat="@mipmap/addphoto"
-        android:scaleX=".3"
-        android:scaleY=".3"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

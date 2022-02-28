@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewTracciato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tracciato geografico"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTracciatoInserzioneManuale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="- Inserimento manuale:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTracciato" />
+
+    <EditText
+        android:id="@+id/ESEMPIO"
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:hint="Questa Non è una mappa. SImulazione!"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTracciatoInserzioneManuale" />
+
+    <TextView
+        android:id="@+id/textViewInserzioneFileGPX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="- Inserimento con file GPX:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ESEMPIO" />
+
+    <Button
+        android:id="@+id/btn_GPX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_white_bord"
+        android:text=" Carica file GPX"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:textStyle="italic"
+        android:textSize="12dp"
+        android:drawableLeft="@mipmap/icon_download"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInserzioneFileGPX" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

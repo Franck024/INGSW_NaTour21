@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/view">
 
-        <include layout="@layout/frame_add_itin_1">
-
+        <include
+            layout="@layout/frame_add_itin_1">
         </include>
     </RelativeLayout>
 

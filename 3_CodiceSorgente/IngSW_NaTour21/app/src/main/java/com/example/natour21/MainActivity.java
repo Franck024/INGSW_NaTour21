@@ -3,6 +3,11 @@ package com.example.natour21;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
+import com.amplifyframework.rx.RxAmplify;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,8 +16,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
       //  setContentView(R.layout.frame_login);
 
+        //Test fetching dell'auth session
+        /*RxAmplify.Auth.fetchAuthSession()
+                .subscribe(
+                        result -> Log.i("AmplifyQuickstart", result.toString()),
+                        error -> Log.e("AmplifyQuickstart", error.toString())
+                );*/
+
+        //Test SignUp
+        //Il codice di conferma è valido per 24 ore.
+        //ATTENZIONE: Usare email reali per evitare limitazioni da Amazon
+
+        /*String email = "";
+        String password = "testPass";
+        AuthSignUpOptions options = AuthSignUpOptions.builder()
+                .userAttribute(AuthUserAttributeKey.email(), email)
+                .build();
+        RxAmplify.Auth.signUp(email, password, options).subscribe(
+                result -> Log.i("AmplifyQuickstart", result.toString()),
+                error -> Log.e("AmplifyQuickstart", error.toString())
+        );;*/
+
         /* TEST */
         setContentView(R.layout.frame_inserzione_itinerario);
         /* ------  */
+
     }
 }

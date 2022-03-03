@@ -40,6 +40,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ControllerLogin" />
+        <activity android:name=".ControllerRegistrazione" />
+        <activity android:name=".ControllerRecovery" />
+
     </application>
 
 </manifest>

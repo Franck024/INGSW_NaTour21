@@ -59,7 +59,10 @@ public class ControllerLogin extends AppCompatActivity {
         pass_dim.setOnClickListener(view -> startActivity(new Intent(ControllerLogin.this, ControllerRecovery.class)));
 
         //Click bottoni
-        login.setOnClickListener(v -> login.startAnimation(anim_btn));
+        login.setOnClickListener(v -> {
+            login.startAnimation(anim_btn);
+            startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
+        });
         fb.setOnClickListener(v -> fb.startAnimation(anim_btn));
         google.setOnClickListener(v -> google.startAnimation(anim_btn));
 

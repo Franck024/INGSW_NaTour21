@@ -43,6 +43,8 @@
         <activity android:name=".ControllerLogin" />
         <activity android:name=".ControllerRegistrazione" />
         <activity android:name=".ControllerRecovery" />
+        <activity android:name=".ControllerHome" />
+        <activity android:name=".ControllerAddItin" />
 
     </application>
 

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         Intent page1 = new Intent(MainActivity.this, ControllerLogin.class);
         startActivity(page1);
 
+
         //Test fetching dell'auth session
         /*RxAmplify.Auth.fetchAuthSession()
                 .subscribe(

@@ -2,6 +2,7 @@ package com.example.natour21;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  setContentView(R.layout.frame_login);
+        Intent page1 = new Intent(MainActivity.this, ControllerLogin.class);
+        startActivity(page1);
+
 
         //Test fetching dell'auth session
         /*RxAmplify.Auth.fetchAuthSession()
@@ -37,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 error -> Log.e("AmplifyQuickstart", error.toString())
         );;*/
 
-        /* TEST */
-        setContentView(R.layout.frame_inserzione_itinerario);
-        /* ------  */
+
 
     }
 }

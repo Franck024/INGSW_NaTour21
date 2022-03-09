@@ -2,11 +2,14 @@ package com.example.natour21;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 public class ControllerHome extends AppCompatActivity {
     private ImageView add_itin;
@@ -25,6 +28,15 @@ public class ControllerHome extends AppCompatActivity {
         add_itin.setOnClickListener(v -> {
             add_itin.startAnimation(anim_btn);
             startActivity(new Intent(ControllerHome.this, ControllerAddItin.class));
+        });
+
+        //Apertura  menu da imageview
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
         });
     }
 }

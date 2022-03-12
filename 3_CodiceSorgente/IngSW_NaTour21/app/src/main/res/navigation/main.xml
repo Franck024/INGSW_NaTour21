@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/MenuHome">
+
+    <fragment
+        android:id="@+id/MenuHome"
+        android:name="com.example.natour21.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/MenuProfilo"
+        android:name="com.example.natour21.ProfileFragment"
+        android:label="profilo"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/MenuMessaggi"
+        android:name="com.example.natour21.MessageFragment"
+        android:label="messaggi"
+        tools:layout="@layout/fragment_message" />
+</navigation>

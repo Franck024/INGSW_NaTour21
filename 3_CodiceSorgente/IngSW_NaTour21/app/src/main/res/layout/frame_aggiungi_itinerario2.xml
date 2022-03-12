@@ -52,45 +52,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ESEMPIO" />
 
-    <Button
-        android:id="@+id/btn_GPX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/btn_white_bord"
-        android:text=" Carica file GPX"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:textStyle="italic"
-        android:textSize="12dp"
-        android:drawableLeft="@mipmap/icon_download"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewInserzioneFileGPX" />
+        <Button
+            android:id="@+id/btn_GPX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_white_bord"
+            android:text=" Carica file GPX"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:textStyle="italic"
+            android:textSize="12dp"
+            android:drawableLeft="@mipmap/icon_download"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewInserzioneFileGPX" />
 
-    <Button
-        android:id="@+id/btnIndietro2"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/btn_white_bord"
-        android:backgroundTint="@color/red"
-        android:text="ANNULLA"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/btnIndietro2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/btn_white_bord"
+            android:backgroundTint="@color/red"
+            android:text="ANNULLA"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnConferma"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/btn_white_bord"
-        android:backgroundTint="@color/green"
-        android:text="CONFERMA"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/btnConferma"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/btn_white_bord"
+            android:backgroundTint="@color/green"
+            android:text="CONFERMA"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

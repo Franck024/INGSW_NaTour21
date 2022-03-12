@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class ControllerHome extends AppCompatActivity {
     private ImageView add_itin;
     private Animation anim_btn = null, anim_txtview = null;
@@ -38,5 +40,8 @@ public class ControllerHome extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        // colore delle icone naturali
+        NavigationView nav_View = findViewById(R.id.navigationView);
+        nav_View.setItemIconTintList(null);
     }
 }

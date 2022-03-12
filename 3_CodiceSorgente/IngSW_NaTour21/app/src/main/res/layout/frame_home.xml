@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ControllerHome">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,8 +56,9 @@
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        app:headerLayout="@layout/layout_nav_header"
         app:menu="@menu/navigation"
         android:layout_gravity="start"/>
-        <!--app:menu="@menu/navigation" -->
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

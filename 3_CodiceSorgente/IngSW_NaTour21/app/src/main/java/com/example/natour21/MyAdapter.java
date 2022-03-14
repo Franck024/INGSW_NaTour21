@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,11 +16,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private Activity activity;
     ArrayList<ParentItem> parentItemArrayList;
-   // ArrayList<ChildItem> childItemArrayList;
 
-//bisogna passare anche array di child
     public MyAdapter(Activity activity, ArrayList<ParentItem> parentItemArrayList) {
-        this.activity = activity;
+        this.activity =  activity;
         this.parentItemArrayList = parentItemArrayList;
     }
 
@@ -29,6 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,
                 parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -40,8 +39,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtDiff.setText(parentItem.difficolta);
         holder.txtArea.setText(parentItem.area);
         holder.txtTempo.setText(parentItem.tempo);
+        holder.rateRB.setRating(parentItem.rate);
 
-        // implementare il rate
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtTempo = itemView.findViewById(R.id.txtViewRisultatoArea);
             txtArea = itemView.findViewById(R.id.txtViewRisultatoTempo);
             rateRB = itemView.findViewById(R.id.rtbHighScore);
+
         }
     }
 }

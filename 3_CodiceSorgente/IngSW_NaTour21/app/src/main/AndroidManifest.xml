@@ -46,6 +46,8 @@
         <activity android:name=".ControllerHome" />
         <activity android:name=".ControllerAddItin"/>
         <activity android:name=".ControllerAddItin_2" />
+        <activity android:name=".Test" />
+
 
     </application>
 

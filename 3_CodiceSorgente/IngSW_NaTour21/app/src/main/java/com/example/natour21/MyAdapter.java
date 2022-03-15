@@ -9,12 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private Activity activity;
+    private final Activity activity;
     ArrayList<ParentItem> parentItemArrayList;
 
     public MyAdapter(Activity activity, ArrayList<ParentItem> parentItemArrayList) {
@@ -66,4 +65,3 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 }
-//16.00

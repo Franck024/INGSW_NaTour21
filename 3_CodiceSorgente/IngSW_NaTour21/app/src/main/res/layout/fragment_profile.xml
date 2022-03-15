@@ -5,10 +5,116 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PROFILO" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="7dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/silver"
+                android:layout_gravity="end"
+                android:src="@mipmap/message"
+                android:background="@drawable/btn_sfera_grigia"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="-30dp"
+                android:src="@mipmap/user_menu2" />
+
+            <TextView
+                android:id="@+id/txtNomeUtente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome Utente"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPlaylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   Le mie playlist"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/sabbia2"
+                android:drawableLeft="@mipmap/playlist"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <Button
+                android:id="@+id/btnFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   Foto"
+                android:layout_marginLeft="15dp"
+                android:backgroundTint="@color/azzurro"
+                android:background="@drawable/btn_white_bord"
+                android:drawableLeft="@mipmap/photo"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/PostUtente"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="20dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

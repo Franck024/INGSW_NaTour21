@@ -38,7 +38,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtDiff.setText(parentItem.difficolta);
         holder.txtArea.setText(parentItem.area);
         holder.txtTempo.setText(parentItem.tempo);
-        holder.rateRB.setRating(parentItem.rate);
+        holder.txtNomeUtente.setText(parentItem.utente);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
     }
@@ -50,8 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txtNome, txtDiff, txtTempo, txtArea;
-        RatingBar rateRB;
+        TextView txtNome, txtDiff, txtTempo, txtArea, txtNomeUtente;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -60,8 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtDiff = itemView.findViewById(R.id.txtViewRisultatoDifficolta);
             txtTempo = itemView.findViewById(R.id.txtViewRisultatoArea);
             txtArea = itemView.findViewById(R.id.txtViewRisultatoTempo);
-            rateRB = itemView.findViewById(R.id.rtbHighScore);
-
+            txtNomeUtente = itemView.findViewById(R.id.txtUtentePost);
         }
     }
 }

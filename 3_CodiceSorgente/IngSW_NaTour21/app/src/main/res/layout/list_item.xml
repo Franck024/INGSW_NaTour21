@@ -28,8 +28,8 @@
 
                 <ImageView
                     android:id="@+id/ivparent"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@mipmap/paesaggio"
                     android:orientation="vertical" />
 
@@ -59,9 +59,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="Qualità:"
-                            android:textSize="20dp"/>
-
+                            android:text="Da:"
+                            android:textSize="15dp"/>
+<!--
                         <RatingBar
                             android:id="@+id/rtbHighScore"
                             android:layout_width="match_parent"
@@ -69,50 +69,52 @@
                             android:gravity="center_vertical"
                             android:layout_marginBottom="5dp"
                             android:layout_marginTop="5dp"
+                            android:paddingLeft="5dp"
                             android:numStars="5"
                             android:max="100"
                             android:rating="0.0"
                             android:stepSize="0.0"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_weight="1" />
-
+-->
+                        <TextView
+                            android:id="@+id/txtUtentePost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nome utente"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/blue"
+                            android:paddingLeft="5dp"/>
 
                     </LinearLayout>
                 </LinearLayout>
         </LinearLayout>
-    <TextView
-        android:id="@+id/tvqty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="20dp"
-        android:text=">"
-        android:textSize="30dp"
-        android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:text=">"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
-<!--
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nested_rv"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:padding="4dp"/>
 
--->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:layout_marginStart="50dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:orientation="horizontal">
 
             <TextView
@@ -134,7 +136,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:orientation="horizontal">
 
             <TextView
@@ -157,7 +159,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:orientation="horizontal">
 
                 <TextView

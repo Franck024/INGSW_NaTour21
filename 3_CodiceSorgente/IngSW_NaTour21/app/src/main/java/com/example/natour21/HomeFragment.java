@@ -21,8 +21,7 @@ public class HomeFragment extends Fragment {
     String[] diff = {"+", "-", "=", "+"};
     String[] tempo = {"12", "22", "3", "66"};
     String[] area = {"AAAA", "BBB", "CCC", "DDDD"};
-    Float[] rate = {1f,2f,3f,4f};
-
+    String[] utente = {"Tizio", "Maria", "Carlo", "Bob"};
 
 @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,7 +32,7 @@ public class HomeFragment extends Fragment {
         parentItemArrayList = new ArrayList<>();
 
         for(int i = 0; i< nomi.length; i++){
-            ParentItem parentItem = new ParentItem(nomi[i], diff[i], tempo[i], area[i], rate[i]);
+            ParentItem parentItem = new ParentItem(nomi[i], diff[i], tempo[i], area[i], utente[i]);
             parentItemArrayList.add(parentItem);
         }
 

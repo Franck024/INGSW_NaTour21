@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
 
 public class HomeFragment extends Fragment {
     ArrayList<ParentItem> parentItemArrayList;
     RecyclerView RVparent;
+
 
     //Prenderli dal DB
     String[] nomi = {"xxxxxxx", "yyyyyy", "zzzz", "pppp"};
@@ -26,6 +29,7 @@ public class HomeFragment extends Fragment {
 @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @NonNull ViewGroup container, @NonNull Bundle saveInstanceState){
+    // Carico post
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         RVparent = view.findViewById(R.id.RVparent);
 
@@ -39,5 +43,6 @@ public class HomeFragment extends Fragment {
         RVparent.setLayoutManager(new LinearLayoutManager(this.getContext()));
         RVparent.setAdapter(new MyAdapter(this.getActivity(), parentItemArrayList));
         return view;
+        ///
     }
 }

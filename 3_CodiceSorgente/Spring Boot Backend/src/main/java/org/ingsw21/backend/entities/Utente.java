@@ -2,6 +2,7 @@ package org.ingsw21.backend.entities;
 
 import lombok.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,6 @@ public class Utente {
 	@NonNull private String cognome;
 	private String cellulare;
 	private String citta;
+	@JsonProperty("isAdmin")
 	@NonNull private boolean isAdmin;
 }

@@ -4,6 +4,8 @@ import lombok.NonNull;
 
 import java.time.OffsetDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
@@ -20,6 +22,7 @@ public class Messaggio {
 	@NonNull private long id;
 	@NonNull private String testo;
 	@NonNull private OffsetDateTime timestamp;
+	@JsonProperty("isUtenteOneSender")
 	private boolean isUtenteOneSender;
 	
 }

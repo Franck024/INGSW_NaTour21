@@ -9,14 +9,45 @@ import android.util.Log;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.rx.RxAmplify;
+import com.example.natour21.DAOHTTP.DAOHTTPItinerario;
+import com.example.natour21.DAOHTTP.DAOHTTPUtente;
+import com.example.natour21.DAOs.DAOItinerario;
+import com.example.natour21.DAOs.DAOUtente;
+import com.example.natour21.entities.Itinerario;
+import com.example.natour21.entities.Utente;
+import com.example.natour21.enums.DifficoltaItinerario;
+import com.example.natour21.exceptions.WrappedCRUDException;
 
 public class MainActivity extends AppCompatActivity {
+
+    private DAOItinerario DAOItinerario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent page1 = new Intent(MainActivity.this, ControllerLogin.class);
         startActivity(page1);
+
+        //Test di una chiamata API con retrofit.
+        /*DAOItinerario = new DAOHTTPItinerario("http://example.dom4in:port);
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try{
+                    DAOItinerario.insertItinerario(new Itinerario(7, "testAndroid@test.com", "test", "test", 10, DifficoltaItinerario.facile, "10"));
+                    System.out.println("Success");
+                }
+                catch (WrappedCRUDException wcrude){
+                    Log.w("sus", wcrude.getWrappedException().getMessage());
+                }
+                finally{
+
+                }
+            }
+        });
+
+        thread.start();*/
 
 
         //Test fetching dell'auth session

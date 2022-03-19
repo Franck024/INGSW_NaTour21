@@ -96,7 +96,7 @@ $$
 --Timestamp is client generated
 CREATE TABLE Messaggio
 (
-	id bigint,
+	id bigint DEFAULT 0,
 	utenteOne text,
 	utenteTwo text,
 	testo text NOT NULL,
@@ -124,7 +124,7 @@ AS $$
 $$
 
 CREATE TRIGGER ON_MESSAGE_INSERT
-	AFTER INSERT ON Messaggio
+	BEFORE INSERT ON Messaggio
 	FOR EACH ROW
 	EXECUTE PROCEDURE increase_chat_message_count_and_set_message_id()
 	

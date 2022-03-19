@@ -18,15 +18,21 @@ import com.example.natour21.entities.Utente;
 import com.example.natour21.enums.DifficoltaItinerario;
 import com.example.natour21.exceptions.WrappedCRUDException;
 
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
+
 public class MainActivity extends AppCompatActivity {
 
     private DAOItinerario DAOItinerario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent page1 = new Intent(MainActivity.this, ControllerLogin.class);
         startActivity(page1);
+
+
 
         //Test di una chiamata API con retrofit.
         /*DAOItinerario = new DAOHTTPItinerario("http://example.dom4in:port);
@@ -74,4 +80,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

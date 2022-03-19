@@ -1,10 +1,17 @@
 package org.ingsw21.backend.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import org.ingsw21.backend.exceptions.*;
 import org.ingsw21.backend.DAOFactories.DAOFactory;
 import org.ingsw21.backend.DAOs.DAOChat;
+import org.ingsw21.backend.DTO.DTOMessaggio;
+import org.ingsw21.backend.DTO.DTOMessaggioInsertResponse;
 import org.ingsw21.backend.entities.*;
 
 import java.util.LinkedList;
@@ -16,6 +23,9 @@ public class ChatController {
 	
 	@Autowired
 	private DAOFactory DAOFactory;
+	
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
 	
 	private DAOChat DAOChat;
 	
@@ -138,12 +148,12 @@ public class ChatController {
 	}
 	
 	//Output: id del nuovo messaggio.
-	@PostMapping("/messaggio")
+	@MessageMapping("/messaggio/live/{utenteOneId}/{utenteTwoId}")
 	public long insertMessaggio
 	(
-			@RequestBody Messaggio messaggio, 
-			@RequestParam String utenteOneId,
-			@RequestParam String utenteTwoId
+			Messaggio messaggio, 
+			@DestinationVariable String utenteOneId,
+			@DestinationVariable String utenteTwoId
 	) throws Exception
 	{
 		if (utenteOneId == null || utenteOneId.equals("") || utenteTwoId == null || utenteTwoId.equals(""))
@@ -152,11 +162,26 @@ public class ChatController {
 		Chat inputChat = new Chat();
 		inputChat.setUtenteOneId(utenteOneId);
 		inputChat.setUtenteTwoId(utenteTwoId);
-		try {
-			return DAOChat.insertMessaggio(inputChat, messaggio);
+		
+		String sender, reciever;
+		if (messaggio.isUtenteOneSender()) {
+			sender = utenteOneId;
+			reciever = utenteTwoId;
 		}
-		catch (WrappedCRUDException wcrude) {
-			throw (wcrude.getWrappedException());
+		else {
+			sender = utenteTwoId;
+			reciever = utenteOneId;
+		}
+		try {
+			long id = DAOChat.insertMessaggio(inputChat, messaggio);
+			DTOMessaggio DTOMessaggio = new DTOMessaggio(sender, messaggio);
+			this.messagingTemplate.convertAndSend("/chat/messaggio/live/" + sender, new DTOMessaggioInsertResponse(id));
+			this.messagingTemplate.convertAndSend("/chat/messaggio/live/" + reciever, DTOMessaggio);
+			return id;
+		}
+		catch (WrappedCRUDException | MessagingException e) {
+			if (e instanceof MessagingException) throw e;
+			else throw (((WrappedCRUDException)e).getWrappedException());
 		}
 	}
 	

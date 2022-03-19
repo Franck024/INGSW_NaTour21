@@ -46,7 +46,10 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     //RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation "io.reactivex.rxjava3:rxjava:3.1.3"
+
+    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
 
     //RxAmplify
     implementation 'com.amplifyframework:rxbindings:1.32.0'
@@ -66,4 +69,10 @@ dependencies {
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+
+    //STOMP client
+    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
+
+    //Java8 time support for Jackson
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
 }

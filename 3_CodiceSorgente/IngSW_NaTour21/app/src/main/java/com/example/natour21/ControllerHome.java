@@ -20,9 +20,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class ControllerHome extends AppCompatActivity {
+public class ControllerHome extends AppCompatActivity{
     private ImageView add_itin;
     private Animation anim_btn = null, anim_txtview = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +64,8 @@ public class ControllerHome extends AppCompatActivity {
                 textTitolo.setText(navDestination.getLabel());
             }
         });
+
     }
+
+
 }

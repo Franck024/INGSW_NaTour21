@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_chat_input.xml" value="0.165" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_content_top.xml" value="0.165" />
+        <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_recive_message.xml" value="0.165" />
+        <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_sent_message.xml" value="0.165" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_blue.xml" value="0.165" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_sfera.xml" value="0.165" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_sfera_grigia.xml" value="0.165" />
@@ -28,6 +30,8 @@
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_login.xml" value="0.20208333333333334" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_recupero_password.xml" value="0.20208333333333334" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_registrazione.xml" value="0.20208333333333334" />
+        <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/item_container_received_message.xml" value="0.25416666666666665" />
+        <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/item_container_sent_message.xml" value="0.25416666666666665" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/layout_nav_header.xml" value="0.25416666666666665" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/list_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />

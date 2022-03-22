@@ -75,4 +75,11 @@ dependencies {
 
     //Java8 time support for Jackson
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
+
+    implementation 'androidx.fragment:fragment:1.4.1'
+
+    implementation 'androidx.activity:activity:1.4.0'
+
+    implementation 'com.github.ticofab:android-gpx-parser:2.2.0'
+
 }

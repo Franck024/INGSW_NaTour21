@@ -1,12 +1,14 @@
 package com.example.natour21;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -16,9 +18,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private final Activity activity;
     ArrayList<ParentItem> parentItemArrayList;
 
+
     public MyAdapter(Activity activity, ArrayList<ParentItem> parentItemArrayList) {
         this.activity =  activity;
         this.parentItemArrayList = parentItemArrayList;
+
     }
 
     @NonNull
@@ -26,7 +30,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,
                 parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -39,7 +42,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtArea.setText(parentItem.area);
         holder.txtTempo.setText(parentItem.tempo);
         holder.txtNomeUtente.setText(parentItem.utente);
+  /*      holder.visualizzaItinerario.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+               getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new ItinerarioFragment()).commit();
 
+            }
+        });
+*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
     }
 
@@ -51,6 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtNome, txtDiff, txtTempo, txtArea, txtNomeUtente;
+        TextView visualizzaItinerario;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -60,6 +72,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtTempo = itemView.findViewById(R.id.txtViewRisultatoArea);
             txtArea = itemView.findViewById(R.id.txtViewRisultatoTempo);
             txtNomeUtente = itemView.findViewById(R.id.txtUtentePost);
+            //
+            visualizzaItinerario= itemView.findViewById(R.id.tvqty);
+
+            //
         }
     }
 }

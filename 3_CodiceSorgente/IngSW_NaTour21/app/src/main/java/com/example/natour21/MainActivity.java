@@ -17,19 +17,21 @@ import com.example.natour21.entities.Itinerario;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.enums.DifficoltaItinerario;
 import com.example.natour21.exceptions.WrappedCRUDException;
+import com.example.natour21.map.MapActivity;
 
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DAOItinerario DAOItinerario;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent page1 = new Intent(MainActivity.this, ControllerLogin.class);
+        Intent page1;
+        //page1 = new Intent(MainActivity.this, ControllerLogin.class);
+        page1 = new Intent(MainActivity.this, MapActivity.class);
         startActivity(page1);
 
 

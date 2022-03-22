@@ -1,7 +1,10 @@
 package com.example.natour21.chat.stompclient;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.example.natour21.DTO.DTOMessaggio;
+import com.example.natour21.DTO.DTOMessaggioInsertResponse;
 import com.example.natour21.entities.Messaggio;
 import com.example.natour21.entities.Utente;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +25,8 @@ public class UserStompClient extends Observable {
 
     private ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
+
+
     public UserStompClient(Utente utente){
 
        stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP,
@@ -29,21 +34,34 @@ public class UserStompClient extends Observable {
        USER_ID = utente.getEmail();
     }
 
+    @SuppressLint("CheckResult")
     public void connect(){
         stompClient.connect();
         stompClient.topic("/chat/messaggio/live/" + USER_ID)
                 .subscribe(topicMessage -> {
                     setChanged();
-                    notifyObservers(topicMessage.getPayload());
+                    Object obj;
+                    try{
+                        obj = objectMapper.readValue(topicMessage.getPayload(), DTOMessaggio.class);
+                    }
+                    catch (Exception firstException){
+                        try{
+                            obj = objectMapper.readValue(topicMessage.getPayload(), DTOMessaggioInsertResponse.class);
+                        }
+                        catch (Exception secondException)
+                        {
+                            obj = secondException;
+                        }
+                    }
+                    notifyObservers(obj);
         });
     }
-
     public void disconnect(){
         stompClient.disconnect();
     }
 
     public void send(String receiver, Messaggio messaggio) throws JsonProcessingException {
         stompClient.send("/chat/messaggio/live/" + USER_ID + "/" + receiver,
-                objectMapper.writeValueAsString(messaggio));
+                objectMapper.writeValueAsString(messaggio)).subscribe();
     }
 }

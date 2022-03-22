@@ -13,6 +13,10 @@
         </intent>
     </queries>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name="NaTourApplication"
         android:allowBackup="true"
@@ -47,6 +51,7 @@
         <activity android:name=".ControllerHome" />
         <activity android:name=".ControllerAddItin"/>
         <activity android:name=".ControllerAddItin_2" />
+        <activity android:name=".map.MapActivity" />
 
 
     </application>

@@ -1,10 +1,13 @@
 package com.example.natour21.map;
 
+import com.example.natour21.exceptions.InvalidGeoPointStringFormatException;
+
 import org.osmdroid.util.GeoPoint;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,24 +24,31 @@ public class MapConverter {
     }
     final private static char LATITUDE_SEPARATOR = '$';
     final private static char LONGITUDE_SEPARATOR = '#';
+    final private static Charset CHARSET = StandardCharsets.UTF_8;
+
+    public static Charset getCHARSET() {
+        return CHARSET;
+    }
 
     //Formato di un punto:
     //<latitudine>$<longitudine>#
     //Charset UTF-8
-    protected static InputStream geoPointsToInputStream(List<GeoPoint> geoPointList){
+    public static InputStream geoPointsToInputStream(List<GeoPoint> geoPointList){
 
         String outputString = "";
         for (GeoPoint gp: geoPointList){
             outputString += gp.getLatitude()+
                     +gp.getLongitude()+LONGITUDE_SEPARATOR;
         }
-        return new ByteArrayInputStream(outputString.getBytes(StandardCharsets.UTF_8));
+        return new ByteArrayInputStream(outputString.getBytes(CHARSET));
     }
 
-    protected static List<GeoPoint> inputStreamToGeoPoint(ByteArrayInputStream input) throws IOException{
+    public static List<GeoPoint> inputStreamToGeoPoint(ByteArrayInputStream input) throws
+            IOException, InvalidGeoPointStringFormatException{
         byte[] byteArray = new byte[input.available()];
+        if (byteArray.length < 4) throw new InvalidGeoPointStringFormatException();
         input.read(byteArray);
-        String string = new String(byteArray, StandardCharsets.UTF_8);
+        String string = new String(byteArray, CHARSET);
         double[] values = new double[2];
         int index;
         ReadMode readMode = ReadMode.LATITUDE;
@@ -51,6 +61,7 @@ public class MapConverter {
             else
                 discriminator = LONGITUDE_SEPARATOR;
             index = string.indexOf(discriminator);
+            if (index == -1) throw new InvalidGeoPointStringFormatException();
             values[fieldsCounter] = Double.valueOf(string.substring(0, index));
             fieldsCounter++;
             string = string.substring(index+1);
@@ -65,7 +76,7 @@ public class MapConverter {
         return output;
     }
 
-    protected static List<LinkedList<GeoPoint>> gpxToGeoPoints(Gpx gpx){
+    public static List<LinkedList<GeoPoint>> gpxToGeoPoints(Gpx gpx){
         List<Track> tracks = gpx.getTracks();
         List<TrackSegment> segments;
         List<TrackPoint> trackPoints;

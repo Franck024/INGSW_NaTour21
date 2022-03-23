@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+// DA ELIMINARE ----> CLASSE SOSTITUITA
+
 
 public class HomeFragment extends Fragment {
     ArrayList<ParentItem> parentItemArrayList;

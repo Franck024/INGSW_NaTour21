@@ -28,7 +28,7 @@
                     tools:ignore="MissingConstraints">
 
                     <TextView
-                        android:id="@+id/textTitolo2"
+                        android:id="@+id/Tw_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -51,6 +51,7 @@
 
 
             <ImageButton
+                android:id="@+id/btn_messaggi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"

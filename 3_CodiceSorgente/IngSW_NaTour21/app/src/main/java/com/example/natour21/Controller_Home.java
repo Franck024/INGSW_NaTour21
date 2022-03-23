@@ -69,22 +69,11 @@ public class Controller_Home extends AppCompatActivity {
             ParentItem parentItem = new ParentItem(nomi[i], diff[i], tempo[i], area[i], utente[i]);
             parentItemArrayList.add(parentItem);
         }
-///
+/// Click post
         MyAdapter2 myAdapter2 = new MyAdapter2(this,parentItemArrayList);
         RVparent.setAdapter(myAdapter2);
         RVparent.setLayoutManager(new LinearLayoutManager(this));
-        ///
-      //  RVparent.setLayoutManager(new LinearLayoutManager(this));
-      //  RVparent.setAdapter(new MyAdapter(this, parentItemArrayList));
-// Fine creazione post
-
-     /*    itinerario = findViewById(R.id.tvqty);
-       itinerario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Controller_Home.this, ControllerRecovery.class));
-            }
-        });*/
+        ///END
 
         user = findViewById(R.id.textTitolo3);
         user.setOnClickListener(new View.OnClickListener() {

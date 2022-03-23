@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
+// DA ELIMINARE ----> CLASSE SOSTITUITA
+
 public class ItinerarioFragment extends Fragment {
 
     @Override

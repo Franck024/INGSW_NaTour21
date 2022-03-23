@@ -56,7 +56,6 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView txtNome, txtDiff, txtTempo, txtArea, txtNomeUtente;
-        TextView visualizzaItinerario;
         ConstraintLayout mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {

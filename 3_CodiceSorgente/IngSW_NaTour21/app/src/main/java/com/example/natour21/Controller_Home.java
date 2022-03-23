@@ -30,7 +30,7 @@ public class Controller_Home extends AppCompatActivity {
 
     private ImageView add_itin;
     private Animation anim_btn = null, anim_txtview = null;
-    private TextView itinerario, messaggi, user;
+    private TextView  user;
 
     ArrayList<ParentItem> parentItemArrayList;
     RecyclerView RVparent;
@@ -85,14 +85,6 @@ public class Controller_Home extends AppCompatActivity {
                 startActivity(new Intent(Controller_Home.this, ControllerRecovery.class));
             }
         });*/
-
-        messaggi = findViewById(R.id.textTitolo1);
-        messaggi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Controller_Home.this, Controller_Messaggi.class));
-            }
-        });
 
         user = findViewById(R.id.textTitolo3);
         user.setOnClickListener(new View.OnClickListener() {

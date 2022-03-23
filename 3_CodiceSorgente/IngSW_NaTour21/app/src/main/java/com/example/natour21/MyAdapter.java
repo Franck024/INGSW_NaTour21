@@ -17,12 +17,11 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private final Activity activity;
     ArrayList<ParentItem> parentItemArrayList;
+    Context context;
 
-
-    public MyAdapter(Activity activity, ArrayList<ParentItem> parentItemArrayList) {
-        this.activity =  activity;
+    public MyAdapter(Context ct, ArrayList<ParentItem> parentItemArrayList) {
+        context =  ct;
         this.parentItemArrayList = parentItemArrayList;
     }
 
@@ -43,26 +42,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.txtArea.setText(parentItem.area);
         holder.txtTempo.setText(parentItem.tempo);
         holder.txtNomeUtente.setText(parentItem.utente);
-       /* holder.visualizzaItinerario.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-             //  getSupportFragmentManager().beginTransaction().replace(R.id.navHostFragment, new ItinerarioFragment()).commit();
-                Controller_Home c = new Controller_Home();
-                c.startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
-            }
-        });
-*/
-        /*
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,Controller_Utente.class);
+                Intent intent = new Intent(context, Controller_itinerario.class);
+                // Intent putExtra 5.22 https://youtu.be/xgpLYwEmlO0
                 context.startActivity(intent);
             }
         });
-        */
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
     }
 
     @Override
@@ -73,10 +60,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtNome, txtDiff, txtTempo, txtArea, txtNomeUtente;
-        TextView visualizzaItinerario;
-        ///
         ConstraintLayout mainLayout;
-        ///
+
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -87,7 +72,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtArea = itemView.findViewById(R.id.txtViewRisultatoTempo);
             txtNomeUtente = itemView.findViewById(R.id.txtUtentePost);
             //
-            visualizzaItinerario= itemView.findViewById(R.id.tvqty);
             mainLayout = itemView.findViewById(R.id.CardView);
             //
         }

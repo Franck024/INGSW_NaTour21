@@ -7,13 +7,15 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ControllerAddItin_2 extends AppCompatActivity {
-//    Button indietro = findViewById(R.id.btnIndietro2);
+    Button indietro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame_aggiungi_itinerario2);
 
- //       indietro.setOnClickListener(v -> startActivity(new Intent(ControllerAddItin_2.this, ControllerAddItin.class)));
+        indietro = findViewById(R.id.btnIndietro2);
+
+        indietro.setOnClickListener(v -> startActivity(new Intent(ControllerAddItin_2.this, ControllerAddItin.class)));
 
     }
 }

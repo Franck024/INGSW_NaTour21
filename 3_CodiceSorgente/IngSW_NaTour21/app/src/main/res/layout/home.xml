@@ -24,20 +24,11 @@
             tools:ignore="MissingConstraints">
 
             <TextView
-                android:id="@+id/textTitolo1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:text="Messaggi"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/textTitolo2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="NaTour"
+                android:text="Home"
                 android:textColor="@color/blue"
                 android:gravity="center"
                 android:textSize="25dp"
@@ -52,6 +43,17 @@
                 android:textSize="20dp"
                 android:textStyle="bold"/>
 
+            <ImageButton
+                android:id="@+id/btn_add_itin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:src="@mipmap/plus"
+                android:backgroundTint="@color/light_green"
+                android:background="@drawable/btn_sfera_grigia"
+                android:paddingVertical="7dp"
+                android:paddingHorizontal="15dp" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -60,18 +62,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolBar2" />
 
-        <ImageButton
-            android:id="@+id/btn_add_itin2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_marginVertical="25dp"
-            android:layout_gravity="right"
-            android:src="@mipmap/plus"
-            android:backgroundTint="@color/light_green"
-            android:background="@drawable/btn_sfera_grigia"
-            android:paddingVertical="7dp"
-            android:paddingHorizontal="15dp" />
+
 
     </LinearLayout>
 

@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
     String[] utente = {"Tizio", "Maria", "Carlo", "Bob"};
 
 
+
 @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @NonNull ViewGroup container, @NonNull Bundle saveInstanceState){

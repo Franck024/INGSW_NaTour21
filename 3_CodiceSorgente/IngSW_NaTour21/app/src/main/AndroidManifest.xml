@@ -52,6 +52,10 @@
         <activity android:name=".ControllerAddItin"/>
         <activity android:name=".ControllerAddItin_2" />
         <activity android:name=".map.MapActivity" />
+        <activity android:name=".Controller_Home" />
+        <activity android:name=".Controller_Messaggi"/>
+        <activity android:name=".Controller_Utente"/>
+        <activity android:name=".Controller_itinerario"/>
 
 
     </application>

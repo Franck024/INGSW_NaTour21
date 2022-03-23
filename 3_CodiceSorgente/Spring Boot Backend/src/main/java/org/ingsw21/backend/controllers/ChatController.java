@@ -90,6 +90,23 @@ public class ChatController {
 		}
 	}
 	
+	@GetMapping("/all")
+	public List<Chat> getAllChatWithUtente
+	(
+			@RequestParam String utenteId
+	) throws Exception
+	{
+		if (utenteId.equals("")) throw new BadRequestWebException();
+		try {
+			DAOChat = DAOFactory.getDAOChat();
+			return DAOChat.getAllChatWithUtente(utenteId);
+		}
+		catch (WrappedCRUDException wcrude) {
+			throw (wcrude.getWrappedException());
+		}
+	}
+	
+	
 	
 	//Tutti i parametri non richiesti si escludono a vicenda.
 	//Viene data priorità nel seguente ordine (discendente): 

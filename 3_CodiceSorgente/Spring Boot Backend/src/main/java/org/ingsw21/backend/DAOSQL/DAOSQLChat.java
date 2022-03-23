@@ -40,7 +40,8 @@ public class DAOSQLChat implements DAOChat {
 	getMessaggioByUtenteStatement,
 	getLastMessaggioStatement,
 	checkIfChatIsUpToDateStatement,
-	getAllMessaggioStatement;
+	getAllMessaggioStatement,
+	getAllChatWithUtenteStatement;
 	
 	public DAOSQLChat() {
 		insertChatStatement = "INSERT INTO Chat VALUES (?, ?, DEFAULT)";
@@ -50,6 +51,7 @@ public class DAOSQLChat implements DAOChat {
 		getLastMessaggioStatement = "SELECT * FROM get_last_messages(?, ?, ?)";
 		checkIfChatIsUpToDateStatement = "SELECT messageCount FROM Chat WHERE utenteOne = ? AND utenteTwo = ?";
 		getAllMessaggioStatement = "SELECT * FROM Messaggio WHERE utenteOne = ? AND utenteTwo = ?";
+		getAllChatWithUtenteStatement = "SELECT * FROM Chat WHERE utenteOne = ? OR utenteTwo = ?";
 	}
 	
 	@PostConstruct
@@ -174,6 +176,17 @@ public class DAOSQLChat implements DAOChat {
 			return jdbcTemplate.query(getAllMessaggioStatement, new MessaggioMapper(),
 					utenteOneId,
 					utenteTwoId);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
+	
+	@Override
+	public List<Chat> getAllChatWithUtente(String utenteId) throws WrappedCRUDException {
+		try {
+			return jdbcTemplate.query(getAllChatWithUtenteStatement, new ChatMapper(),
+					utenteId, utenteId);
 		}
 		catch (DataAccessException dae) {
 			throw new WrappedCRUDException(dae);

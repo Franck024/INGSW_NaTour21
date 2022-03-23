@@ -35,7 +35,7 @@ CREATE TABLE Itinerario
 	nomePuntoIniziale text NOT NULL,
 	difficolta difficoltaItinerario NOT NULL,
 	descrizione text,
-	tracciatoKey text UNIQUE NOT NULL,
+	tracciatoKey text UNIQUE,
 	CONSTRAINT ITINERARIO_PK PRIMARY KEY(id),
 	CONSTRAINT ITINERARIO_FK_AUTHOR FOREIGN KEY (authorId) REFERENCES Utente(email),
 	CONSTRAINT ITINERARIO_DURATA_MIN CHECK (durata > 0),

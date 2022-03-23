@@ -24,5 +24,5 @@ public class Itinerario {
 	private int durata;
 	@NonNull private DifficoltaItinerario difficoltaItinerario;
 	private String descrizione;
-	@NonNull private String tracciatoKey;
+	private String tracciatoKey;
 }

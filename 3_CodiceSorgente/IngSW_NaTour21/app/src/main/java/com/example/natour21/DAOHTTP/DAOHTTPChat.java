@@ -49,6 +49,11 @@ public class DAOHTTPChat implements DAOChat {
                         @Query("utenteOneId") String utenteOneId,
                         @Query("utenteTwoId") String utenteTwoId
                 );
+        @GET("/chat/all")
+        public Call<List<Chat>> getAllChatWithUtente
+                (
+                        @Query("utenteId") String utenteId
+                );
     }
 
     HTTPAPIChat APIChat;
@@ -172,6 +177,17 @@ public class DAOHTTPChat implements DAOChat {
     }
 
     @Override
+    public List<Chat> getAllChatWithUtente(String utenteId) throws WrappedCRUDException {
+        try{
+            Response<List<Chat>> response = APIChat.getAllChatWithUtente(utenteId).execute();
+            return DAOHTTPUtil.handleResponse(response);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
     public Messaggio getMessaggioByChatMessaggioPosition(Chat chat, int messagePosition) throws WrappedCRUDException {
         return null;
     }
@@ -200,4 +216,6 @@ public class DAOHTTPChat implements DAOChat {
     public int checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, int currentNumberOfMessaggio) throws WrappedCRUDException {
         return 0;
     }
+
+
 }

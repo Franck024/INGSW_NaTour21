@@ -67,8 +67,8 @@ import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 
 public class MapActivity extends AppCompatActivity {
 
-    private final int MAX_RESULTS = 5;
-    private MapView map = null;
+
+    private MapView map;
     private AutoCompleteTextView addressAutoCompleteTextView;
     private Geocoder geocoder;
     private boolean isSearchingAddress = false;
@@ -80,7 +80,10 @@ public class MapActivity extends AppCompatActivity {
     private String inputAddress;
     private List<GeoPoint> shownAddressesGeopoints;
     private List<PolylineMarkerPair> polylineMarkerPairs = new LinkedList<PolylineMarkerPair>();
+    private final int MAX_RESULTS = 5;
     private final int DEFAULT_COLOR = Color.rgb(0, 80, 0);
+    private final double DEFAULT_ZOOM = 17.5;
+    private final int DEFAULT_REQUIRED_LOCATION_ACCURACY = 60;
 
     private enum MapMode {
         MARKER_INSERT,
@@ -232,8 +235,6 @@ public class MapActivity extends AppCompatActivity {
                 null, 0, 0, 0);
         map.invalidate();
         map.getOverlays().add(new Overlay() {
-            //Esiste solo per test
-            int overlayCounter = 1;
                 @Override
                 public void draw(Canvas c, MapView osmv, boolean shadow) {
 
@@ -251,12 +252,7 @@ public class MapActivity extends AppCompatActivity {
                         PolylineMarkerPair mainPolylineMarkerPair = polylineMarkerPairs.get(0);
                         mainPolylineMarkerPair.getMarkers().add(marker);
                         map.getOverlays().add(marker);
-                        overlayCounter++;
-                        System.out.println(overlayCounter);
                         mainPolylineMarkerPair.getPolyline().addPoint(geoPoint);
-                        //test cancellazione
-                        if(overlayCounter == 10)
-                            clearPolyLineMarkerPair(mainPolylineMarkerPair);
                         map.invalidate();
                     }
                     return true;
@@ -308,8 +304,7 @@ public class MapActivity extends AppCompatActivity {
         {
             @Override
             public void onLocationChanged(Location location){
-
-               if ( location.getAccuracy() < 60 ){
+               if ( location.getAccuracy() < DEFAULT_REQUIRED_LOCATION_ACCURACY ){
                    locationManager.removeUpdates(this);
                    zoomOntoLocation(location);
                }
@@ -320,7 +315,7 @@ public class MapActivity extends AppCompatActivity {
         if (map != null){
             GeoPoint startPoint = new GeoPoint(location);
             IMapController mapController = map.getController();
-            mapController.setZoom(17.5);
+            mapController.setZoom(DEFAULT_ZOOM);
             mapController.setCenter(startPoint);
 
         }
@@ -328,7 +323,7 @@ public class MapActivity extends AppCompatActivity {
 
     private void zoomOntoGeoPoint(GeoPoint geoPoint){
         IMapController mapController = map.getController();
-        mapController.setZoom(17.5);
+        mapController.setZoom(DEFAULT_ZOOM);
         mapController.animateTo(geoPoint);
     }
 
@@ -374,6 +369,25 @@ public class MapActivity extends AppCompatActivity {
         tracks.add(trackBuilder.build());
         GPXbuilder.setTracks(tracks);
         return GPXbuilder.build();
+    }
+
+    private PolylineMarkerPair generatePolylineMarkerPairFromGeoPoints(List<GeoPoint> geopoints){
+        Polyline polyline = new Polyline();
+        List<Marker> markers = new LinkedList<Marker>();
+        for(GeoPoint gp : geopoints){
+            polyline.addPoint(gp);
+            Marker m = new Marker(map);
+            m.setPosition(gp);
+            markers.add(m);
+        }
+        return new PolylineMarkerPair(polyline, markers);
+    }
+
+    private void addPolylineMarkerPairToMap(PolylineMarkerPair polylineMarkerPair){
+        Polyline polyline = polylineMarkerPair.getPolyline();
+        List<Marker> markers = polylineMarkerPair.getMarkers();
+        map.getOverlays().add(polyline);
+        for (Marker m : markers) map.getOverlays().add(m);
     }
 
 

@@ -14,14 +14,13 @@ public class Itinerario {
 
     public Itinerario(){}
 
-    public Itinerario(long id, String authorId, String nome, String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario, String tracciatoKey) {
+    public Itinerario(long id, String authorId, String nome, String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario) {
         this.id = id;
         this.authorId = authorId;
         this.nome = nome;
         this.nomePuntoIniziale = nomePuntoIniziale;
         this.durata = durata;
         this.difficoltaItinerario = difficoltaItinerario;
-        this.tracciatoKey = tracciatoKey;
     }
 
     public Itinerario(long id, String authorId, String nome, String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario, String descrizione, String tracciatoKey) {

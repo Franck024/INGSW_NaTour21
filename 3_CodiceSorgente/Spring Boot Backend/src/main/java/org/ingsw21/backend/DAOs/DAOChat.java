@@ -20,5 +20,5 @@ public interface DAOChat {
 	public List<Messaggio> getLastMessaggio(Chat chat, int n) throws WrappedCRUDException;
 	public List<Messaggio> getAllMessaggio(String utenteOneId, String utenteTwoId) throws WrappedCRUDException;
 	public int checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, int currentNumberOfMessaggio) throws WrappedCRUDException;
-
+	public List<Chat> getAllChatWithUtente(String utenteId) throws WrappedCRUDException;
 }

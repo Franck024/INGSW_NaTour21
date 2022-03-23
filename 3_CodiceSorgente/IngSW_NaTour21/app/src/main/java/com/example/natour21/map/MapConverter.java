@@ -13,9 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.ticofab.androidgpxparser.parser.domain.Gpx;
+import io.ticofab.androidgpxparser.parser.domain.Route;
+import io.ticofab.androidgpxparser.parser.domain.RoutePoint;
 import io.ticofab.androidgpxparser.parser.domain.Track;
 import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
+import io.ticofab.androidgpxparser.parser.domain.WayPoint;
 
 public class MapConverter {
     private enum ReadMode{
@@ -33,21 +36,20 @@ public class MapConverter {
     //Formato di un punto:
     //<latitudine>$<longitudine>#
     //Charset UTF-8
-    public static InputStream geoPointsToInputStream(List<GeoPoint> geoPointList){
-
+    public static ByteArrayInputStream geoPointsToByteArrayInputStream(List<GeoPoint> geoPointList){
+        if (geoPointList == null) return null;
         String outputString = "";
         for (GeoPoint gp: geoPointList){
-            outputString += gp.getLatitude()+
+            outputString += gp.getLatitude()+LATITUDE_SEPARATOR
                     +gp.getLongitude()+LONGITUDE_SEPARATOR;
         }
         return new ByteArrayInputStream(outputString.getBytes(CHARSET));
     }
 
-    public static List<GeoPoint> inputStreamToGeoPoint(ByteArrayInputStream input) throws
-            IOException, InvalidGeoPointStringFormatException{
+    public static List<GeoPoint> byteArrayInputStreamToGeoPoint(ByteArrayInputStream input) throws InvalidGeoPointStringFormatException{
         byte[] byteArray = new byte[input.available()];
         if (byteArray.length < 4) throw new InvalidGeoPointStringFormatException();
-        input.read(byteArray);
+        input.read(byteArray, 0, byteArray.length);
         String string = new String(byteArray, CHARSET);
         double[] values = new double[2];
         int index;
@@ -92,6 +94,21 @@ public class MapConverter {
                 }
                 output.add(geoPoints);
             }
+        }
+        List<WayPoint> wayPoints = gpx.getWayPoints();
+        for (WayPoint wp: wayPoints) {
+            geoPoints = new LinkedList<GeoPoint>();
+            geoPoints.add(new GeoPoint(wp.getLatitude(), wp.getLongitude()));
+            output.add(geoPoints);
+        }
+        List<Route> routes = gpx.getRoutes();
+        for (Route r : routes){
+            geoPoints = new LinkedList<GeoPoint>();
+            List<RoutePoint> routePoints = r.getRoutePoints();
+            for (RoutePoint rp : routePoints){
+                geoPoints.add(new GeoPoint(rp.getLatitude(), rp.getLongitude()));
+            }
+            output.add(geoPoints);
         }
         return output;
     }

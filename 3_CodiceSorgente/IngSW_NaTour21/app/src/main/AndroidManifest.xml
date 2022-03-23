@@ -55,6 +55,8 @@
         <activity android:name=".Controller_Messaggi"/>
         <activity android:name=".Controller_Utente"/>
         <activity android:name=".Controller_itinerario"/>
+        <activity android:name=".Controller_AccessoAdmin"/>
+        <activity android:name=".Controller_Statistiche"/>
 
 
     </application>

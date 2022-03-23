@@ -195,5 +195,18 @@
             app:layout_constraintTop_toTopOf="@+id/editTextPassword"
             app:layout_constraintVertical_bias="0.312" />
 
+        <TextView
+            android:id="@+id/accesso_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accesso admin"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 

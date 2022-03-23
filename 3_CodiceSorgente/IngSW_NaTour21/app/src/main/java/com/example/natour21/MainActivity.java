@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent page1;
-        //page1 = new Intent(MainActivity.this, ControllerLogin.class);
-        page1 = new Intent(MainActivity.this, MapActivity.class);
+        page1 = new Intent(MainActivity.this, ControllerLogin.class);
+       // page1 = new Intent(MainActivity.this, MapActivity.class);
         startActivity(page1);
 
 

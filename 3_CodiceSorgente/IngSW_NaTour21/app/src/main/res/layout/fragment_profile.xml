@@ -16,7 +16,42 @@
             android:layout_height="180dp"
             android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/layoutToolBar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@color/lightgrey"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/Tw_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Home"
+                        android:gravity="center"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textTitolo3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Utente"
+                        android:textColor="@color/blue"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
             <ImageButton
+                android:id="@+id/btn_messaggi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"

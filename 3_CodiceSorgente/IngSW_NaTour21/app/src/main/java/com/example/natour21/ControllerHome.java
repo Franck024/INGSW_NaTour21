@@ -20,6 +20,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+// DA ELIMINARE ----> CLASSE SOSTITUITA
+
 public class ControllerHome extends AppCompatActivity{
     private ImageView add_itin;
     private Animation anim_btn = null, anim_txtview = null;

@@ -128,6 +128,12 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editViewPuntoIniziale" />
+<RadioGroup
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/RB_diff"
+    app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta">
 
     <RadioButton
         android:id="@+id/radioBtnFacile"
@@ -136,8 +142,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="25dp"
         android:text="Facile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
+        android:checked="true"/>
 
     <RadioButton
         android:id="@+id/radioBtnMedia"
@@ -145,9 +150,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Medio"
-        app:layout_constraintEnd_toStartOf="@+id/radioBtnDifficile"
-        app:layout_constraintStart_toEndOf="@+id/radioBtnFacile"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
+        android:layout_marginLeft="20dp"/>
 
     <RadioButton
         android:id="@+id/radioBtnDifficile"
@@ -156,9 +159,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
         android:text="Difficile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta" />
-
+        android:layout_marginLeft="20dp" />
+</RadioGroup>
     <TextView
         android:id="@+id/textViewDescrizione"
         android:layout_width="wrap_content"
@@ -169,7 +171,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnFacile" />
+        app:layout_constraintTop_toBottomOf="@+id/RB_diff" />
 
     <EditText
         android:id="@+id/editTextDescrizione"
@@ -185,34 +187,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
-
-    <TextView
-        android:id="@+id/textViewImmagine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
-        android:text="Immagine (Opzionale)"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
-
-    <Button
-        android:id="@+id/image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/btn_white_bord"
-        android:drawableLeft="@mipmap/icon_download"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
-        android:text=" Carica foto"
-        android:textSize="12dp"
-        android:textStyle="italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewImmagine" />
 
     <Button
         android:id="@+id/btnIndietro"

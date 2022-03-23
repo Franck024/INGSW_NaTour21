@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+// DA ELIMINARE ----> CLASSE SOSTITUITA
+
 public class MessageFragment extends Fragment {
 
     ArrayList<UtentiChat> ListChat;

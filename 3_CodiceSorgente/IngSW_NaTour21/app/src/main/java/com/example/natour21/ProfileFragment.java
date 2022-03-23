@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+// DA ELIMINARE ----> CLASSE SOSTITUITA
+
 public class ProfileFragment extends Fragment {
 //Dovrà prendere solo i post pubblicati dall utente (confronto con nome nella classe Utente)
     ArrayList<ParentItem> parentItemArrayList;

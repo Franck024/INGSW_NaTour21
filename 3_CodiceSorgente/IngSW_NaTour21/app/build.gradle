@@ -82,4 +82,7 @@ dependencies {
 
     implementation 'com.github.ticofab:android-gpx-parser:2.2.0'
 
+    //Per le statistiche
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }

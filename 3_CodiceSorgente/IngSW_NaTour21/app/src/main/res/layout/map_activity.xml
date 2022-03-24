@@ -14,20 +14,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp">
 
-        <EditText
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Cerca"
-            android:paddingLeft="20dp"
-            android:paddingRight="150dp"/>
+            android:src="@mipmap/cestino"
+            android:background="@color/white"
+            android:layout_gravity="center"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="50dp"
             android:text="Invia"
             android:textStyle="bold"
             android:textColor="@color/green"
             android:background="@color/white"
+            android:layout_gravity="center_horizontal"
             android:drawableRight="@mipmap/invia_map"/>
     </LinearLayout>
 

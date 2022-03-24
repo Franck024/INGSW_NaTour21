@@ -35,6 +35,7 @@ public class Controller_Utente extends AppCompatActivity {
         setContentView(R.layout.fragment_profile);
 
         // Creazione post
+        //Dovrà prendere solo i post pubblicati dall utente (confronto con nome nella classe Utente)
         RVutente = findViewById(R.id.PostUtente);
         parentItemArrayList = new ArrayList<>();
 

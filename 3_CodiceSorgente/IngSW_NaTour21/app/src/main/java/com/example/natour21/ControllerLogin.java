@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -25,7 +26,7 @@ import ua.naiksoftware.stomp.StompClient;
 
 public class ControllerLogin extends AppCompatActivity {
     private EditText email, password;
-    private TextView registrazione, pass_dim, txt_reg;
+    private TextView registrazione, pass_dim, txt_reg, accesso_admin;
     private Button login, fb, google, eye;
     private Animation anim_btn = null, anim_txtview = null;
     private int counter=0, r;
@@ -44,6 +45,7 @@ public class ControllerLogin extends AppCompatActivity {
         google = findViewById(R.id.btnGoogleLogin);
         eye = findViewById(R.id.eye);
         txt_reg = findViewById(R.id.textViewRegister);
+        accesso_admin = findViewById(R.id.accesso_admin);
 
         anim_btn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_bottone);
         anim_txtview = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_textview);
@@ -77,6 +79,13 @@ public class ControllerLogin extends AppCompatActivity {
         });
         fb.setOnClickListener(v -> fb.startAnimation(anim_btn));
         google.setOnClickListener(v -> google.startAnimation(anim_btn));
+
+        accesso_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ControllerLogin.this, Controller_AccessoAdmin.class));
+            }
+        });
 
     }
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:id="@+id/textViewTracciato"
         android:layout_width="wrap_content"
@@ -27,16 +28,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTracciato" />
 
-    <EditText
-        android:id="@+id/ESEMPIO"
+    <TextView
+        android:id="@+id/openMap"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginRight="25dp"
-        android:hint="Questa Non è una mappa. SImulazione!"
-        android:background="@drawable/btn_white_bord"
-        android:inputType="textPersonName"
+        android:text="· Apri mappa"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTracciatoInserzioneManuale" />
@@ -46,11 +47,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="- Inserimento con file GPX:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ESEMPIO" />
+        app:layout_constraintTop_toBottomOf="@+id/openMap" />
 
         <Button
             android:id="@+id/btn_GPX"

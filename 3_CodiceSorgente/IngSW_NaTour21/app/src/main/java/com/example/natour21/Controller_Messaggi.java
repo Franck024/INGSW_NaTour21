@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class Controller_Messaggi extends AppCompatActivity {
-
-
+//    private ActivityChatBinding binding;
+//    private User receiverUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

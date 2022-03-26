@@ -15,8 +15,8 @@ import com.example.natour21.R;
 import java.util.ArrayList;
 
 public class Controller_Messaggi extends AppCompatActivity {
-
-
+//    private ActivityChatBinding binding;
+//    private User receiverUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

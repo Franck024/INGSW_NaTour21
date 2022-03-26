@@ -25,7 +25,12 @@ public class DAOHTTPItinerario implements DAOItinerario {
         public Call<Boolean> insertItinerario(@Body Itinerario itinerario);
 
         @GET("/itinerario")
-        public Call<List<Itinerario>> getItinerario(@Query("id") long id);
+        public Call<List<Itinerario>> getItinerario
+                (
+                    @Query("id") Long id,
+                    @Query("numberToGet") Integer numberToGet,
+                    @Query("idToStartFrom") Integer idToStartFrom
+                );
     }
 
     HTTPAPIItinerario APIItinerario;
@@ -55,11 +60,37 @@ public class DAOHTTPItinerario implements DAOItinerario {
     public Itinerario getItinerarioById(long idItinerario) throws WrappedCRUDException {
         try{
             Response<List<Itinerario>> response = APIItinerario
-                    .getItinerario(idItinerario)
+                    .getItinerario(idItinerario, null, null)
                     .execute();
             List<Itinerario> listItinerario = DAOHTTPUtil.handleResponse(response);
             if (listItinerario.isEmpty()) return null;
             else return listItinerario.get(0);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
+    public List<Itinerario> getLastNItinerario(int n) throws WrappedCRUDException {
+        try{
+            Response<List<Itinerario>> response = APIItinerario
+                    .getItinerario(null, n, null)
+                    .execute();
+            return DAOHTTPUtil.handleResponse(response);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
+    public List<Itinerario> getLastNItinerarioStartingFrom(int startingFrom, int n) throws WrappedCRUDException {
+        try{
+            Response<List<Itinerario>> response = APIItinerario
+                    .getItinerario(null, n, startingFrom)
+                    .execute();
+            return DAOHTTPUtil.handleResponse(response);
         }
         catch (IOException ioe){
             throw new WrappedCRUDException(ioe);
@@ -85,9 +116,5 @@ public class DAOHTTPItinerario implements DAOItinerario {
     public List<Itinerario> getItinerarioByPuntoIniziale(GeoPoint puntoIniziale) throws WrappedCRUDException {
         return null;
     }
-
-
-
-
 
 }

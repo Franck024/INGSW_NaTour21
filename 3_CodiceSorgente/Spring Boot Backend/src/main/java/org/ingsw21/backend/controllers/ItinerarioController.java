@@ -20,26 +20,42 @@ public class ItinerarioController {
 	private DAOItinerario DAOItinerario;
 	
 	private enum ItinerarioGetQuery{
-		ID
+		ID,
+		GET_N_ITINERARIO,
+		GET_N_ITINERARIO_STARTING_FROM
 	}
 	
 	@GetMapping 
 	public List<Itinerario> getItinerario
 	(
-			@RequestParam long id
+			@RequestParam(required = false) Long id,
+			@RequestParam(required = false) Integer numberToGet,
+			@RequestParam(required = false) Integer idToStartFrom
 	) throws Exception
 	{
-		if (id > 0) {
+		ItinerarioGetQuery itinerarioGetQueryType;
+		itinerarioGetQueryType = decideGetQueryType(id, numberToGet, idToStartFrom);
+		if (itinerarioGetQueryType == null) throw new BadRequestWebException();
+		try {
 			DAOItinerario = DAOFactory.getDAOItinerario();
-			try {
-				List<Itinerario> result = new LinkedList<Itinerario>();
+			List<Itinerario> result = new LinkedList<Itinerario>();
+			if (itinerarioGetQueryType.equals(ItinerarioGetQuery.ID)){
 				result.add(DAOItinerario.getItinerarioById(id));
-				return result;
+				
 			}
-			catch (WrappedCRUDException wcrude) {
-				throw (wcrude.getWrappedException());
+			else if (itinerarioGetQueryType.equals(ItinerarioGetQuery.GET_N_ITINERARIO)) {
+				result.addAll(DAOItinerario.getLastNItinerario(numberToGet));
 			}
-		} else throw new BadRequestWebException("Invalid id :" + id);
+			else if (itinerarioGetQueryType.equals(ItinerarioGetQuery.GET_N_ITINERARIO_STARTING_FROM)) {
+				result.addAll(DAOItinerario.getLastNItinerarioStartingFrom(idToStartFrom, numberToGet));
+			}
+			return result;
+		}
+		catch (WrappedCRUDException wcrude) {
+			throw (wcrude.getWrappedException());
+		}
+			
+	
 	}
 	
 	@PostMapping
@@ -56,5 +72,12 @@ public class ItinerarioController {
 		catch (WrappedCRUDException wcrude) {
 			throw (wcrude.getWrappedException());
 		}
+	}
+	
+	public ItinerarioGetQuery decideGetQueryType(Long id, Integer numberToGet, Integer idToStartFrom) {
+		if (id != null && id > 0) return ItinerarioGetQuery.ID;
+		else if ( (numberToGet == null || numberToGet < 1) ) return null;
+		else if (idToStartFrom == null || idToStartFrom < 1) return ItinerarioGetQuery.GET_N_ITINERARIO;
+		else return ItinerarioGetQuery.GET_N_ITINERARIO_STARTING_FROM;
 	}
 }

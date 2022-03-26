@@ -11,13 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.natour21.controller.Controller_itinerario;
+
 import java.util.ArrayList;
 
-public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
     ArrayList<ParentItem> parentItemArrayList;
     Context context;
 
-    public MyAdapter2(Context ct, ArrayList<ParentItem> parentItemArrayList){
+    public PostAdapter(Context ct, ArrayList<ParentItem> parentItemArrayList){
         context =  ct;
         this.parentItemArrayList = parentItemArrayList;
     }
@@ -34,11 +36,11 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ParentItem parentItem = parentItemArrayList.get(position);
 
-        holder.txtNome.setText(parentItem.nomePercorso);
-        holder.txtDiff.setText(parentItem.difficolta);
-        holder.txtArea.setText(parentItem.area);
-        holder.txtTempo.setText(parentItem.tempo);
-        holder.txtNomeUtente.setText(parentItem.utente);
+        holder.txtNome.setText(parentItem.getNomePercorso());
+        holder.txtDiff.setText(parentItem.getDifficolta());
+        holder.txtArea.setText(parentItem.getNomePuntoIniziale());
+        holder.txtTempo.setText(parentItem.getDurata());
+        holder.txtNomeUtente.setText(parentItem.getAutore());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

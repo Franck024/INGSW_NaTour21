@@ -48,8 +48,8 @@ public class DAOSQLChat implements DAOChat {
 		insertMessaggioStatement = "INSERT INTO Messaggio VALUES(DEFAULT, ?, ?, ?, ?, ?) RETURNING id";
 		getChatByUtenteStatement = "SELECT * FROM Chat WHERE utenteOne = ? AND utenteTwo = ?";
 		getMessaggioByUtenteStatement = "SELECT * FROM Messaggio WHERE utenteOne = ? AND utenteTwo = ?";
-		getLastMessaggioStatement = "SELECT * FROM get_last_messages(?, ?, ?)";
-		checkIfChatIsUpToDateStatement = "SELECT messageCount FROM Chat WHERE utenteOne = ? AND utenteTwo = ?";
+		getLastMessaggioStatement = "SELECT * FROM get_last_n_messaggio(?, ?, ?)";
+		checkIfChatIsUpToDateStatement = "SELECT messaggioCount FROM Chat WHERE utenteOne = ? AND utenteTwo = ?";
 		getAllMessaggioStatement = "SELECT * FROM Messaggio WHERE utenteOne = ? AND utenteTwo = ?";
 		getAllChatWithUtenteStatement = "SELECT * FROM Chat WHERE utenteOne = ? OR utenteTwo = ?";
 	}

@@ -70,7 +70,7 @@ CREATE TABLE Chat
 (
 	utenteOne text,
 	utenteTwo text,
-	messageCount bigint DEFAULT 0,
+	messaggioCount bigint DEFAULT 0,
 	CONSTRAINT CHAT_PK PRIMARY KEY(utenteOne, utenteTwo),
 	CONSTRAINT CHAT_FK_UTENTEONE FOREIGN KEY (utenteOne) REFERENCES Utente(email),
 	CONSTRAINT CHAT_FK_UTENTETWO FOREIGN KEY (utenteTwo) REFERENCES Utente(email),
@@ -115,7 +115,7 @@ AS $$
 	BEGIN
 		NEW.id = next_message_id(NEW.utenteOne, NEW.utenteTwo);
 		UPDATE Chat
-		SET messageCount = messageCount + 1
+		SET messaggioCount = messaggioCount + 1
 		WHERE utenteOne = NEW.utenteOne
 		AND
 		utenteTwo = NEW.utenteTwo;

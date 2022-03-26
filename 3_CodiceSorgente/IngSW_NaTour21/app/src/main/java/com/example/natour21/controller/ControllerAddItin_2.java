@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.natour21.R;
 import com.example.natour21.map.MapActivity;
 
 public class ControllerAddItin_2 extends AppCompatActivity {

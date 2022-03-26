@@ -14,6 +14,7 @@
     </queries>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -45,18 +46,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ControllerLogin" />
-        <activity android:name=".ControllerRegistrazione" />
-        <activity android:name=".ControllerRecovery" />
-        <activity android:name=".ControllerAddItin"/>
-        <activity android:name=".ControllerAddItin_2" />
+        <activity android:name=".controller.ControllerLogin" />
+        <activity android:name=".controller.ControllerRegistrazione" />
+        <activity android:name=".controller.ControllerRecovery" />
+        <activity android:name=".controller.ControllerAddItin"/>
+        <activity android:name=".controller.ControllerAddItin_2" />
         <activity android:name=".map.MapActivity" />
-        <activity android:name=".Controller_Home" />
-        <activity android:name=".Controller_Messaggi"/>
-        <activity android:name=".Controller_Utente"/>
-        <activity android:name=".Controller_itinerario"/>
-        <activity android:name=".Controller_AccessoAdmin"/>
-        <activity android:name=".Controller_Statistiche"/>
+        <activity android:name=".controller.Controller_Home" />
+        <activity android:name=".controller.Controller_Messaggi"/>
+        <activity android:name=".controller.Controller_Utente"/>
+        <activity android:name=".controller.Controller_itinerario"/>
+        <activity android:name=".controller.Controller_AccessoAdmin"/>
+        <activity android:name=".controller.Controller_Statistiche"/>
 
 
     </application>

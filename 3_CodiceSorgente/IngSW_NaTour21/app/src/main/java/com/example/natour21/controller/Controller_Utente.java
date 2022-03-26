@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.natour21.PostAdapter;
+import com.example.natour21.ParentItem;
+import com.example.natour21.R;
 
 import java.util.ArrayList;
 
@@ -41,13 +45,13 @@ public class Controller_Utente extends AppCompatActivity {
 
 
 
-        for(int i = 0; i< nomi.length; i++){
+        /*for(int i = 0; i< nomi.length; i++){
             ParentItem parentItem = new ParentItem(nomi[i], diff[i], tempo[i], area[i], utente[i]);
             parentItemArrayList.add(parentItem);
-        }
+        }*/
         /// Click post
-        MyAdapter2 myAdapter2 = new MyAdapter2(this,parentItemArrayList);
-        RVutente.setAdapter(myAdapter2);
+        PostAdapter postAdapter = new PostAdapter(this,parentItemArrayList);
+        RVutente.setAdapter(postAdapter);
         RVutente.setLayoutManager(new LinearLayoutManager(this));
         ///END
 

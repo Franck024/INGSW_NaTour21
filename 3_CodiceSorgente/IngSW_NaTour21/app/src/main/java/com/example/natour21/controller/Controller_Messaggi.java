@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.natour21.R;
 
 import java.util.ArrayList;
 

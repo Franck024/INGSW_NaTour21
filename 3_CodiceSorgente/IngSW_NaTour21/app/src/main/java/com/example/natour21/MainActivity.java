@@ -4,23 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.amplifyframework.auth.AuthUserAttributeKey;
-import com.amplifyframework.auth.options.AuthSignUpOptions;
-import com.amplifyframework.rx.RxAmplify;
-import com.example.natour21.DAOHTTP.DAOHTTPItinerario;
-import com.example.natour21.DAOHTTP.DAOHTTPUtente;
-import com.example.natour21.DAOs.DAOItinerario;
-import com.example.natour21.DAOs.DAOUtente;
-import com.example.natour21.entities.Itinerario;
-import com.example.natour21.entities.Utente;
-import com.example.natour21.enums.DifficoltaItinerario;
-import com.example.natour21.exceptions.WrappedCRUDException;
-import com.example.natour21.map.MapActivity;
-
-import ua.naiksoftware.stomp.Stomp;
-import ua.naiksoftware.stomp.StompClient;
+import com.example.natour21.controller.ControllerLogin;
+import com.example.natour21.controller.Controller_Messaggi;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent page1;
-        page1 = new Intent(MainActivity.this, Controller_Messaggi.class);
+        page1 = new Intent(MainActivity.this, ControllerLogin.class);
        // page1 = new Intent(MainActivity.this, MapActivity.class);
         startActivity(page1);
 

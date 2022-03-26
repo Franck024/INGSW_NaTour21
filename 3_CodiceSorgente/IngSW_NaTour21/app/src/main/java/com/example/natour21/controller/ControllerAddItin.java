@@ -1,22 +1,15 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.example.natour21.R;
 
 public class ControllerAddItin extends AppCompatActivity {
     private Button annulla, prossimo;

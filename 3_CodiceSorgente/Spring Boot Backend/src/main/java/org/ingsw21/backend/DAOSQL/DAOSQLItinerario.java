@@ -28,11 +28,15 @@ public class DAOSQLItinerario implements DAOItinerario {
 	private DataSource dataSource;
 	
 	private String insertItinerarioStatement,
-	getItinerarioByIdStatement;
+	getItinerarioByIdStatement,
+	getLastNItinerarioStatement, 
+	getLastNItinerarioStartingFromStatement;
 	
 	public DAOSQLItinerario() {
 		insertItinerarioStatement = "INSERT INTO Itinerario VALUES(DEFAULT, ?, ?, ?, ?, ?::difficoltaItinerario, ?, ?)";
 		getItinerarioByIdStatement = "SELECT * FROM Itinerario AS I WHERE I.id = ?";
+		getLastNItinerarioStatement = "SELECT * FROM get_last_n_itinerario(?)";
+		getLastNItinerarioStartingFromStatement = "SELECT * FROM get_last_n_itinerario_starting_from(?, ?)";
 	}
 	
 	@PostConstruct
@@ -86,6 +90,28 @@ public class DAOSQLItinerario implements DAOItinerario {
 		}
 		
 	}
+	
+	@Override
+	public List<Itinerario> getLastNItinerario(int n) throws WrappedCRUDException {
+		try {
+			return jdbcTemplate.query(getLastNItinerarioStatement, new ItinerarioMapper(), n);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
+
+	@Override
+	public List<Itinerario> getLastNItinerarioStartingFrom(int startingFrom, int n) throws WrappedCRUDException {
+		try {
+			return jdbcTemplate.query(getLastNItinerarioStartingFromStatement, new ItinerarioMapper(),
+					startingFrom,
+					n);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
 
 	@Override
 	public void deleteItinerario(Itinerario itinerario) throws WrappedCRUDException {
@@ -112,4 +138,6 @@ public class DAOSQLItinerario implements DAOItinerario {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }

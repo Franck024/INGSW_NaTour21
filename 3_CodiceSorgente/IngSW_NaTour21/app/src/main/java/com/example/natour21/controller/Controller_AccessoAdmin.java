@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.natour21.R;
 
 public class Controller_AccessoAdmin extends AppCompatActivity {
     EditText passAdmin;

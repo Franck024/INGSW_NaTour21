@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.controller;
 
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.natour21.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -206,5 +208,4 @@ public class ControllerRegistrazione extends AppCompatActivity {
         return m.matches();
     }
 }
-
 

@@ -56,12 +56,20 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+
+       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:id="@+id/swipe_refresh">
+
+           <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVparent2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolBar2" />
 
+       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>

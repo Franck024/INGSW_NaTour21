@@ -29,7 +29,7 @@ public class DAOHTTPItinerario implements DAOItinerario {
                 (
                     @Query("id") Long id,
                     @Query("numberToGet") Integer numberToGet,
-                    @Query("idToStartFrom") Integer idToStartFrom
+                    @Query("idToStartFrom") Long idToStartFrom
                 );
     }
 
@@ -85,7 +85,7 @@ public class DAOHTTPItinerario implements DAOItinerario {
     }
 
     @Override
-    public List<Itinerario> getLastNItinerarioStartingFrom(int startingFrom, int n) throws WrappedCRUDException {
+    public List<Itinerario> getLastNItinerarioStartingFrom(long startingFrom, int n) throws WrappedCRUDException {
         try{
             Response<List<Itinerario>> response = APIItinerario
                     .getItinerario(null, n, startingFrom)

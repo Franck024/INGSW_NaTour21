@@ -30,7 +30,7 @@ public class ItinerarioController {
 	(
 			@RequestParam(required = false) Long id,
 			@RequestParam(required = false) Integer numberToGet,
-			@RequestParam(required = false) Integer idToStartFrom
+			@RequestParam(required = false) Long idToStartFrom
 	) throws Exception
 	{
 		ItinerarioGetQuery itinerarioGetQueryType;
@@ -74,10 +74,10 @@ public class ItinerarioController {
 		}
 	}
 	
-	public ItinerarioGetQuery decideGetQueryType(Long id, Integer numberToGet, Integer idToStartFrom) {
+	public ItinerarioGetQuery decideGetQueryType(Long id, Integer numberToGet, Long idToStartFrom) {
 		if (id != null && id > 0) return ItinerarioGetQuery.ID;
 		else if ( (numberToGet == null || numberToGet < 1) ) return null;
-		else if (idToStartFrom == null || idToStartFrom < 1) return ItinerarioGetQuery.GET_N_ITINERARIO;
+		else if (idToStartFrom == null) return ItinerarioGetQuery.GET_N_ITINERARIO;
 		else return ItinerarioGetQuery.GET_N_ITINERARIO_STARTING_FROM;
 	}
 }

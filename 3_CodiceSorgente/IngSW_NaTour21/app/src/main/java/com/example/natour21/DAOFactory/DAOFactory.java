@@ -8,53 +8,58 @@ import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 
 public class DAOFactory {
 
-    private EndPoint endPoint;
-    private ConnectionType connectionType;
+    private static EndPoint endPoint = EndPoint.LOCAL;
+    private static ConnectionType connectionType = ConnectionType.HTTP;
 
-    private String EC2BaseUrl = "";
-    private String localHostBaseUrl = "";
-    private String defaultConnectionSettingsErrorMessage;
+    private static String EC2BaseUrl = "";
+    private static String localHostBaseUrl = "http://192.168.1.220:5000";
 
-    public DAOFactory(EndPoint endPoint, ConnectionType connectionType){
-        this.endPoint = endPoint;
-        this.connectionType = connectionType;
-        defaultConnectionSettingsErrorMessage =
-                "Invalid connection settings; endpoint: " + endPoint + " connectiontype: " + connectionType;
+    private static String getDefaultConnectionSettingsErrorMessage(){
+        return "Invalid connection settings; endpoint: " + endPoint + " connectiontype: " + connectionType;
     }
 
-    public DAOUtente getDAOUtente() throws InvalidConnectionSettingsException{
+    public static DAOUtente getDAOUtente() throws InvalidConnectionSettingsException{
         if (connectionType.equals(ConnectionType.HTTP)){
             if (endPoint.equals(EndPoint.LOCAL)) return new DAOHTTPUtente(localHostBaseUrl);
             else if (endPoint.equals(EndPoint.EC2)) return new DAOHTTPUtente(EC2BaseUrl);
         }
         throw new InvalidConnectionSettingsException
-                (defaultConnectionSettingsErrorMessage);
+                (getDefaultConnectionSettingsErrorMessage());
     }
 
-    public DAOChat getDAOChat() throws InvalidConnectionSettingsException{
+    public static DAOChat getDAOChat() throws InvalidConnectionSettingsException{
         if (connectionType.equals(ConnectionType.HTTP)){
             if (endPoint.equals(EndPoint.LOCAL)) return new DAOHTTPChat(localHostBaseUrl);
             else if (endPoint.equals(EndPoint.EC2)) return new DAOHTTPChat(EC2BaseUrl);
         }
         throw new InvalidConnectionSettingsException
-                (defaultConnectionSettingsErrorMessage);
+                (getDefaultConnectionSettingsErrorMessage());
     }
 
-    public DAOItinerario getDAOItinerario() throws InvalidConnectionSettingsException{
+    public static DAOItinerario getDAOItinerario() throws InvalidConnectionSettingsException{
         if (connectionType.equals(ConnectionType.HTTP)){
             if (endPoint.equals(EndPoint.LOCAL)) return new DAOHTTPItinerario(localHostBaseUrl);
             else if (endPoint.equals(EndPoint.EC2)) return new DAOHTTPItinerario(EC2BaseUrl);
         }
         throw new InvalidConnectionSettingsException
-                (defaultConnectionSettingsErrorMessage);
+                (getDefaultConnectionSettingsErrorMessage());
     }
 
-    public DAOSegnalazione getDAOSegnalazione() throws InvalidConnectionSettingsException {
+    public static DAOSegnalazione getDAOSegnalazione() throws InvalidConnectionSettingsException {
         if (connectionType.equals(ConnectionType.HTTP)) {
             if (endPoint.equals(EndPoint.LOCAL)) return new DAOHTTPSegnalazione(localHostBaseUrl);
             else if (endPoint.equals(EndPoint.EC2)) return new DAOHTTPSegnalazione(EC2BaseUrl);
         }
         throw new InvalidConnectionSettingsException
-                (defaultConnectionSettingsErrorMessage);
+                (getDefaultConnectionSettingsErrorMessage());
+    }
+
+    public static DAOStatistiche getDAOStatistiche() throws InvalidConnectionSettingsException {
+        if (connectionType.equals(ConnectionType.HTTP)) {
+            if (endPoint.equals(EndPoint.LOCAL)) return new DAOHTTPStatistiche(localHostBaseUrl);
+            else if (endPoint.equals(EndPoint.EC2)) return new DAOHTTPStatistiche(EC2BaseUrl);
+        }
+        throw new InvalidConnectionSettingsException
+                (getDefaultConnectionSettingsErrorMessage());
     }
 }

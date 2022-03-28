@@ -12,4 +12,9 @@ public class WrappedCRUDException extends Exception {
     public Exception getWrappedException() {
         return wrappedException;
     }
+
+    public String getMessage(){
+        if (wrappedException != null) return wrappedException.getMessage();
+        return null;
+    }
 }

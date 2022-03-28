@@ -102,7 +102,7 @@ public class DAOSQLItinerario implements DAOItinerario {
 	}
 
 	@Override
-	public List<Itinerario> getLastNItinerarioStartingFrom(int startingFrom, int n) throws WrappedCRUDException {
+	public List<Itinerario> getLastNItinerarioStartingFrom(long startingFrom, int n) throws WrappedCRUDException {
 		try {
 			return jdbcTemplate.query(getLastNItinerarioStartingFromStatement, new ItinerarioMapper(),
 					startingFrom,

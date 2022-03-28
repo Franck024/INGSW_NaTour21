@@ -75,7 +75,7 @@ CREATE TABLE Chat
 	CONSTRAINT CHAT_FK_UTENTEONE FOREIGN KEY (utenteOne) REFERENCES Utente(email),
 	CONSTRAINT CHAT_FK_UTENTETWO FOREIGN KEY (utenteTwo) REFERENCES Utente(email),
 	CONSTRAINT CHAT_CHECK_NOT_SAME_UTENTE CHECK (utenteOne <> utenteTwo),
-	CONSTRAINT CHAT_MESSAGECOUNT_NOT_NEGATIVE CHECK (messageCount >= 0),
+	CONSTRAINT CHAT_MESSAGECOUNT_NOT_NEGATIVE CHECK (messaggioCount >= 0),
 	CONSTRAINT CHAT_USERS_NOT_ALREADY_IN_CHAT CHECK (check_users_not_already_in_chat(utenteOne, utenteTwo))
 );
 
@@ -86,7 +86,7 @@ AS $$
 	DECLARE
 		nextId bigint;
 	BEGIN
-		SELECT C.messageCount INTO nextId
+		SELECT C.messaggioCount INTO nextId
 		FROM Chat as C
 		WHERE C.utenteOne = utenteOneId AND C.utenteTwo = utenteTwoId;
 		RETURN (nextId + 1);

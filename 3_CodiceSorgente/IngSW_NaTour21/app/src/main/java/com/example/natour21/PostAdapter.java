@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.natour21.controller.Controller_itinerario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
     ArrayList<ParentItem> parentItemArrayList;
@@ -56,6 +57,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         return parentItemArrayList.size();
     }
 
+    public void addAll(List<ParentItem> parentItems){
+        parentItemArrayList.addAll(parentItems);
+        System.out.println("SUS: " + parentItemArrayList.size());
+        notifyDataSetChanged();
+    }
+
+    public void addAllAtIndex(int index, List<ParentItem> parentItems){
+        parentItemArrayList.addAll(index, parentItems);
+        System.out.println("SUS: " + parentItemArrayList.size());
+        notifyDataSetChanged();
+
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView txtNome, txtDiff, txtTempo, txtArea, txtNomeUtente;
         ConstraintLayout mainLayout;
@@ -64,8 +78,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             super(itemView);
             txtNome = itemView.findViewById(R.id.NomePost);
             txtDiff = itemView.findViewById(R.id.txtViewRisultatoDifficolta);
-            txtTempo = itemView.findViewById(R.id.txtViewRisultatoArea);
-            txtArea = itemView.findViewById(R.id.txtViewRisultatoTempo);
+            txtTempo = itemView.findViewById(R.id.txtViewRisultatoTempo);
+            txtArea = itemView.findViewById(R.id.txtViewRisultatoArea);
             txtNomeUtente = itemView.findViewById(R.id.txtUtentePost);
             mainLayout = itemView.findViewById(R.id.CardView);
         }

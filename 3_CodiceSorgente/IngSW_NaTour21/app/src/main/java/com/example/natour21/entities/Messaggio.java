@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
 
+////  ELIMINARE
+
 public class Messaggio {
 
     private long id;

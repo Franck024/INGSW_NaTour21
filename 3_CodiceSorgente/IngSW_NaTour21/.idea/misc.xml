@@ -42,9 +42,16 @@
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/menu.xml" value="0.18333333333333332" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/toolbar.xml" value="0.20208333333333334" />
         <entry key="..\:/Progetti_Github/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/menu/navigation.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_sent_message.xml" value="0.236" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_blue.xml" value="0.236" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_sfera_grigia.xml" value="0.236" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/settings.xml" value="0.236" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/vie_bg.xml" value="0.236" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/accesso_admin.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/activity_chat.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/fragment_itinerario.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/fragment_message.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/fragment_profile.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_1.xml" value="0.264" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_2.xml" value="0.1" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_3.xml" value="0.1" />
@@ -54,7 +61,10 @@
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_inserzione_itinerario.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_recupero_password.xml" value="0.176" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_registrazione.xml" value="0.24547101449275363" />
-        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/home.xml" value="0.1068840579710145" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_statistiche.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/home.xml" value="0.264" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/item_container_received_message.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/item_container_sent_message.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/list_item.xml" value="0.4" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/map.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/map_activity.xml" value="0.23854166666666668" />

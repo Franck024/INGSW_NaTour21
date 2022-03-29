@@ -11,7 +11,7 @@ import com.example.natour21.databinding.ItemContainerSentMessageBinding;
 
 import java.util.List;
 
-// ELIMINARE
+// YT
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final List<chatMessage> chatMessages;

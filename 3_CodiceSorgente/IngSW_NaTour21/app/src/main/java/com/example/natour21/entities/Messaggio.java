@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
 
-////  ELIMINARE
+
 
 public class Messaggio {
 
@@ -33,7 +33,7 @@ public class Messaggio {
     }
 
     public OffsetDateTime getTimestamp() {
-        return timestamp;
+        return timestamp;  /// .toString()
     }
 
     public boolean isUtenteOneSender() {

@@ -21,22 +21,23 @@ import com.example.natour21.ParentItem;
 import com.example.natour21.PostAdapter;
 import com.example.natour21.R;
 import com.example.natour21.UtentiChat;
+import com.example.natour21.databinding.ActivityChatBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+// YT
 
 // classe MessagingService video2 min 6.45
 public class Controller_Messaggi extends AppCompatActivity {
-    /*
 
 
-  //  private ActivityMainBinding binding;
-//    private User receiverUser;
+    private ActivityChatBinding binding;
+    private User receiverUser;
     private ChatAdapter chatAdapter;
     private PreferenceManager preferenceManager;
     // private Firebase db;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
@@ -59,38 +60,6 @@ public class Controller_Messaggi extends AppCompatActivity {
     /////
 
 
-    */
 
 
-    TextView nomeUtente;
-    ArrayList<UtentiChat> listChat;
-    RecyclerView RVlistChat;
-
-    //Prenderli dal DB
-    String[] nomi = {"xxxxxxx", "yyyyyy", "zzzz", "pppp"};
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_message);
-
-        // Creazione lista chat
-        nomeUtente = findViewById(R.id.nome_utente);
-        RVlistChat = findViewById(R.id.RVchat);
-
-        nomeUtente.setText("MIO NOME");
-        listChat = new ArrayList<>();
-
-
-
-        for(int i = 0; i< nomi.length; i++){
-            UtentiChat chatItem = new UtentiChat(nomi[i]);
-            listChat.add(chatItem);
-        }
-        /// Click post
-        ListChatAdapter listChatAdapter = new ListChatAdapter(this, listChat);
-        RVlistChat.setAdapter(listChatAdapter);
-        RVlistChat.setLayoutManager(new LinearLayoutManager(this));
-        ///END
-    }
 }

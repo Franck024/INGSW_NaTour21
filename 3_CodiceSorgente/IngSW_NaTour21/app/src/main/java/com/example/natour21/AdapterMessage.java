@@ -17,18 +17,26 @@ import java.util.ArrayList;
 public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHolder>{
     ArrayList<Messaggio> messageItemArrayList;
     Context context;
+    int value;
 
-    public AdapterMessage(Context ct, ArrayList<Messaggio> messageItemArrayList){
+    public AdapterMessage(Context ct, ArrayList<Messaggio> messageItemArrayList, int value){
         context =  ct;
         this.messageItemArrayList = messageItemArrayList;
+        this.value=value;
     }
 
     @NonNull
     @Override
     public AdapterMessage.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
+        ////test
+        if(value == 1){
+            View viewRecive = inflater.inflate(R.layout.item_container_received_message, parent, false);
+            return new AdapterMessage.MyViewHolder(viewRecive, 1);
+        }
+        //fine test
         View view = inflater.inflate(R.layout.item_container_sent_message, parent, false);
-        return new AdapterMessage.MyViewHolder(view);
+        return new AdapterMessage.MyViewHolder(view, 2);
     }
 
     @Override
@@ -47,10 +55,15 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView messaggio, orario;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, int value) {
             super(itemView);
-            messaggio = itemView.findViewById(R.id.textMessage);
-            orario = itemView.findViewById(R.id.orario);
+            if( value == 1){
+                messaggio = itemView.findViewById(R.id.textMessageReceive);
+                orario = itemView.findViewById(R.id.orarioR);
+            }else{
+                messaggio = itemView.findViewById(R.id.textMessage);
+                orario = itemView.findViewById(R.id.orario);
+            }
         }
     }
 

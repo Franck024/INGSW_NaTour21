@@ -88,7 +88,7 @@ public class Controller_Utente extends AppCompatActivity {
         messaggi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Controller_Utente.this, Controller_Messaggi.class));
+                startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
             }
         });
 

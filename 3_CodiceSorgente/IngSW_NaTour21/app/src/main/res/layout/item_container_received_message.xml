@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/textMessageReceive"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bckgrd_recive_message"
         android:padding="10dp"
@@ -16,5 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.8" />
+
+
+    <TextView
+        android:id="@+id/orarioR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Orario"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMessageReceive" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

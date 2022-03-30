@@ -11,6 +11,8 @@ import com.example.natour21.databinding.ItemContainerSentMessageBinding;
 
 import java.util.List;
 
+// YT
+
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final List<chatMessage> chatMessages;
     private final String senderId;
@@ -71,6 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
         void setData(chatMessage chatMessage){
             binding.textMessage.setText(chatMessage.message);
+            binding.orario.setText(chatMessage.dateTime);
         }
     }
     static class RecivedMessageViewHolder extends RecyclerView.ViewHolder {
@@ -83,7 +86,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         void setData(chatMessage chatMessage) {
             binding.textMessageReceive.setText(chatMessage.message);
-           // binding.textMessage.setText(chatMessage.message);
+            binding.orarioR.setText(chatMessage.dateTime);
         }
     }
 }

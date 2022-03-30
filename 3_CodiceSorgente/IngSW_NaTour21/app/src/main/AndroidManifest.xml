@@ -53,11 +53,14 @@
         <activity android:name=".controller.ControllerAddItin"/>
         <activity android:name=".map.MapActivity" />
         <activity android:name=".controller.Controller_Home" />
-        <activity android:name=".controller.Controller_Messaggi"/>
+        <activity android:name=".controller.Controller_listChat"/>
         <activity android:name=".controller.Controller_Utente"/>
         <activity android:name=".controller.Controller_itinerario"/>
         <activity android:name=".controller.Controller_AccessoAdmin"/>
         <activity android:name=".controller.Controller_Statistiche"/>
+        <activity android:name=".controller.Controller_ChatUtente"/>
+        <activity android:name=".controller.Controller_Messaggi"
+            android:windowSoftInputMode="adjustResize"/>
 
 
     </application>

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
 
+
+
 public class Messaggio {
 
     private long id;
@@ -31,7 +33,7 @@ public class Messaggio {
     }
 
     public OffsetDateTime getTimestamp() {
-        return timestamp;
+        return timestamp;  /// .toString()
     }
 
     public boolean isUtenteOneSender() {

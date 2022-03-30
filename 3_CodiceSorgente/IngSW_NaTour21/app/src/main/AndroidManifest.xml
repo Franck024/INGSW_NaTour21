@@ -61,6 +61,8 @@
         <activity android:name=".controller.Controller_ChatUtente"/>
         <activity android:name=".controller.Controller_Messaggi"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".PopupSegnalazione"
+            android:theme="@style/AppTheme.PopMe"/>
 
 
     </application>

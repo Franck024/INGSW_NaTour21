@@ -48,7 +48,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterMessage.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Messaggio messageChat = messageItemArrayList.get(position);
-        this.position = position;  
+        this.position = position;
 
         holder.messaggio.setText(messageChat.getTesto());
         holder.orario.setText("12.22");  // messageChat.getTimestamp()

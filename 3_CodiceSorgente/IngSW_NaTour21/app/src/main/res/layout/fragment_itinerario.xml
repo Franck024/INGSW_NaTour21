@@ -28,6 +28,7 @@
                   android:paddingLeft="20dp">
 
                   <TextView
+                      android:id="@+id/nomePercorsoItin"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="Nome percorso"
@@ -48,6 +49,7 @@
                           android:textColor="@color/black"/>
 
                       <TextView
+                          android:id="@+id/nomeUtenteItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="Nome utente"
@@ -73,6 +75,7 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
+                          android:id="@+id/diffItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="Difficoltà"
@@ -109,6 +112,7 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
+                          android:id="@+id/inizioItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="Inizio"
@@ -134,6 +138,7 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
+                          android:id="@+id/fineItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="Fine"
@@ -158,6 +163,7 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
+                          android:id="@+id/tempoItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="Tempo"
@@ -166,6 +172,7 @@
                   </LinearLayout>
 
                   <TextView
+                      android:id="@+id/warning"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="right"
@@ -177,6 +184,7 @@
                       android:textStyle="bold"
                       android:textColor="@color/red"/>
                   <Button
+                      android:id="@+id/segnala"
                       android:layout_width="wrap_content"
                       android:layout_height="30dp"
                       android:layout_gravity="right"
@@ -195,6 +203,7 @@
                       android:layout_marginTop="5dp"/>
 
                   <TextView
+                      android:id="@+id/descrizioneItin"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:text="Esempio di descrizione dell itinerario.

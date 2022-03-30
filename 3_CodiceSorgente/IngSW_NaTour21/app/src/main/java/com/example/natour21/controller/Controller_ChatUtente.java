@@ -51,6 +51,7 @@ public class Controller_ChatUtente extends AppCompatActivity {
         RVmessaggi = findViewById(R.id.chatRecycleView);
         progressBar = findViewById(R.id.progressBar);
 
+        nome_chat.setText(" "); // Passarlo tramite qualche entità
         back.setOnClickListener(
                 view -> startActivity(new Intent(Controller_ChatUtente.this, Controller_listChat.class)));
 

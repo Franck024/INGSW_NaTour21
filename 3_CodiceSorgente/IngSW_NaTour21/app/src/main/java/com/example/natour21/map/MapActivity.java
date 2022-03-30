@@ -5,7 +5,9 @@ package com.example.natour21.map;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -70,6 +73,8 @@ public class MapActivity extends AppCompatActivity {
 
     private MapView map;
     private AutoCompleteTextView addressAutoCompleteTextView;
+    private Button btnSend;
+    private Button btnDeletePath;
     private Geocoder geocoder;
     private boolean isSearchingAddress = false;
     private boolean isEditFromDropDown = false;
@@ -135,6 +140,26 @@ public class MapActivity extends AppCompatActivity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.map_activity);
+        Intent intent = getIntent();
+        btnSend = findViewById(R.id.btnSendPath);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (polylineMarkerPairs != null && (polylineMarkerPairs.size() == 1)){
+                    PolylineMarkerPair mainPolylineMarkerPair = polylineMarkerPairs.get(0);
+                    if (mainPolylineMarkerPair != null){
+                        List<GeoPoint> geoPoints = mainPolylineMarkerPair
+                                .getPolyline().getActualPoints();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("GEO_POINT_LIST", MapConverter
+                                .geoPointsToString(geoPoints));
+                        intent.putExtras(bundle);
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
+                    }
+                }
+            }
+        });
         scrollView = new ScrollView(ctx);
         LinearLayout myLayout = (LinearLayout) findViewById(R.id.linearlayout);
         addressAutoCompleteTextView = new AutoCompleteTextView(ctx);

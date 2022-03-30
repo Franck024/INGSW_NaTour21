@@ -88,6 +88,8 @@ dependencies {
 
     //Per le statistiche
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    //
+
+    //file picker per i file GPX
+    implementation 'com.nbsp:materialfilepicker:1.9.1'
 
 }

@@ -59,6 +59,8 @@
         <activity android:name=".controller.Controller_AccessoAdmin"/>
         <activity android:name=".controller.Controller_Statistiche"/>
         <activity android:name=".controller.Controller_ChatUtente"/>
+        <activity android:name=".controller.Controller_Messaggi"
+            android:windowSoftInputMode="adjustResize"/>
 
 
     </application>

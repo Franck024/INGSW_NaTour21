@@ -54,7 +54,4 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
         }
     }
 
-    //// TEST
-
-    //FINE
 }

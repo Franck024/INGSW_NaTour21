@@ -19,9 +19,8 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     ArrayList<Messaggio> messageItemArrayList;
     Context context;
     int value;
-    //test
     int position;
-    //
+
     public static final int VIEW_TYPE_RECIVED = 1;
     public static final int VIEW_TYPE_SENT = 2;
 
@@ -37,12 +36,11 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     @Override
     public AdapterMessage.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        ////test
+        // Determina se il messaggio è stato inviato o ricevuto
         if(messageItemArrayList.get(position).isUtenteOneSender() == false){
             View viewRecive = inflater.inflate(R.layout.item_container_received_message, parent, false);
             return new AdapterMessage.MyViewHolder(viewRecive, VIEW_TYPE_RECIVED);
         }
-        //fine test
         View view = inflater.inflate(R.layout.item_container_sent_message, parent, false);
         return new AdapterMessage.MyViewHolder(view, VIEW_TYPE_SENT);
     }
@@ -50,7 +48,7 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterMessage.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Messaggio messageChat = messageItemArrayList.get(position);
-        this.position = position;  //test
+        this.position = position;  
 
         holder.messaggio.setText(messageChat.getTesto());
         holder.orario.setText("12.22");  // messageChat.getTimestamp()

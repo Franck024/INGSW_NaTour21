@@ -1,5 +1,6 @@
 package com.example.natour21;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,11 +19,18 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     ArrayList<Messaggio> messageItemArrayList;
     Context context;
     int value;
+    //test
+    int position;
+    //
+    public static final int VIEW_TYPE_RECIVED = 1;
+    public static final int VIEW_TYPE_SENT = 2;
+
 
     public AdapterMessage(Context ct, ArrayList<Messaggio> messageItemArrayList, int value){
         context =  ct;
         this.messageItemArrayList = messageItemArrayList;
         this.value=value;
+
     }
 
     @NonNull
@@ -30,18 +38,19 @@ public class AdapterMessage extends RecyclerView.Adapter<AdapterMessage.MyViewHo
     public AdapterMessage.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         ////test
-        if(value == 1){
+        if(messageItemArrayList.get(position).isUtenteOneSender() == false){
             View viewRecive = inflater.inflate(R.layout.item_container_received_message, parent, false);
-            return new AdapterMessage.MyViewHolder(viewRecive, 1);
+            return new AdapterMessage.MyViewHolder(viewRecive, VIEW_TYPE_RECIVED);
         }
         //fine test
         View view = inflater.inflate(R.layout.item_container_sent_message, parent, false);
-        return new AdapterMessage.MyViewHolder(view, 2);
+        return new AdapterMessage.MyViewHolder(view, VIEW_TYPE_SENT);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterMessage.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterMessage.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Messaggio messageChat = messageItemArrayList.get(position);
+        this.position = position;  //test
 
         holder.messaggio.setText(messageChat.getTesto());
         holder.orario.setText("12.22");  // messageChat.getTimestamp()

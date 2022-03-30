@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.natour21.controller.ControllerAddItin;
 import com.example.natour21.controller.ControllerLogin;
 import com.example.natour21.controller.Controller_Home;
 import com.example.natour21.controller.Controller_Messaggi;
+import com.example.natour21.map.MapActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent page1;
-        page1 = new Intent(MainActivity.this, Controller_Home.class);
-       // page1 = new Intent(MainActivity.this, MapActivity.class);
+        page1 = new Intent(MainActivity.this, ControllerAddItin.class);
+        //page1 = new Intent(MainActivity.this, MapActivity.class);
         startActivity(page1);
 
 

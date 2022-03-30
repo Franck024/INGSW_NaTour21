@@ -123,44 +123,44 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
-        android:text="Difficolta'"
+        android:text="Difficoltà"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editViewPuntoIniziale" />
-<RadioGroup
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/RB_diff"
-    app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta">
-
-    <RadioButton
-        android:id="@+id/radioBtnFacile"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="25dp"
-        android:text="Facile"
-        android:checked="true"/>
+        android:orientation="horizontal"
+        android:id="@+id/RB_diff"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta">
 
-    <RadioButton
-        android:id="@+id/radioBtnMedia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Medio"
-        android:layout_marginLeft="20dp"/>
+        <RadioButton
+            android:id="@+id/radioBtnFacile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="25dp"
+            android:text="Facile"
+            android:checked="true"/>
 
-    <RadioButton
-        android:id="@+id/radioBtnDifficile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="25dp"
-        android:text="Difficile"
-        android:layout_marginLeft="20dp" />
-</RadioGroup>
+        <RadioButton
+            android:id="@+id/radioBtnMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Medio"
+            android:layout_marginLeft="20dp"/>
+
+        <RadioButton
+            android:id="@+id/radioBtnDifficile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:text="Difficile"
+            android:layout_marginLeft="20dp" />
+    </RadioGroup>
     <TextView
         android:id="@+id/textViewDescrizione"
         android:layout_width="wrap_content"
@@ -181,12 +181,60 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
         android:paddingLeft="10dp"
+        android:gravity="top"
         android:background="@drawable/btn_white_bord"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
+
+    <TextView
+        android:id="@+id/textViewTracciato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tracciato (opzionale)"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/radioBtnGroupTracciato"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTracciato">
+
+        <RadioButton
+            android:id="@+id/radioBtnNonInserire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:checked="true"
+            android:text="Non voglio inserire un tracciato" />
+
+        <RadioButton
+            android:id="@+id/radioBtnMappa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="25dp"
+            android:text="Inserimento con mappa"/>
+
+        <RadioButton
+            android:id="@+id/radioBtnGPX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="25dp"
+            android:text="Inserimento con file GPX" />
+
+    </RadioGroup>
+
 
     <Button
         android:id="@+id/btnIndietro"
@@ -198,6 +246,7 @@
         android:backgroundTint="@color/red"
         android:text="INDIETRO"
         android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/radioBtnGroupTracciato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -211,8 +260,15 @@
         android:backgroundTint="@color/green"
         android:text="PROSSIMO"
         android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/radioBtnGroupTracciato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

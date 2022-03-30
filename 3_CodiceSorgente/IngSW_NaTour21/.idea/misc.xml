@@ -45,6 +45,7 @@
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/bckgrd_sent_message.xml" value="0.236" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_blue.xml" value="0.236" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_sfera_grigia.xml" value="0.236" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/btn_white_bord.xml" value="0.1005" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/settings.xml" value="0.236" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/drawable/vie_bg.xml" value="0.236" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/accesso_admin.xml" value="0.24547101449275363" />
@@ -55,7 +56,7 @@
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_1.xml" value="0.264" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_2.xml" value="0.1" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_add_itin_3.xml" value="0.1" />
-        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_aggiungi_itinerario.xml" value="0.24547101449275363" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_aggiungi_itinerario.xml" value="0.1" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_aggiungi_itinerario2.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_home.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/frame_inserzione_itinerario.xml" value="0.24547101449275363" />
@@ -67,7 +68,7 @@
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/item_container_sent_message.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/list_item.xml" value="0.4" />
         <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/map.xml" value="0.24547101449275363" />
-        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/map_activity.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/Luca/Documents/INGSW/repo/INGSW_NaTour21/3_CodiceSorgente/IngSW_NaTour21/app/src/main/res/layout/map_activity.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.natour21.PopupSegnalazione;
 import com.example.natour21.R;
@@ -15,6 +16,7 @@ import com.example.natour21.entities.Itinerario;
 public class Controller_itinerario extends AppCompatActivity {
     TextView nomePercorso, nomeUtente, difficolta, inizio, fine, tempo, warning, descrizione;
     Button segnalazione;
+    DrawerLayout bckgrdItinerario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class Controller_itinerario extends AppCompatActivity {
         warning = findViewById(R.id.warning);
         descrizione = findViewById(R.id.descrizioneItin);
         segnalazione = findViewById(R.id.segnala);
+        bckgrdItinerario = findViewById(R.id.bckgrdItinerario);
 
 /* sono vuoti
         nomePercorso.setText(Itinerario.getNome());
@@ -41,14 +44,17 @@ public class Controller_itinerario extends AppCompatActivity {
         warning.setText(Itinerario.getWarning());
         descrizione.setText(Itinerario.getDescrizione);
  */
+
         segnalazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent int1 = new Intent(getApplicationContext(), PopupSegnalazione.class);
+                bckgrdItinerario.setAlpha((float) 0.3);
                 startActivity(int1);
+
             }
         });
-
+        
 
     }
 }

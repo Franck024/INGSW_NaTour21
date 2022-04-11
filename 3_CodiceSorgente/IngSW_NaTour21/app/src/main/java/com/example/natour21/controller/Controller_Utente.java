@@ -3,6 +3,8 @@ package com.example.natour21.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,10 +23,11 @@ import java.util.ArrayList;
 
 public class Controller_Utente extends AppCompatActivity {
     Button playlist, foto;
-    ImageButton messaggi;
-    TextView home;
+    ImageButton messaggi, home, btn_filtro_inProfilo;
     ArrayList<ParentItem> parentItemArrayList;
     RecyclerView RVutente;
+
+    private Animation btn_menu = null;
 
     //Prenderli dal DB
     String[] nomi = {"xxxxxxx", "yyyyyy", "zzzz", "pppp"};
@@ -43,7 +46,7 @@ public class Controller_Utente extends AppCompatActivity {
         RVutente = findViewById(R.id.PostUtente);
         parentItemArrayList = new ArrayList<>();
 
-
+        btn_menu = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.btn_menu);
 
         /*for(int i = 0; i< nomi.length; i++){
             ParentItem parentItem = new ParentItem(nomi[i], diff[i], tempo[i], area[i], utente[i]);
@@ -55,17 +58,43 @@ public class Controller_Utente extends AppCompatActivity {
         RVutente.setLayoutManager(new LinearLayoutManager(this));
         ///END
 
-        home = findViewById(R.id.Tw_home);
+        home = findViewById(R.id.btn_home_inProfilo);
         playlist = findViewById(R.id.btnPlaylist);
         foto = findViewById(R.id.btnFoto);
         messaggi = findViewById(R.id.btn_messaggi);
+        btn_filtro_inProfilo = findViewById(R.id.btn_message_inProfilo);
 
-        home.setOnClickListener(new View.OnClickListener() {
+        btn_filtro_inProfilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
+                btn_filtro_inProfilo.startAnimation(btn_menu);
             }
         });
+
+        home.setOnClickListener(v -> {
+            home.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
+                        }
+                    });
+        });
+
+        btn_filtro_inProfilo.setOnClickListener(v -> {
+            btn_filtro_inProfilo.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
+                        }
+                    });
+        });
+
 
         playlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +114,6 @@ public class Controller_Utente extends AppCompatActivity {
             }
         });
 
-        messaggi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
-            }
-        });
 
     }
 }

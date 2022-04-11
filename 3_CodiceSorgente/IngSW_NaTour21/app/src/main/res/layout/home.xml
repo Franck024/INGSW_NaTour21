@@ -15,7 +15,7 @@
             android:id="@+id/layoutToolBar2"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/lightgrey"
+            android:background="@color/purple_700"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="15dp"
@@ -23,44 +23,36 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/textTitolo2"
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="Home"
-                android:textColor="@color/blue"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:hint="Ricerca percorso"
+                android:background="@drawable/btn_white_bord"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                android:drawableRight="@mipmap/search"
+                android:drawablePadding="20dp"/>
 
-            <TextView
-                android:id="@+id/textTitolo3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="Utente"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/btn_add_itin2"
+                    android:id="@+id/btn_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/plus"
-                    android:backgroundTint="@color/light_green"
-                    android:background="@drawable/btn_sfera_grigia"
-                    android:paddingVertical="7dp"
-                    android:paddingHorizontal="15dp"
                     android:layout_gravity="right"
-                    android:layout_marginTop="5dp"/>
+                    android:background="@drawable/btn_white_bord"
+                    android:backgroundTint="@color/white"
+                    android:padding="5dp"
+                    android:src="@mipmap/plus"
+                    android:tint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UseAppTint" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
 
@@ -77,6 +69,65 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutToolBar2" />
 
        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bckgr_menu"
+                android:backgroundTint="@color/purple_700"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_utente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/white"
+                android:padding="10dp"
+                android:src="@mipmap/utente_home"
+                android:layout_marginVertical="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view" />
+
+            <ImageButton
+                android:id="@+id/btn_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/white"
+                android:tint="@color/blue"
+                android:padding="10dp"
+                android:src="@mipmap/home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_utente"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseAppTint" />
+
+            <ImageButton
+                android:id="@+id/btn_filtro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/white"
+                android:padding="10dp"
+                android:src="@mipmap/search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_utente"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </LinearLayout>

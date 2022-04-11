@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,9 +46,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Controller_Home extends AppCompatActivity {
 
-    private ImageView add_itin;
-    private Animation anim_btn = null, anim_txtview = null;
-    private TextView  user;
+    private Animation btn_menu = null;
     private final int POSTS_PER_REFRESH = 10;
     private DAOItinerario DAOItinerario;
     private DAOUtente DAOUtente;
@@ -57,6 +54,7 @@ public class Controller_Home extends AppCompatActivity {
     private boolean isNotPullRefresh = false;
     private boolean isUpdating = false;
     SwipeRefreshLayout refreshLayout;
+    ImageButton btn_utente,btn_home,btn_filtri, add_itin;
 
     PostAdapter feedPostAdapter;
     RecyclerView RVparent;
@@ -76,15 +74,14 @@ public class Controller_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        add_itin = findViewById(R.id.btn_add_itin2);
+        add_itin = findViewById(R.id.btn_add);
+        btn_home = findViewById(R.id.btn_home);
+        btn_utente = findViewById(R.id.btn_utente);
+        btn_filtri = findViewById(R.id.btn_filtro);
 
-        anim_btn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_bottone);
-        anim_txtview = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_textview);
+        btn_menu = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.btn_menu);
 
-        add_itin.setOnClickListener(v -> {
-            add_itin.startAnimation(anim_btn);
-            startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
-        });
+
 
         refreshLayout = findViewById(R.id.swipe_refresh);
         refreshLayout.setOnRefreshListener(
@@ -126,14 +123,54 @@ public class Controller_Home extends AppCompatActivity {
         });
         ///END
 
-        user = findViewById(R.id.textTitolo3);
-        user.setOnClickListener(new View.OnClickListener() {
+        add_itin.setOnClickListener(v -> {
+            add_itin.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
+                        }
+                    });
+        });
+
+        btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Controller_Home.this, Controller_Utente.class));
+                btn_home.startAnimation(btn_menu);
             }
         });
 
+        btn_utente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_utente.animate().rotationY(360).withEndAction(
+                        new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                startActivity(new Intent(Controller_Home.this, Controller_Utente.class));
+                            }
+                        });
+            }
+        });
+
+        btn_filtri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_filtri.animate().rotationY(360).withEndAction(
+                        new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                startActivity(new Intent(Controller_Home.this, Controller_Ricerca.class));
+                            }
+                        });
+            }
+        });
     }
 
     private void onUpdateError(Throwable throwable, UpdateType updateType){

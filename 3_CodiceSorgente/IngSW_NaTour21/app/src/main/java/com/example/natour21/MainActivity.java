@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent page1;
 
-        page1 = new Intent(MainActivity.this, Controller_Ricerca.class);
+        page1 = new Intent(MainActivity.this, Controller_Home.class);
         //page1 = new Intent(MainActivity.this, MapActivity.class);
 
         startActivity(page1);

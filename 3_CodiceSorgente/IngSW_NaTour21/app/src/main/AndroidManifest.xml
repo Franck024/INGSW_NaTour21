@@ -63,6 +63,7 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".PopupSegnalazione"
             android:theme="@style/AppTheme.PopMe"/>
+        <activity android:name=".controller.Controller_Ricerca"/>
 
 
     </application>

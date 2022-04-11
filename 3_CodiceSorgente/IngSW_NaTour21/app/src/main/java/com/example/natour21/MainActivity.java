@@ -10,6 +10,7 @@ import com.example.natour21.controller.ControllerLogin;
 import com.example.natour21.controller.Controller_Home;
 import com.example.natour21.controller.Controller_Messaggi;
 
+import com.example.natour21.controller.Controller_Ricerca;
 import com.example.natour21.controller.Controller_itinerario;
 
 import com.example.natour21.map.MapActivity;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent page1;
 
-        page1 = new Intent(MainActivity.this, Controller_itinerario.class);
+        page1 = new Intent(MainActivity.this, Controller_Ricerca.class);
         //page1 = new Intent(MainActivity.this, MapActivity.class);
 
         startActivity(page1);

@@ -54,7 +54,7 @@ public class Controller_Home extends AppCompatActivity {
     private boolean isNotPullRefresh = false;
     private boolean isUpdating = false;
     SwipeRefreshLayout refreshLayout;
-    ImageButton btn_utente,btn_home,btn_filtri, add_itin;
+    ImageButton btn_utente,btn_home,btn_filtri, add_itin, btn_mess;
 
     PostAdapter feedPostAdapter;
     RecyclerView RVparent;
@@ -78,6 +78,7 @@ public class Controller_Home extends AppCompatActivity {
         btn_home = findViewById(R.id.btn_home);
         btn_utente = findViewById(R.id.btn_utente);
         btn_filtri = findViewById(R.id.btn_filtro);
+        btn_mess = findViewById(R.id.btn_message_inHome);
 
         btn_menu = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.btn_menu);
 
@@ -131,6 +132,18 @@ public class Controller_Home extends AppCompatActivity {
                         public void run()
                         {
                             startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
+                        }
+                    });
+        });
+
+        btn_mess.setOnClickListener(v -> {
+            btn_mess.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Home.this, Controller_listChat.class));
                         }
                     });
         });

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Controller_Utente extends AppCompatActivity {
     Button playlist, foto;
-    ImageButton messaggi, home, btn_filtro_inProfilo;
+    ImageButton messaggi, home, btn_utente_inProfilo, back;
     ArrayList<ParentItem> parentItemArrayList;
     RecyclerView RVutente;
 
@@ -61,18 +61,19 @@ public class Controller_Utente extends AppCompatActivity {
         home = findViewById(R.id.btn_home_inProfilo);
         playlist = findViewById(R.id.btnPlaylist);
         foto = findViewById(R.id.btnFoto);
-        messaggi = findViewById(R.id.btn_messaggi);
-        btn_filtro_inProfilo = findViewById(R.id.btn_message_inProfilo);
+        messaggi = findViewById(R.id.btn_message_inProfilo);
+        btn_utente_inProfilo = findViewById(R.id.btn_utente_inProfilo);
+        back = findViewById(R.id.back_inProfilo);
 
-        btn_filtro_inProfilo.setOnClickListener(new View.OnClickListener() {
+        btn_utente_inProfilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_filtro_inProfilo.startAnimation(btn_menu);
+                btn_utente_inProfilo.startAnimation(btn_menu);
             }
         });
 
         home.setOnClickListener(v -> {
-            home.animate().rotation(360).withEndAction(
+            home.animate().rotationY(360).withEndAction(
                     new Runnable()
                     {
                         @Override
@@ -83,8 +84,8 @@ public class Controller_Utente extends AppCompatActivity {
                     });
         });
 
-        btn_filtro_inProfilo.setOnClickListener(v -> {
-            btn_filtro_inProfilo.animate().rotation(360).withEndAction(
+        messaggi.setOnClickListener(v -> {
+            messaggi.animate().rotationY(360).withEndAction(
                     new Runnable()
                     {
                         @Override
@@ -114,6 +115,17 @@ public class Controller_Utente extends AppCompatActivity {
             }
         });
 
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back.animate().rotationY(360).withEndAction(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
+                            }
+                        });
+            }
+        });
     }
 }

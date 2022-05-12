@@ -13,54 +13,67 @@
 
         <LinearLayout
             android:id="@+id/layoutToolBar2"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/lightgrey"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="15dp"
+            android:paddingStart="10dp"
             android:paddingEnd="15dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/textTitolo2"
+            <ImageButton
+                android:id="@+id/btnSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:background="@color/lightgrey"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="7dp"
+                android:src="@drawable/settings" />
+
+            <TextView
+                android:id="@+id/textViewHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Home"
-                android:textColor="@color/blue"
-                android:gravity="center"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textTitolo3"
+                android:id="@+id/textViewUtente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:text="Utente"
+                android:textColor="@color/blue"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewMessaggi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="Messaggi"
                 android:textSize="20dp"
                 android:textStyle="bold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/btn_add_itin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_sfera_grigia"
+                android:backgroundTint="@color/light_green"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="7dp"
+                android:src="@mipmap/plus" />
 
-                <ImageButton
-                    android:id="@+id/btn_add_itin2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/plus"
-                    android:backgroundTint="@color/light_green"
-                    android:background="@drawable/btn_sfera_grigia"
-                    android:paddingVertical="7dp"
-                    android:paddingHorizontal="15dp"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="5dp"/>
-
-            </LinearLayout>
         </LinearLayout>
 
 

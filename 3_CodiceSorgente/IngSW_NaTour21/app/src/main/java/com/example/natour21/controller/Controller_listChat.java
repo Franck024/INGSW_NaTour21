@@ -4,44 +4,37 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.natour21.ListChatAdapter;
+import com.example.natour21.chat.views.ListChatAdapter;
 import com.example.natour21.R;
-import com.example.natour21.UtentiChat;
-
-import java.util.ArrayList;
+import com.example.natour21.chat.views.viewmodels.ChatViewModel;
 
 public class Controller_listChat extends AppCompatActivity {
     TextView nomeUtente;
-    ArrayList<UtentiChat> listChat;
     RecyclerView RVlistChat;
-
-    //Prenderli dal DB
-    String[] nomi = {"xxxxxxx", "yyyyyy", "zzzz", "pppp"};
+    ChatViewModel chatViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_message);
 
-        // Creazione lista chat
         nomeUtente = findViewById(R.id.nome_utente);
         RVlistChat = findViewById(R.id.RVchat);
 
         nomeUtente.setText("Chat");
-        listChat = new ArrayList<>();
 
+        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
 
-        for (int i = 0; i < nomi.length; i++) {
-            UtentiChat chatItem = new UtentiChat(nomi[i]);
-            listChat.add(chatItem);
-        }
-
-        ListChatAdapter listChatAdapter = new ListChatAdapter(this, listChat);
+        ListChatAdapter listChatAdapter = new ListChatAdapter(new ListChatAdapter.ChatDiff());
         RVlistChat.setAdapter(listChatAdapter);
-        RVlistChat.setLayoutManager(new LinearLayoutManager(this));  /// Click chat
+        RVlistChat.setLayoutManager(new LinearLayoutManager(this));
 
+        chatViewModel.getChats().observe(this, chats -> {
+            listChatAdapter.submitList(chats);
+        });
     }
 }

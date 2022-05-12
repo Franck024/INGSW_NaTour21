@@ -1,42 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearlayoutP"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapTopLayout"
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/cestino"
-            android:background="@color/white"
-            android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/btnSendPath"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:text="Invia"
-            android:textStyle="bold"
-            android:textColor="@color/green"
-            android:background="@color/white"
-            android:layout_gravity="center_horizontal"
-            android:drawableRight="@mipmap/invia_map"/>
-    </LinearLayout>
+        android:id="@+id/mapRelativeLayout"/>
 
     <LinearLayout
-        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.95"
+            android:orientation="horizontal" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mapToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:minHeight="?attr/actionBarSize">
+
+            <LinearLayout
+                android:id="@+id/toolbarMenuLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/btnDeleteAll"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:src="@mipmap/cestino" />
+
+                <ImageButton
+                    android:id="@+id/btnCenterOnUserLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:src="@drawable/get_position_icon" />
+
+                <ImageButton
+                    android:id="@+id/btnSendPath"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:src="@mipmap/invia_map" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

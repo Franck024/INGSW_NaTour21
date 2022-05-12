@@ -121,8 +121,8 @@ public class ChatController {
 	(
 			@RequestParam String utenteOneId,
 			@RequestParam String utenteTwoId,
-			@RequestParam(required = false) Integer numberOfMessaggioToGet,
-			@RequestParam(required = false) Integer currentNumberOfMessaggio,
+			@RequestParam(required = false) Long numberOfMessaggioToGet,
+			@RequestParam(required = false) Long currentNumberOfMessaggio,
 			@RequestParam(required = false) Boolean getAllMessaggio
 	) throws Exception
 	{
@@ -141,7 +141,7 @@ public class ChatController {
 				messaggioResult.addAll(DAOChat.getLastMessaggio(chatInput, numberOfMessaggioToGet));
 			}
 			else if (chatGetQueryType == ChatGetQuery.NUMBER_OF_MESSAGGIO_BEHIND) {
-				int numberOfMessaggioBehind = -1 * DAOChat.checkIfChatIsUpToDate
+				long numberOfMessaggioBehind = -1 * DAOChat.checkIfChatIsUpToDate
 						(utenteOneId, utenteTwoId, currentNumberOfMessaggio);
 				if (numberOfMessaggioBehind > 0) {
 					messaggioResult.addAll(DAOChat.getLastMessaggio(chatInput, numberOfMessaggioBehind));
@@ -202,7 +202,7 @@ public class ChatController {
 		}
 	}
 	
-	private ChatGetQuery decideGetQueryType(Integer numberOfMessaggioToGet, Integer currentNumberOfMessaggio,
+	private ChatGetQuery decideGetQueryType(Long numberOfMessaggioToGet, Long currentNumberOfMessaggio,
 			Boolean getAllMessaggio) {
 		if (numberOfMessaggioToGet != null && numberOfMessaggioToGet > 0) return ChatGetQuery.GET_LAST_N_MESSAGGIO;
 		else if (currentNumberOfMessaggio != null && currentNumberOfMessaggio >= 0) return ChatGetQuery.NUMBER_OF_MESSAGGIO_BEHIND;

@@ -16,4 +16,6 @@ public interface DAOItinerario {
     public List<Itinerario> getItinerarioByPuntoIniziale(GeoPoint puntoIniziale) throws WrappedCRUDException;
     public List<Itinerario> getLastNItinerario(int n) throws WrappedCRUDException;
     public List<Itinerario> getLastNItinerarioStartingFrom(long startingFrom, int n) throws WrappedCRUDException;
+    public List<Itinerario> getLastNItinerarioNewerThan(long newestId, int n) throws WrappedCRUDException;
+    public List<Itinerario> getItinerarioByUtenteId(String utenteId) throws WrappedCRUDException;
 }

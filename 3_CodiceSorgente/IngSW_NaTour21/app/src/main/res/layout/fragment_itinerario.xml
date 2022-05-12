@@ -82,28 +82,15 @@
                           android:textSize="20dp"
                           android:paddingLeft="20dp"/>
                   </LinearLayout>
-
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Luogo:"
-                          android:textSize="20dp"
-                          android:textStyle="bold"
-                          android:paddingTop="5dp"
-                          android:textColor="@color/black"
-                          android:drawableLeft="@mipmap/mappa"
-                          android:drawablePadding="5dp"/>
-
                   <LinearLayout
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginLeft="30dp">
+                      android:orientation="horizontal">
 
                       <TextView
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Inizio:"
+                          android:text="Punto Iniziale:"
                           android:textSize="20dp"
                           android:textStyle="bold"
                           android:paddingTop="5dp"
@@ -112,39 +99,15 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
-                          android:id="@+id/inizioItin"
+                          android:id="@+id/puntoInizialeItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Inizio"
+                          android:text="Punto Iniziale"
                           android:textSize="20dp"
                           android:paddingLeft="20dp"/>
+
                   </LinearLayout>
 
-                  <LinearLayout
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginLeft="30dp">
-
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Fine:"
-                          android:textSize="20dp"
-                          android:textStyle="bold"
-                          android:paddingTop="5dp"
-                          android:textColor="@color/black"
-                          android:drawableLeft="@mipmap/fine"
-                          android:drawablePadding="5dp"/>
-
-                      <TextView
-                          android:id="@+id/fineItin"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Fine"
-                          android:textSize="20dp"
-                          android:paddingLeft="20dp"/>
-                  </LinearLayout>
 
                   <LinearLayout
                       android:layout_width="wrap_content"
@@ -154,7 +117,7 @@
                       <TextView
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Tempo:"
+                          android:text="Durata:"
                           android:textSize="20dp"
                           android:textStyle="bold"
                           android:paddingTop="5dp"
@@ -163,10 +126,10 @@
                           android:drawablePadding="5dp"/>
 
                       <TextView
-                          android:id="@+id/tempoItin"
+                          android:id="@+id/durataItin"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Tempo"
+                          android:text="Durata"
                           android:textSize="20dp"
                           android:paddingLeft="20dp"/>
                   </LinearLayout>

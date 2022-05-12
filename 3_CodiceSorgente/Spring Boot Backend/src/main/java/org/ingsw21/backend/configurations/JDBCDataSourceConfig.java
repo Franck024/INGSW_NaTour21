@@ -32,7 +32,7 @@ public class JDBCDataSourceConfig {
 			PASSWORD = "metanismo18";
 			IP = "localhost";
 			PORT = "5432"; 
-			DBNAME = "INGSW21Third";
+			DBNAME = "INGSW21FourthMay";
 			url = "jdbc:postgresql://"+IP+":"+PORT+"/"+DBNAME;
 			DRIVERNAME = "org.postgresql.Driver";
         }

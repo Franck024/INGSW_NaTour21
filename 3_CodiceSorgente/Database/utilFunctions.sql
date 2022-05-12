@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_last_n_messaggio(utenteOneId text, utenteTwoId text, numberOfMessaggioToGet integer)
+CREATE OR REPLACE FUNCTION get_last_n_messaggio(utenteOneId text, utenteTwoId text, numberOfMessaggioToGet bigint)
 RETURNS table
 (id bigint, testo text, ts timestamp with time zone, isUtenteOneSender boolean)
 LANGUAGE plpgsql
@@ -17,6 +17,17 @@ LANGUAGE plpgsql
 AS $$
 	BEGIN
 		RETURN QUERY EXECUTE ('SELECT * FROM Itinerario ORDER BY Itinerario.id DESC LIMIT $1') USING numberOfItinerarioToGet;
+	END
+$$
+
+CREATE OR REPLACE FUNCTION get_last_n_itinerario_newer_than(newestId bigint, numberOfItinerarioToGet integer)
+RETURNS TABLE (id bigint, authorId text, nome text, durata integer, nomePuntoIniziale text,
+difficolta difficoltaItinerario, descrizione text, tracciatoKey text)
+LANGUAGE plpgsql
+AS $$
+	BEGIN
+		RETURN QUERY EXECUTE ('SELECT * FROM Itinerario WHERE Itinerario.id > $1 ORDER BY Itinerario.id DESC LIMIT $2') 
+		USING newestId, numberOfItinerarioToGet;
 	END
 $$
 

@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import org.ingsw21.backend.DAOs.DAOItinerario;
 import org.ingsw21.backend.configurations.JDBCDataSourceConfig;
 import org.ingsw21.backend.entities.Itinerario;
+import org.ingsw21.backend.entities.Utente;
 import org.ingsw21.backend.enums.DifficoltaItinerario;
 import org.ingsw21.backend.exceptions.WrappedCRUDException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,18 @@ public class DAOSQLItinerario implements DAOItinerario {
 	private String insertItinerarioStatement,
 	getItinerarioByIdStatement,
 	getLastNItinerarioStatement, 
-	getLastNItinerarioStartingFromStatement;
+	getLastNItinerarioStartingFromStatement,
+	getLastNItinerarioNewerThanStatement,
+	getItinerarioByUtenteStatement;
 	
 	public DAOSQLItinerario() {
 		insertItinerarioStatement = "INSERT INTO Itinerario VALUES(DEFAULT, ?, ?, ?, ?, ?::difficoltaItinerario, ?, ?)";
 		getItinerarioByIdStatement = "SELECT * FROM Itinerario AS I WHERE I.id = ?";
 		getLastNItinerarioStatement = "SELECT * FROM get_last_n_itinerario(?)";
 		getLastNItinerarioStartingFromStatement = "SELECT * FROM get_last_n_itinerario_starting_from(?, ?)";
+		getLastNItinerarioNewerThanStatement = "SELECT * FROM get_last_n_itinerario_newer_than(?, ?)";
+		getItinerarioByUtenteStatement = "SELECT * FROM Itinerario AS I WHERE I.authorId = ?";
+	
 	}
 	
 	@PostConstruct
@@ -112,6 +118,29 @@ public class DAOSQLItinerario implements DAOItinerario {
 			throw new WrappedCRUDException(dae);
 		}
 	}
+	
+	@Override
+	public List<Itinerario> getItinerarioByUtenteId(String utenteId) throws WrappedCRUDException {
+		try {
+			return jdbcTemplate.query(getItinerarioByUtenteStatement, new ItinerarioMapper(),
+					utenteId);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
+	
+	@Override
+	public List<Itinerario> getLastNItinerarioNewerThan(long newestId, int n) throws WrappedCRUDException {
+		try {
+			return jdbcTemplate.query(getLastNItinerarioNewerThanStatement, new ItinerarioMapper(),
+					newestId,
+					n);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
 
 	@Override
 	public void deleteItinerario(Itinerario itinerario) throws WrappedCRUDException {
@@ -138,6 +167,5 @@ public class DAOSQLItinerario implements DAOItinerario {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 }

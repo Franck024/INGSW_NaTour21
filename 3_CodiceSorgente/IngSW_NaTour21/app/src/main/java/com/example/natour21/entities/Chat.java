@@ -1,10 +1,13 @@
 package com.example.natour21.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Chat {
 
     private String utenteOneId;

@@ -5,6 +5,8 @@ import com.example.natour21.entities.Chat;
 import com.example.natour21.entities.Messaggio;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.WrappedCRUDException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,8 +34,8 @@ public class DAOHTTPChat implements DAOChat {
                 (
                         @Query("utenteOneId") String utenteOneId,
                         @Query("utenteTwoId") String utenteTwoId,
-                        @Query("numberOfMessaggioToGet") Integer numberOfMessaggioToGet,
-                        @Query("currentNumberOfMessaggio") Integer currentNumberOfMessaggio,
+                        @Query("numberOfMessaggioToGet") Long numberOfMessaggioToGet,
+                        @Query("currentNumberOfMessaggio") Long currentNumberOfMessaggio,
                         @Query("getAllMessaggio") Boolean getAllMessaggio
                 );
         @POST("/chat")
@@ -59,9 +61,10 @@ public class DAOHTTPChat implements DAOChat {
     HTTPAPIChat APIChat;
 
     public DAOHTTPChat(String baseUrl){
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                 .build();
         APIChat = retrofit.create(HTTPAPIChat.class);
     }
@@ -126,7 +129,27 @@ public class DAOHTTPChat implements DAOChat {
                                     chat.getUtenteOneId(),
                                     chat.getUtenteTwoId(),
                                     null,
-                                    chat.getNumberOfMessaggio(),
+                                    (long) chat.getNumberOfMessaggio(),
+                                    null
+                            )
+                    .execute();
+            return DAOHTTPUtil.handleResponse(response);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
+    public List<Messaggio> getMissingMessaggio(Chat chat, long localMessaggioNumber) throws WrappedCRUDException{
+        try{
+            Response<List<Messaggio>> response = APIChat
+                    .getMessaggio
+                            (
+                                    chat.getUtenteOneId(),
+                                    chat.getUtenteTwoId(),
+                                    null,
+                                    localMessaggioNumber,
                                     null
                             )
                     .execute();
@@ -157,7 +180,7 @@ public class DAOHTTPChat implements DAOChat {
     }
 
     @Override
-    public List<Messaggio> getLastMessaggio(Chat chat, int n) throws WrappedCRUDException {
+    public List<Messaggio> getLastMessaggio(Chat chat, long n) throws WrappedCRUDException {
         try{
             Response<List<Messaggio>> response = APIChat
                     .getMessaggio
@@ -188,7 +211,7 @@ public class DAOHTTPChat implements DAOChat {
     }
 
     @Override
-    public Messaggio getMessaggioByChatMessaggioPosition(Chat chat, int messagePosition) throws WrappedCRUDException {
+    public Messaggio getMessaggioByChatMessaggioPosition(Chat chat, long messagePosition) throws WrappedCRUDException {
         return null;
     }
 
@@ -203,7 +226,7 @@ public class DAOHTTPChat implements DAOChat {
     }
 
     @Override
-    public List<Messaggio> getMessaggioInRange(Chat chat, int startRange, int endRange) throws WrappedCRUDException {
+    public List<Messaggio> getMessaggioInRange(Chat chat, long startRange, long endRange) throws WrappedCRUDException {
         return null;
     }
 
@@ -213,7 +236,7 @@ public class DAOHTTPChat implements DAOChat {
     }
 
     @Override
-    public int checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, int currentNumberOfMessaggio) throws WrappedCRUDException {
+    public long checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, long currentNumberOfMessaggio) throws WrappedCRUDException {
         return 0;
     }
 

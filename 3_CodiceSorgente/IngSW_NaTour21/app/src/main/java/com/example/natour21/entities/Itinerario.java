@@ -1,30 +1,29 @@
 package com.example.natour21.entities;
 
 import com.example.natour21.enums.DifficoltaItinerario;
+
+
 public class Itinerario {
 
-    public static String getDescrizione;
     private long id;
-    private static String authorId;
-    private static String nome;
-    private static String nomePuntoIniziale;
-    private static int durata;
-    private static DifficoltaItinerario difficoltaItinerario;
-    static String descrizione;
-    private static String tracciatoKey;
-    private static int warning;
+    private String authorId;
+    private String nome;
+    private String nomePuntoIniziale;
+    private int durata;
+    private DifficoltaItinerario difficoltaItinerario;
+    private String descrizione;
+    private String tracciatoKey;
 
     public Itinerario(){}
 
     public Itinerario(long id, String authorId, String nome,
-                      String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario, int warning) {
+                      String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario) {
         this.id = id;
         this.authorId = authorId;
         this.nome = nome;
         this.nomePuntoIniziale = nomePuntoIniziale;
         this.durata = durata;
         this.difficoltaItinerario = difficoltaItinerario;
-        this.warning = warning;
     }
 
     public Itinerario(long id, String authorId, String nome, String nomePuntoIniziale, int durata, DifficoltaItinerario difficoltaItinerario, String descrizione, String tracciatoKey) {
@@ -42,23 +41,23 @@ public class Itinerario {
         return id;
     }
 
-    public static String getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public static String getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public static String getNomePuntoIniziale() {
+    public String getNomePuntoIniziale() {
         return nomePuntoIniziale;
     }
 
-    public static int getDurata() {
+    public int getDurata() {
         return durata;
     }
 
-    public static DifficoltaItinerario getDifficoltaItinerario() {
+    public DifficoltaItinerario getDifficoltaItinerario() {
         return difficoltaItinerario;
     }
 
@@ -74,7 +73,5 @@ public class Itinerario {
         return tracciatoKey;
     }
 
-    public static int getWarning() {
-        return warning;
-    }
+    public String getDurataAsHourMinuteString() { return durata/60 + "h " + durata%60 + "m";}
 }

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutAggiungiItinerario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -57,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
 
     <EditText
-        android:id="@+id/editViewDurataOre"
+        android:id="@+id/editTextDurataOre"
         android:layout_width="40dp"
         android:layout_height="28dp"
         android:layout_marginLeft="5dp"
@@ -76,11 +77,11 @@
         android:layout_marginTop="5dp"
         android:text="Minuti:"
         android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/editViewDurataOre"
+        app:layout_constraintStart_toEndOf="@+id/editTextDurataOre"
         app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
 
     <EditText
-        android:id="@+id/editViewDurataMinuti"
+        android:id="@+id/editTextDurataMinuti"
         android:layout_width="40dp"
         android:layout_height="28dp"
         android:layout_marginLeft="5dp"
@@ -101,10 +102,32 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editViewDurataOre" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDurataOre"/>
 
-    <EditText
-        android:id="@+id/editViewPuntoIniziale"
+    <ProgressBar
+        android:id="@+id/progressBarPuntoIniziale"
+        android:layout_width="21dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="invisible"
+        android:indeterminate="true"
+        app:layout_constraintStart_toEndOf="@+id/textViewPuntoIniziale"
+        app:layout_constraintTop_toTopOf="@+id/textViewPuntoIniziale" />
+
+    <TextView
+        android:id="@+id/textViewPuntoInizialeSubText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:text="Questo campo può essere non indicato se si inserisce un tracciato."
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoIniziale" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteEditTextView"
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:layout_marginLeft="25dp"
@@ -115,7 +138,8 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoIniziale" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoInizialeSubText" />
+
 
     <TextView
         android:id="@+id/textViewDifficolta"
@@ -127,12 +151,12 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editViewPuntoIniziale" />
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteEditTextView" />
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/RB_diff"
+        android:id="@+id/radioGroupDifficolta"
         app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta">
 
         <RadioButton
@@ -171,7 +195,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RB_diff" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupDifficolta" />
 
     <EditText
         android:id="@+id/editTextDescrizione"
@@ -234,7 +258,6 @@
             android:text="Inserimento con file GPX" />
 
     </RadioGroup>
-
 
     <Button
         android:id="@+id/btnIndietro"

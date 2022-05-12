@@ -146,7 +146,7 @@ public class DAOSQLChat implements DAOChat {
 	}
 	
 	@Override
-	public List<Messaggio> getLastMessaggio(Chat chat, int n) throws WrappedCRUDException {
+	public List<Messaggio> getLastMessaggio(Chat chat, long n) throws WrappedCRUDException {
 		try {
 			return jdbcTemplate.query(getLastMessaggioStatement, new MessaggioMapper(),
 					chat.getUtenteOneId(),
@@ -159,11 +159,11 @@ public class DAOSQLChat implements DAOChat {
 	}
 
 	@Override
-	public int checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, int currentNumberOfMessaggio) 
+	public long checkIfChatIsUpToDate(String utenteOneId, String utenteTwoId, long currentNumberOfMessaggio) 
 			throws WrappedCRUDException {
 		try {
 			return currentNumberOfMessaggio - 
-					jdbcTemplate.queryForObject(checkIfChatIsUpToDateStatement, Integer.class, utenteOneId, utenteTwoId);
+					jdbcTemplate.queryForObject(checkIfChatIsUpToDateStatement, Long.class, utenteOneId, utenteTwoId);
 		}
 		catch (DataAccessException dae) {
 			throw new WrappedCRUDException(dae);
@@ -194,7 +194,7 @@ public class DAOSQLChat implements DAOChat {
 	}
 
 	@Override
-	public Messaggio getMessaggioByChatMessaggioPosition(Chat chat, int messagePosition) throws WrappedCRUDException {
+	public Messaggio getMessaggioByChatMessaggioPosition(Chat chat, long messagePosition) throws WrappedCRUDException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -212,7 +212,7 @@ public class DAOSQLChat implements DAOChat {
 	}
 
 	@Override
-	public List<Messaggio> getMessaggioInRange(Chat chat, int startRange, int endRange) throws WrappedCRUDException {
+	public List<Messaggio> getMessaggioInRange(Chat chat, long startRange, long endRange) throws WrappedCRUDException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -221,6 +221,12 @@ public class DAOSQLChat implements DAOChat {
 	public void updateMessaggio(Chat chat, Messaggio messaggio) throws WrappedCRUDException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Messaggio> getMissingMessaggio(Chat chat, long currentNumberOfMessaggio) throws WrappedCRUDException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

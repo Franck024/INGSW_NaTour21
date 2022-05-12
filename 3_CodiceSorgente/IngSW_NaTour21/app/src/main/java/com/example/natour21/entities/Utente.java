@@ -70,4 +70,6 @@ public class Utente {
     public boolean isAdmin() {
         return isAdmin;
     }
+
+    public String getDisplayName() { return (nome + " " + cognome);}
 }

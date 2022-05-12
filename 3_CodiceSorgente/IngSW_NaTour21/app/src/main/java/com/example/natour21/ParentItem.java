@@ -4,27 +4,33 @@ import com.example.natour21.enums.DifficoltaItinerario;
 
 public class ParentItem {
 
-    private String nomePercorso;
+    private long idItinerario;
+    private String nomeItinerario;
     private String difficolta;
     private String durata;
     private String nomePuntoIniziale;
     private String autore;
 
-    public ParentItem(String nomePercorso, DifficoltaItinerario difficolta, int durata,
+    public ParentItem(long idItinerario, String nomeItinerario, DifficoltaItinerario difficolta, int durata,
                       String nomePuntoIniziale, String autore) {
-        this.nomePercorso = nomePercorso;
+        this.idItinerario = idItinerario;
+        this.nomeItinerario = nomeItinerario;
         this.difficolta = difficolta.toString();
         this.durata = intMinutesToHourAndMinutesString(durata);
         this.nomePuntoIniziale = nomePuntoIniziale;
         this.autore = autore;
     }
 
+
     private String intMinutesToHourAndMinutesString(int minutes){
+        if (minutes < 60) return (minutes + "m");
         return (minutes/60 + "h " + minutes%60 + "m");
     }
 
-    public String getNomePercorso() {
-        return nomePercorso;
+    public long getIdItinerario(){ return idItinerario;}
+
+    public String getNomeItinerario() {
+        return nomeItinerario;
     }
 
     public String getDifficolta() {

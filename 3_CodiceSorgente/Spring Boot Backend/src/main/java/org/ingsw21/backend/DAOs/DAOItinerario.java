@@ -3,6 +3,7 @@ package org.ingsw21.backend.DAOs;
 import java.util.List;
 
 import org.ingsw21.backend.entities.Itinerario;
+import org.ingsw21.backend.entities.Utente;
 import org.ingsw21.backend.exceptions.WrappedCRUDException;
 import org.springframework.data.geo.Point;
 
@@ -16,4 +17,6 @@ public interface DAOItinerario {
 	public List<Itinerario> getItinerarioByPuntoIniziale(Point puntoIniziale) throws WrappedCRUDException;
 	public List<Itinerario> getLastNItinerario(int n) throws WrappedCRUDException;
 	public List<Itinerario> getLastNItinerarioStartingFrom(long startingFrom, int n) throws WrappedCRUDException;
+	public List<Itinerario> getLastNItinerarioNewerThan(long newestId, int n) throws WrappedCRUDException;
+	public List<Itinerario> getItinerarioByUtenteId(String utenteId) throws WrappedCRUDException;
 }

@@ -2,6 +2,7 @@ package com.example.natour21.DAOHTTP;
 
 import com.example.natour21.DAOs.DAOItinerario;
 import com.example.natour21.entities.Itinerario;
+import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.WrappedCRUDException;
 
 import org.osmdroid.util.GeoPoint;
@@ -9,6 +10,8 @@ import org.osmdroid.util.GeoPoint;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -29,7 +32,9 @@ public class DAOHTTPItinerario implements DAOItinerario {
                 (
                     @Query("id") Long id,
                     @Query("numberToGet") Integer numberToGet,
-                    @Query("idToStartFrom") Long idToStartFrom
+                    @Query("idToStartFrom") Long idToStartFrom,
+                    @Query("newestId") Long newestId,
+                    @Query("utenteId") String utenteId
                 );
     }
 
@@ -60,7 +65,7 @@ public class DAOHTTPItinerario implements DAOItinerario {
     public Itinerario getItinerarioById(long idItinerario) throws WrappedCRUDException {
         try{
             Response<List<Itinerario>> response = APIItinerario
-                    .getItinerario(idItinerario, null, null)
+                    .getItinerario(idItinerario, null, null, null, null)
                     .execute();
             List<Itinerario> listItinerario = DAOHTTPUtil.handleResponse(response);
             if (listItinerario.isEmpty()) return null;
@@ -75,7 +80,7 @@ public class DAOHTTPItinerario implements DAOItinerario {
     public List<Itinerario> getLastNItinerario(int n) throws WrappedCRUDException {
         try{
             Response<List<Itinerario>> response = APIItinerario
-                    .getItinerario(null, n, null)
+                    .getItinerario(null, n, null, null, null)
                     .execute();
             return DAOHTTPUtil.handleResponse(response);
         }
@@ -88,7 +93,33 @@ public class DAOHTTPItinerario implements DAOItinerario {
     public List<Itinerario> getLastNItinerarioStartingFrom(long startingFrom, int n) throws WrappedCRUDException {
         try{
             Response<List<Itinerario>> response = APIItinerario
-                    .getItinerario(null, n, startingFrom)
+                    .getItinerario(null, n, startingFrom, null, null)
+                    .execute();
+            return DAOHTTPUtil.handleResponse(response);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
+    public List<Itinerario> getLastNItinerarioNewerThan(long newestId, int n) throws WrappedCRUDException {
+        try{
+            Response<List<Itinerario>> response = APIItinerario
+                    .getItinerario(null, n, null, newestId, null)
+                    .execute();
+            return DAOHTTPUtil.handleResponse(response);
+        }
+        catch (IOException ioe){
+            throw new WrappedCRUDException(ioe);
+        }
+    }
+
+    @Override
+    public List<Itinerario> getItinerarioByUtenteId(String utenteId) throws WrappedCRUDException {
+        try{
+            Response<List<Itinerario>> response = APIItinerario
+                    .getItinerario(null, null, null, null, utenteId)
                     .execute();
             return DAOHTTPUtil.handleResponse(response);
         }

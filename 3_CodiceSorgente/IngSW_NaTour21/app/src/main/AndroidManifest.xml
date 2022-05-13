@@ -61,6 +61,7 @@
         <activity android:name=".controller.Controller_ChatUtente"/>
         <activity android:name=".SkipLoginController" />
         <activity android:name=".controller.SettingsActivity"/>
+        <activity android:name=".controller.Controller_Ricerca"/>
     </application>
 
 </manifest>

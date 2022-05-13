@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.natour21.controller.ControllerAddItin;
-import com.example.natour21.controller.Controller_itinerario;
-import com.example.natour21.map.MapActivity;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         Intent page1;
 
         page1 = new Intent(MainActivity.this, SkipLoginController.class);
-
         startActivity(page1);
 
 

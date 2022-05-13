@@ -27,6 +27,8 @@ import com.example.natour21.entities.Itinerario;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -38,16 +40,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Controller_Utente extends AppCompatActivity implements java.util.Observer {
     private Button playlist, foto;
-    private ImageButton btnStartChat, btnAddItin, btnSettings;
-    private TextView home, messaggi;
+    private ImageButton btnStartChat, btnAddItin, btnSettings, btnRicerca,
+            messaggi, home;
     private RecyclerView RVutente;
-
+    private ArrayList<ParentItem> parentItemArrayList;
+    private Animation btn_menu = null;
     private DAOItinerario DAOItinerario;
     private DAOUtente DAOUtente;
     private String PROFILE_UTENTE_ID;
     private String PROFILE_UTENTE_DISPLAY_NAME;
+    private BadgeDrawable badgeDrawableUnreadMessaggi;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UnsafeOptInUsageError"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_profile);
@@ -71,30 +75,27 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
 
         String CURRENT_USER_ID = UserSessionManager.getInstance().getUserId();
 
-        home = findViewById(R.id.textViewHome);
-        playlist = findViewById(R.id.btnPlaylist);
-        foto = findViewById(R.id.btnFoto);
-        messaggi = findViewById(R.id.textViewMessaggi);
-        btnAddItin = findViewById(R.id.btn_add_itin2);
-        Observable.just(UserStompClient.getInstance().getUnreadMessageCountBlocking())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> messaggi.setText("Messaggi" +
-                        (result > 1
-                        ? "(" + result + ")"
-                        : ""
-                        )
-                    )
-                );
-
-        btnStartChat = findViewById(R.id.btn_startChat);
-        btnSettings = findViewById(R.id.btnSettings);
-
         if (CURRENT_USER_ID.equals(UserSessionManager.getInstance().getUserId())){
             btnStartChat.setVisibility(View.GONE);
         }
         else{
-            ((LinearLayout) findViewById(R.id.mainToolbarLayout)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.constraintLayoutBottomToolbar)).setVisibility(View.GONE);
+            badgeDrawableUnreadMessaggi = BadgeDrawable.create(getBaseContext());
+            badgeDrawableUnreadMessaggi.setMaxCharacterCount(2);
+            badgeDrawableUnreadMessaggi.setVisible(false);
+            BadgeUtils.attachBadgeDrawable(badgeDrawableUnreadMessaggi, messaggi);
+            Observable.just(UserStompClient.getInstance().getUnreadMessageCountBlocking())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                        if (result < 1) {
+                            badgeDrawableUnreadMessaggi.setVisible(false);
+                            return;
+                        }
+                        badgeDrawableUnreadMessaggi.setNumber
+                                ((result < 100) ? Math.toIntExact(result) : 100);
+                        badgeDrawableUnreadMessaggi.setVisible(true);
+                    });
             btnStartChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -105,12 +106,55 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
                 }
             });
         }
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
-            }
+
+        playlist = findViewById(R.id.btnPlaylist);
+        foto = findViewById(R.id.btnFoto);
+        btnAddItin = findViewById(R.id.btn_add_itin2);
+        btnStartChat = findViewById(R.id.btn_startChat);
+        btnSettings = findViewById(R.id.btnSettings);
+
+
+        /// Click post
+        PostAdapter postAdapter = new PostAdapter(this,parentItemArrayList);
+        RVutente.setAdapter(postAdapter);
+        RVutente.setLayoutManager(new LinearLayoutManager(this));
+
+        home = findViewById(R.id.btn_home);
+        messaggi = findViewById(R.id.btnMessaggi);
+        btnRicerca = findViewById(R.id.btnRicerca);
+        playlist = findViewById(R.id.btnPlaylist);
+        foto = findViewById(R.id.btnFoto);
+
+
+        home.setOnClickListener(view -> {
+            home.animate().rotationY(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
+                        }
+                    });
         });
+
+        messaggi.setOnClickListener(v -> {
+            messaggi.animate().rotationY(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
+                        }
+                    });
+        });
+
+        btnRicerca.setOnClickListener(view -> {
+            btnRicerca.animate().rotationY(360).withEndAction(() -> startActivity(new Intent
+                    (Controller_Utente.this, Controller_Ricerca.class)));
+        });
+
 
         playlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,13 +171,6 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
                 Toast.makeText(Controller_Utente.this,
                         "La raccolta foto sarà implementata in un futuro aggiornamento !",
                         Toast.LENGTH_LONG).show();
-            }
-        });
-
-        messaggi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
             }
         });
 
@@ -196,11 +233,16 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
     public void update(java.util.Observable observable, Object o) {
         if (!(o instanceof Long)) return;
         if ((Long) o < 1 ) return;
-        runOnUiThread(() -> messaggi.setText("Messaggi" +
-                ( (Long) o > 1
-                        ? "(" + o + ")"
-                        : ""
-                )));
+        Long count = (Long) o;
+        runOnUiThread(() -> {
+            if (count < 1){
+                badgeDrawableUnreadMessaggi.setVisible(false);
+                return;
+            }
+            badgeDrawableUnreadMessaggi.setNumber
+                    ((count < 100) ? Math.toIntExact(count) : 100);
+            badgeDrawableUnreadMessaggi.setVisible(true);
+        });
     }
 
     @Override

@@ -1,14 +1,12 @@
 package com.example.natour21.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +26,8 @@ import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.exceptions.WrappedCRUDException;
 import com.example.natour21.sharedprefs.UserSessionManager;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,19 +39,19 @@ import java.util.concurrent.Callable;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.http.POST;
 
 public class Controller_Home extends AppCompatActivity implements java.util.Observer {
 
-    private ImageButton add_itin, btnSettings;
+    private ImageButton add_itin, btnSettings, btn_utente,btn_home, btnRicerca, btn_mess;
     private Animation anim_btn = null, anim_txtview = null;
-    private TextView profilo, messaggi;
+    private Animation btn_menu = null;
     private final int POSTS_PER_REFRESH = 10;
     private DAOItinerario DAOItinerario;
     private DAOUtente DAOUtente;
     private boolean isNotPullRefresh = false;
     private boolean isUpdating = false;
     SwipeRefreshLayout refreshLayout;
+    private BadgeDrawable badgeDrawableUnreadMessaggi;
 
     PostAdapter feedPostAdapter;
     RecyclerView RVparent;
@@ -71,23 +71,26 @@ public class Controller_Home extends AppCompatActivity implements java.util.Obse
     private long oldestLoadedPostId = 0;
     private long newestLoadedPostId = 0;
 
+    @SuppressLint("UnsafeOptInUsageError")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
+
         UserStompClient.getInstance().addObserver(this);
 
         add_itin = findViewById(R.id.btn_add_itin2);
         btnSettings = findViewById(R.id.btnSettings);
+        btn_home = findViewById(R.id.btn_home);
+        btn_utente = findViewById(R.id.btn_utente);
+        btnRicerca = findViewById(R.id.btnRicerca);
+        btn_mess = findViewById(R.id.btnMessaggi);
 
-        anim_btn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_bottone);
-        anim_txtview = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_textview);
+        btn_menu = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.btn_menu);
 
-        add_itin.setOnClickListener(v -> {
-            add_itin.startAnimation(anim_btn);
-            startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
-        });
+
+
 
         btnSettings.setOnClickListener(view -> {
             startActivity(new Intent(Controller_Home.this, SettingsActivity.class));
@@ -131,19 +134,13 @@ public class Controller_Home extends AppCompatActivity implements java.util.Obse
                 }
             }
         });
+
+        badgeDrawableUnreadMessaggi = BadgeDrawable.create(getBaseContext());
+        badgeDrawableUnreadMessaggi.setMaxCharacterCount(2);
+        badgeDrawableUnreadMessaggi.setVisible(false);
+        BadgeUtils.attachBadgeDrawable(badgeDrawableUnreadMessaggi, btn_mess);
+
         ///END
-
-        profilo = findViewById(R.id.textViewUtente);
-        profilo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent profileIntent = new Intent(Controller_Home.this, Controller_Utente.class);
-                profileIntent.putExtra("USER_ID", UserSessionManager.getInstance().getUserId());
-                startActivity(profileIntent);
-            }
-        });
-
-        messaggi = findViewById(R.id.textViewMessaggi);
 
         Callable<Long> getUnreadMessageCountCallable = () ->
             UserStompClient.getInstance().getUnreadMessageCountBlocking();
@@ -152,15 +149,72 @@ public class Controller_Home extends AppCompatActivity implements java.util.Obse
         Observable.fromCallable(getUnreadMessageCountCallable)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> messaggi.setText(messaggi.getText() + "(" + result +")"));
+                .subscribe(result -> {
 
-        messaggi.setOnClickListener(new View.OnClickListener() {
+                    if (result < 1) {
+                        badgeDrawableUnreadMessaggi.setVisible(false);
+                        return;
+                    }
+                    badgeDrawableUnreadMessaggi.setNumber
+                            ((result < 100) ? Math.toIntExact(result) : 100);
+                    badgeDrawableUnreadMessaggi.setVisible(true);
+                });
+        add_itin.setOnClickListener(v -> {
+            add_itin.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Home.this, ControllerAddItin.class));
+                        }
+                    });
+        });
+
+        btn_mess.setOnClickListener(v -> {
+            btn_mess.animate().rotation(360).withEndAction(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            startActivity(new Intent(Controller_Home.this, Controller_listChat.class));
+                        }
+                    });
+        });
+
+
+        btn_utente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Controller_Home.this, Controller_listChat.class));
+                btn_utente.animate().rotationY(360).withEndAction(
+                        new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Intent profileIntent = new Intent(Controller_Home.this, Controller_Utente.class);
+                                profileIntent.putExtra("USER_ID", UserSessionManager.getInstance().getUserId());
+                                startActivity(profileIntent);
+                            }
+                        });
             }
         });
 
+        btnRicerca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnRicerca.animate().rotationY(360).withEndAction(
+                        new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                startActivity(new Intent(Controller_Home.this, Controller_Ricerca.class));
+                            }
+                        });
+            }
+        });
     }
 
     private void onUpdateError(Throwable throwable, UpdateType updateType){
@@ -248,8 +302,17 @@ public class Controller_Home extends AppCompatActivity implements java.util.Obse
     @Override
     public void update(java.util.Observable observable, Object o) {
         if (!(o instanceof Long)) return;
-        if ((Long) o < 1 ) return;
-        runOnUiThread(() -> messaggi.setText("Messaggi " + " (" + o + ")"));
+        if (badgeDrawableUnreadMessaggi == null) return;
+        Long count = (Long) o;
+        runOnUiThread(() -> {
+            if (count < 1){
+                badgeDrawableUnreadMessaggi.setVisible(false);
+                return;
+            }
+            badgeDrawableUnreadMessaggi.setNumber
+                    ((count < 100) ? Math.toIntExact(count) : 100);
+            badgeDrawableUnreadMessaggi.setVisible(true);
+        });
     }
 
     private boolean getNewerPosts(List<ParentItem> list) throws WrappedCRUDException{

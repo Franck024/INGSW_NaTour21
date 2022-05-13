@@ -30,6 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Controller_itinerario extends AppCompatActivity {
 
+
     private DAOItinerario DAOItinerario;
     private DAOSegnalazione DAOSegnalazione;
     private com.example.natour21.DAOs.DAOUtente DAOUtente;
@@ -46,13 +47,11 @@ public class Controller_itinerario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_itinerario);
-
-        try{
+        try {
             DAOItinerario = DAOFactory.getDAOItinerario();
             DAOSegnalazione = DAOFactory.getDAOSegnalazione();
             DAOUtente = DAOFactory.getDAOUtente();
-        }
-        catch (InvalidConnectionSettingsException icse){
+        } catch (InvalidConnectionSettingsException icse) {
             //
         }
 
@@ -74,7 +73,7 @@ public class Controller_itinerario extends AppCompatActivity {
         btnSegnalazione = findViewById(R.id.segnala);
 
 
-        Callable<Void>  queryCallable = () -> {
+        Callable<Void> queryCallable = () -> {
             itinerario = DAOItinerario.getItinerarioById(idItinerario);
             segnalazioni = DAOSegnalazione.getSegnalazioneByItinerario(itinerario);
             utenteAuthor = DAOUtente.getUtenteByEmail(itinerario.getAuthorId());
@@ -116,8 +115,9 @@ public class Controller_itinerario extends AppCompatActivity {
             }
         });
 
-
     }
+
+
 
     private void showErrorMessage(String s){
         Log.e("ITINERARIO", s);

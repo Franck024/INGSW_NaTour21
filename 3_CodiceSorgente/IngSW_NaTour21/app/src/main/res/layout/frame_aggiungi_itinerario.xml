@@ -217,47 +217,58 @@
         android:id="@+id/textViewTracciato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
         android:text="Tracciato (opzionale)"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
 
-    <RadioGroup
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/radioBtnGroupTracciato"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTracciato">
 
-        <RadioButton
-            android:id="@+id/radioBtnNonInserire"
+        <RadioGroup
+            android:id="@+id/radioBtnGroupTracciato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="5dp"
-            android:checked="true"
-            android:text="Non voglio inserire un tracciato" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radioBtnMappa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="25dp"
-            android:text="Inserimento con mappa"/>
+            <RadioButton
+                android:id="@+id/radioBtnNonInserire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:checked="true"
+                android:text="Non voglio inserire un tracciato" />
 
-        <RadioButton
-            android:id="@+id/radioBtnGPX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="25dp"
-            android:text="Inserimento con file GPX" />
+            <RadioButton
+                android:id="@+id/radioBtnMappa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:text="Inserimento con mappa" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioBtnGPX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:text="Inserimento con file GPX" />
+
+        </RadioGroup>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btnIndietro"
@@ -269,7 +280,6 @@
         android:backgroundTint="@color/red"
         android:text="INDIETRO"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnGroupTracciato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -283,7 +293,6 @@
         android:backgroundTint="@color/green"
         android:text="PROSSIMO"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnGroupTracciato"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

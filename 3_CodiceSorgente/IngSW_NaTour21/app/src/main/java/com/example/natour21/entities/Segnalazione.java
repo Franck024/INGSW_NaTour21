@@ -1,11 +1,15 @@
 package com.example.natour21.entities;
 
+import com.example.natour21.enums.DifficoltaItinerario;
+
 public class Segnalazione {
 
     private String authorId;
     private long itinerarioId;
     private String titolo;
     private String descrizione;
+    private int durata;
+    private DifficoltaItinerario difficolta;
 
     public Segnalazione(){}
 
@@ -41,5 +45,13 @@ public class Segnalazione {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
+
+    public int getDurata() { return durata; }
+
+    public void setDurata(int durata) { this.durata = durata; }
+
+    public DifficoltaItinerario getDifficolta() { return difficolta; }
+
+    public void setDifficolta(DifficoltaItinerario difficolta) { this.difficolta = difficolta; }
 }
 

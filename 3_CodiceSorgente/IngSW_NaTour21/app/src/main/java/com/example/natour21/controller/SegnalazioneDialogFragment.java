@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import com.example.natour21.exceptions.WrappedCRUDException;
 
 public class SegnalazioneDialogFragment extends DialogFragment {
 
-    EditText editTextTitolo, editTextDescrizione;
+    EditText editTextTitolo, editTextDescrizione, editTextAggDurataOre, editTextAggDurataMinuti;
     long idItinerario;
     String segnalazioneAuthorId;
 
@@ -64,11 +65,39 @@ public class SegnalazioneDialogFragment extends DialogFragment {
     }
 
     private void insertSegnalazione() throws InvalidConnectionSettingsException, WrappedCRUDException {
-        DAOSegnalazione DAOSegnalazione = DAOFactory.getDAOSegnalazione();
-        Segnalazione segnalazione = new Segnalazione(segnalazioneAuthorId,
-                idItinerario,
-                editTextTitolo.getText().toString(),
-                editTextDescrizione.getText().toString());
-        DAOSegnalazione.insertSegnalazione(segnalazione);
+        if(controlloCampi() == true ) {
+            DAOSegnalazione DAOSegnalazione = DAOFactory.getDAOSegnalazione();
+            if(!editTextAggDurataMinuti.getText().toString().isEmpty() &&
+                    !editTextAggDurataOre.getText().toString().isEmpty()){
+
+              /*  Segnalazione segnalazione = new Segnalazione(segnalazioneAuthorId,
+                        idItinerario,
+                        editTextTitolo.getText().toString(),
+                        editTextDescrizione.getText().toString());
+                        editTextAggDurataOre.getText().toString();
+                        editTextAggDurataMinuti.getText().toString();
+                DAOSegnalazione.insertSegnalazione(segnalazione);  */
+            }else{
+                Segnalazione segnalazione = new Segnalazione(segnalazioneAuthorId,
+                        idItinerario,
+                        editTextTitolo.getText().toString(),
+                        editTextDescrizione.getText().toString());
+                DAOSegnalazione.insertSegnalazione(segnalazione);
+            }
+        }
+    }
+
+    private boolean controlloCampi(){
+        if (editTextTitolo.getText().toString().isEmpty()) {
+            editTextTitolo.setError("Campo obbligatorio.");
+            editTextTitolo.requestFocus();
+            return false;
+        }
+        if (editTextDescrizione.getText().toString().isEmpty()) {
+            editTextDescrizione.setError("Campo obbligatorio.");
+            editTextDescrizione.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

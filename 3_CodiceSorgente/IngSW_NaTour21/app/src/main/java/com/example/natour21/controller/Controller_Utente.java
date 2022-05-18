@@ -11,11 +11,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOItinerario;
 import com.example.natour21.DAOs.DAOUtente;
@@ -29,16 +27,16 @@ import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class Controller_Utente extends AppCompatActivity implements java.util.Observer {
+    public static int valore_utente = -1; // 0--> Profilo;  1--> Utente post
+
     private Button playlist, foto;
     private ImageButton btnStartChat, btnAddItin, btnSettings, btnRicerca,
             messaggi, home;
@@ -125,6 +123,11 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
         playlist = findViewById(R.id.btnPlaylist);
         foto = findViewById(R.id.btnFoto);
 
+
+        if(valore_utente == 1){
+            btnStartChat.setVisibility(View.VISIBLE);
+            btnAddItin.setVisibility(View.INVISIBLE);
+        }
 
         home.setOnClickListener(view -> {
             home.animate().rotationY(360).withEndAction(

@@ -29,7 +29,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Controller_itinerario extends AppCompatActivity {
-
+    public static final int val_utente = 1; // 0--> Profilo;  1--> Utente post
 
     private DAOItinerario DAOItinerario;
     private DAOSegnalazione DAOSegnalazione;
@@ -104,6 +104,14 @@ public class Controller_itinerario extends AppCompatActivity {
                         }
                         , error -> showErrorMessage(error.getMessage()));
 
+
+        textViewNomeUtente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controller_Utente.valore_utente = val_utente; //Si vuole vedere il profilo dell'utente del post
+                startActivity(new Intent(Controller_itinerario.this, Controller_Utente.class));
+            }
+        });
 
         btnSegnalazione.setOnClickListener(new View.OnClickListener() {
             @Override

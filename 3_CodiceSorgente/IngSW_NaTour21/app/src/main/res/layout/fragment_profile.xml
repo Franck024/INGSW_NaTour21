@@ -18,7 +18,7 @@
             android:layout_height="?actionBarSize"
             android:background="@color/lightgrey"
             android:orientation="horizontal"
-            android:paddingStart="10dp"
+            android:paddingStart="0dp"
             android:paddingEnd="15dp"
             tools:ignore="MissingConstraints"
             android:weightSum="1">
@@ -68,6 +68,7 @@
             android:id="@+id/btn_startChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
             android:layout_marginRight="20dp"
@@ -105,20 +106,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnPost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Post"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/btn_white_bord"
-                android:backgroundTint="#CDFFA0"
-                android:drawableLeft="@mipmap/mappa"
-                android:drawablePadding="8dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
 
             <Button
                 android:id="@+id/btnFoto"

@@ -37,7 +37,8 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:orientation="vertical"
-                    android:src="@mipmap/paesaggio" />
+                    android:src="@mipmap/paesaggio"
+                    card_view:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -51,8 +52,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Nome percorso"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        card_view:ignore="HardcodedText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -66,17 +68,19 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:text="Da:"
-                            android:textSize="15dp" />
+                            android:textSize="15sp"
+                            card_view:ignore="HardcodedText" />
 
                         <TextView
                             android:id="@+id/txtUtentePost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
+                            android:paddingStart="5dp"
                             android:text="Nome utente"
                             android:textColor="@color/blue"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            card_view:ignore="HardcodedText,RtlSymmetry" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -86,12 +90,13 @@
                 android:id="@+id/tvqty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:text=">"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textSize="30sp"
+                android:textStyle="bold"
+                card_view:ignore="HardcodedText" />
 
         </RelativeLayout>
 
@@ -113,15 +118,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Difficoltà: "
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    card_view:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txtViewRisultatoDifficolta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ValoreDifficoltà: "
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    card_view:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,15 +142,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Area: "
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    card_view:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txtViewRisultatoArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ValoreArea "
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    card_view:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -158,15 +167,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tempo: "
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    card_view:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txtViewRisultatoTempo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ValoreTempo "
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    card_view:ignore="HardcodedText" />
 
             </LinearLayout>
 

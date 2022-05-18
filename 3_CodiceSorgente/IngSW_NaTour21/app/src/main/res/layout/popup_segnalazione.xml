@@ -1,6 +1,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -10,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Titolo Segnalazione"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextTitolo"
@@ -29,19 +31,21 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitolo" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitolo"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/textViewDescrizione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descrizione"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitolo"/>
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitolo"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextDescrizione"
@@ -57,7 +61,8 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/textViewAggDiff"
@@ -65,11 +70,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Aggiorna difficoltà (opzionale)"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione"
+        tools:ignore="HardcodedText" />
 
     <RadioGroup
         android:id="@+id/radioAggDiff"
@@ -85,27 +91,30 @@
             android:id="@+id/radioBtnAggFacile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:checked="true"
-            android:text="Facile" />
+            android:text="Facile"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/radioBtnAggMedia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:text="Medio" />
+            android:text="Medio"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/radioBtnAggDifficile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="25dp"
-            android:text="Difficile" />
+            android:layout_marginEnd="25dp"
+            android:text="Difficile"
+            tools:ignore="HardcodedText" />
     </RadioGroup>
 
     <TextView
@@ -114,55 +123,60 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Aggiorna tempo (opzionale)"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioAggDiff" />
+        app:layout_constraintTop_toBottomOf="@+id/radioAggDiff"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textViewAggDurataOre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:text="Ore:"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextAggDurataOre"
         android:layout_width="40dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/btn_white_bord"
         android:inputType="number"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/textViewAggDurataOre"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"></EditText>
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"
+        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
     <TextView
         android:id="@+id/textViewAggDurataMinuti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:text="Minuti:"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/editTextAggDurataOre"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextAggDurataMinuti"
         android:layout_width="40dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/btn_white_bord"
         android:inputType="number"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/textViewAggDurataMinuti"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"></EditText>
+        app:layout_constraintTop_toBottomOf="@+id/textViewAggTempo"
+        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 </androidx.constraintlayout.widget.ConstraintLayout>

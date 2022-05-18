@@ -34,7 +34,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textViewNaTour"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textViewNaTour"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="60dp"
                 android:text="NaTour"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +54,7 @@
                 android:id="@+id/btn_add_itin2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/btn_sfera_grigia"
                 android:backgroundTint="@color/light_green"
                 android:paddingVertical="10dp"
@@ -62,7 +63,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textViewNaTour"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -110,7 +112,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_utente"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="UseAppTint" />
+                tools:ignore="ContentDescription,UseAppTint" />
 
             <ImageButton
                 android:id="@+id/btn_utente"
@@ -124,7 +126,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintEnd_toStartOf="@id/btnMessaggi"
                 app:layout_constraintStart_toEndOf="@id/btn_home"
-                app:layout_constraintTop_toTopOf="@+id/view" />
+                app:layout_constraintTop_toTopOf="@+id/view"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/btnMessaggi"
@@ -137,7 +140,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_utente"
                 app:layout_constraintEnd_toStartOf="@id/btnRicerca"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/btnRicerca"
@@ -150,7 +154,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnMessaggi"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

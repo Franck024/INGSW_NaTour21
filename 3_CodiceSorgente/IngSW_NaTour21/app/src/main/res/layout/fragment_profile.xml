@@ -34,7 +34,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textViewNaTour"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textViewNaTour"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="60dp"
                 android:text="NaTour"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +54,7 @@
                 android:id="@+id/btn_add_itin2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/btn_sfera_grigia"
                 android:backgroundTint="@color/light_green"
                 android:paddingVertical="10dp"
@@ -62,7 +63,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/textViewNaTour"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <ImageButton
             android:id="@+id/btn_startChat"
@@ -71,18 +73,20 @@
             android:visibility="invisible"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/silver"
             android:layout_gravity="end"
             android:src="@mipmap/message"
-            android:background="@drawable/btn_sfera_grigia"/>
+            android:background="@drawable/btn_sfera_grigia"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="-30dp"
-            android:src="@mipmap/user_menu2" />
+            android:src="@mipmap/user_menu2"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/txtNomeUtente"
@@ -90,8 +94,9 @@
             android:layout_height="wrap_content"
             android:text="Nome Utente"
             android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
 
 
@@ -114,25 +119,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Foto"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:backgroundTint="@color/azzurro"
                 android:background="@drawable/btn_white_bord"
                 android:drawablePadding="8dp"
-                android:drawableLeft="@mipmap/photo"
+                android:drawableStart="@mipmap/photo"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                tools:ignore="ButtonStyle,HardcodedText" />
             <Button
                 android:id="@+id/btnPlaylist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Playlist"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/btn_white_bord"
                 android:backgroundTint="@color/sabbia2"
-                android:drawableLeft="@mipmap/playlist"
+                android:drawableStart="@mipmap/playlist"
                 android:drawablePadding="8dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                tools:ignore="ButtonStyle,HardcodedText" />
 
 
         </LinearLayout>
@@ -153,9 +160,10 @@
                 android:text="Post"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="25dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="10dp"/>
+                android:textSize="25sp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
@@ -168,7 +176,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:paddingLeft="20dp"/>
+                android:paddingStart="20dp"
+                tools:ignore="RtlSymmetry" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -200,7 +209,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_utente"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/btn_utente"
@@ -215,7 +225,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintEnd_toStartOf="@id/btnMessaggi"
                 app:layout_constraintStart_toEndOf="@id/btn_home"
-                app:layout_constraintTop_toTopOf="@+id/view" />
+                app:layout_constraintTop_toTopOf="@+id/view"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/btnMessaggi"
@@ -228,7 +239,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_utente"
                 app:layout_constraintEnd_toStartOf="@id/btnRicerca"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:id="@+id/btnRicerca"
@@ -241,7 +253,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnMessaggi"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

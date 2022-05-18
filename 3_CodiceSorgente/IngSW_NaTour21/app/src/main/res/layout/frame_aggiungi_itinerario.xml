@@ -11,10 +11,10 @@
         android:id="@+id/textViewNomeItinerario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:text="Nome percorso"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,22 +26,23 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:background="@drawable/btn_white_bord"
         android:inputType="textPersonName"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNomeItinerario" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeItinerario"
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/textViewDurata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:text="Durata"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
@@ -50,10 +51,10 @@
         android:id="@+id/textViewDurataOre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:text="Ore:"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
 
@@ -61,22 +62,23 @@
         android:id="@+id/editTextDurataOre"
         android:layout_width="40dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:background="@drawable/btn_white_bord"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/textViewDurataOre"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"
+        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
     <TextView
         android:id="@+id/textViewDurataMinuti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:text="Minuti:"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/editTextDurataOre"
         app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
 
@@ -84,22 +86,23 @@
         android:id="@+id/editTextDurataMinuti"
         android:layout_width="40dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:background="@drawable/btn_white_bord"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/textViewDurataMinuti"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"
+        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
     <TextView
         android:id="@+id/textViewPuntoIniziale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:text="Punto di inizio"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDurataOre"/>
@@ -120,9 +123,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:text="Questo campo può essere non indicato se si inserisce un tracciato."
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPuntoIniziale" />
 
@@ -133,22 +136,23 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:background="@drawable/btn_white_bord"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoInizialeSubText" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoInizialeSubText"
+        tools:ignore="LabelFor,RtlSymmetry" />
 
 
     <TextView
         android:id="@+id/textViewDifficolta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:text="Difficoltà"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autoCompleteEditTextView" />
@@ -164,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:text="Facile"
             android:checked="true"/>
 
@@ -174,25 +178,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Medio"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <RadioButton
             android:id="@+id/radioBtnDifficile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
             android:text="Difficile"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginStart="20dp" />
     </RadioGroup>
     <TextView
         android:id="@+id/textViewDescrizione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descrizione (opzionale)"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupDifficolta" />
@@ -204,23 +208,24 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="25dp"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:gravity="top"
         android:background="@drawable/btn_white_bord"
         android:inputType="textMultiLine"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione"
+        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
     <TextView
         android:id="@+id/textViewTracciato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:text="Tracciato (opzionale)"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione" />
@@ -239,13 +244,14 @@
             android:id="@+id/radioBtnGroupTracciato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <RadioButton
                 android:id="@+id/radioBtnNonInserire"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:checked="true"
                 android:text="Non voglio inserire un tracciato" />
@@ -254,7 +260,7 @@
                 android:id="@+id/radioBtnMappa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="0dp"
                 android:text="Inserimento con mappa" />
 
@@ -262,7 +268,7 @@
                 android:id="@+id/radioBtnGPX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="0dp"
                 android:text="Inserimento con file GPX" />
 
@@ -274,7 +280,7 @@
         android:id="@+id/btnIndietro"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/btn_white_bord"
         android:backgroundTint="@color/red"
@@ -287,7 +293,7 @@
         android:id="@+id/btnProssimo"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/btn_white_bord"
         android:backgroundTint="@color/green"

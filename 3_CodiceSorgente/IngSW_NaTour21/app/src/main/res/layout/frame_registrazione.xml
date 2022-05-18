@@ -12,14 +12,15 @@ android:background="@mipmap/bckgr_reg">
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:text="Creazione nuovo account"
         android:textAlignment="viewStart"
         android:textColor="@color/green"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
 <EditText
     android:id="@+id/editTextNome"
@@ -32,12 +33,13 @@ android:background="@mipmap/bckgr_reg">
     android:ems="10"
     android:hint="Nome"
     android:inputType="textPersonName"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:visibility="visible"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="@+id/textViewCreateAccount"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
 
 <EditText
     android:id="@+id/editTextCognome"
@@ -46,7 +48,7 @@ android:background="@mipmap/bckgr_reg">
     android:layout_marginTop="5dp"
     android:layout_marginLeft="25dp"
     android:layout_marginRight="25dp"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:background="@drawable/vie_bg"
     android:ems="10"
     android:hint="Cognome"
@@ -55,7 +57,8 @@ android:background="@mipmap/bckgr_reg">
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextNome"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
 
 <EditText
     android:id="@+id/editTextEmail"
@@ -68,12 +71,14 @@ android:background="@mipmap/bckgr_reg">
     android:ems="10"
     android:hint="Email"
     android:inputType="textEmailAddress"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:visibility="visible"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextCognome"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="HardcodedText,RtlSymmetry"
+    android:autofillHints="emailAddress" />
 
 
 
@@ -87,13 +92,14 @@ android:background="@mipmap/bckgr_reg">
     android:background="@drawable/vie_bg"
     android:ems="10"
     android:hint="Cellulare (Facoltativo)"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:inputType="phone"
     android:visibility="visible"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="Autofill,HardcodedText,RtlSymmetry"/>
 
 <EditText
     android:id="@+id/editTextCity"
@@ -105,13 +111,14 @@ android:background="@mipmap/bckgr_reg">
     android:background="@drawable/vie_bg"
     android:ems="10"
     android:hint="Città (Facoltativo)"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:inputType="text"
     android:visibility="visible"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
 
 <TextView
     android:id="@+id/textViewPasswordRules"
@@ -131,7 +138,8 @@ android:background="@mipmap/bckgr_reg">
     android:textColor="@color/black"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+    app:layout_constraintTop_toBottomOf="@+id/editTextCity"
+    tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -144,11 +152,13 @@ android:background="@mipmap/bckgr_reg">
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPasswordRules"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        tools:ignore="HardcodedText,RtlSymmetry"
+        android:autofillHints="password" />
 
 <EditText
     android:id="@+id/editTextConfirmPassword"
@@ -160,44 +170,48 @@ android:background="@mipmap/bckgr_reg">
     android:background="@drawable/vie_bg"
     android:ems="10"
     android:hint="Conferma password"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:inputType="textPassword"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
-    tools:visibility="visible" />
+    tools:visibility="visible"
+    tools:ignore="HardcodedText,RtlSymmetry"
+    android:autofillHints="password" />
 
 <CheckBox
     android:id="@+id/checkBoxAcceptTerms"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="25dp"
+    android:layout_marginStart="25dp"
     android:layout_marginTop="5dp"
     android:text="Accetto tutti i termini e servizi"
     android:textColor="@color/white"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword" />
+    app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword"
+    tools:ignore="HardcodedText" />
 
 <Button
     android:id="@+id/btnConfirm"
     android:layout_width="150dp"
     android:layout_height="45dp"
     android:layout_marginTop="45dp"
-    android:layout_marginRight="25dp"
+    android:layout_marginEnd="25dp"
     android:background="@drawable/vie_bg"
     android:backgroundTint="@color/green"
     android:text="Conferma"
     android:textColor="#FFFFFF"
-    android:textSize="18dp"
+    android:textSize="18sp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/checkBoxAcceptTerms" />
+    app:layout_constraintTop_toBottomOf="@+id/checkBoxAcceptTerms"
+    tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/visPass"
         android:layout_width="23dp"
         android:layout_height="22dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@mipmap/icon_eye"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
@@ -208,7 +222,7 @@ android:background="@mipmap/bckgr_reg">
         android:layout_width="23dp"
         android:layout_height="22dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@mipmap/icon_eye"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextConfirmPassword" />

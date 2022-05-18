@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -24,7 +25,8 @@
                 android:background="@color/white"
                 android:src="@mipmap/back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textView"
@@ -32,12 +34,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Ricerca itinerario"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/suppRicerca"
                 app:layout_constraintStart_toEndOf="@+id/back_ricerca"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <ImageButton
                 android:id="@+id/suppRicerca"
@@ -45,7 +48,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
@@ -55,15 +59,18 @@
         android:text="Area"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:textColor="@color/blue"/>
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        tools:ignore="HardcodedText" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Vicino a..."
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:padding="10dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        android:inputType="text"
+        tools:ignore="Autofill,HardcodedText" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,15 +81,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Nel raggio di..."
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"/>
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:inputType="number"
+            tools:ignore="Autofill,HardcodedText" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Km"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:layout_marginLeft="8dp"/>
+            android:textSize="17sp"
+            android:layout_marginStart="8dp"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <TextView
@@ -91,8 +101,9 @@
         android:text="Difficoltà"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:textSize="20dp"
-        android:textColor="@color/blue"/>
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -103,7 +114,7 @@
             android:id="@+id/RB_diff_ricerca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +125,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:button="@drawable/rdbtn_facile"
                 android:checked="true" />
@@ -122,7 +133,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:button="@drawable/btn_medio"
                 android:checked="true" />
@@ -130,7 +141,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:button="@drawable/btn_difficile"
                 android:checked="true" />
@@ -144,8 +155,9 @@
         android:text="Durata"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:textSize="20dp"
-        android:textColor="@color/blue"/>
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        tools:ignore="HardcodedText" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -159,19 +171,24 @@
             android:textSize="17dp"
             android:entries="@array/tempo"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            tools:ignore="SpUsage" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Ore      "
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"/>
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:inputType="number"
+            tools:ignore="Autofill,HardcodedText" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Minuti   "
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"/>
+            android:layout_marginStart="10dp"
+            android:padding="10dp"
+            android:inputType="number"
+            tools:ignore="Autofill,HardcodedText" />
     </LinearLayout>
 
     <TextView
@@ -180,15 +197,17 @@
         android:text="Accesso per disabili"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:textSize="20dp"
-        android:textColor="@color/blue"/>
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        tools:ignore="HardcodedText" />
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ricerca percorsi per disabili   "
         android:checked="false"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        tools:ignore="HardcodedText,UseSwitchCompatOrMaterialXml" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -205,7 +224,8 @@
             android:text="INDIETRO"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/btnProssimo"
@@ -217,7 +237,8 @@
             android:text="PROSSIMO"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="HardcodedText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

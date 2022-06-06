@@ -7,24 +7,24 @@ import android.util.Log;
 import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOChat;
 import com.example.natour21.DAOs.DAOUtente;
-import com.example.natour21.DTO.DTOMessaggio;
-import com.example.natour21.DTO.DTOMessaggioInsertResponse;
+import com.example.natour21.DTOs.DTOMessaggio;
+import com.example.natour21.DTOs.DTOMessaggioInsertResponse;
+import com.example.natour21.chat.MessaggioUtils;
 import com.example.natour21.chat.room.entities.ChatDBEntity;
 import com.example.natour21.chat.room.entities.MessaggioDBEntity;
 import com.example.natour21.chat.room.repositories.ChatRepository;
 import com.example.natour21.chat.room.repositories.MessaggioRepository;
-import com.example.natour21.controller.Controller_Home;
 import com.example.natour21.entities.Chat;
 import com.example.natour21.entities.Messaggio;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
+import com.example.natour21.exceptions.NoSuchUserInUtenteOneHashMap;
 import com.example.natour21.exceptions.UninitializedUserStompClientException;
 import com.example.natour21.sharedprefs.UserSessionManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -34,7 +34,6 @@ import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
@@ -50,6 +49,7 @@ public class UserStompClient extends java.util.Observable {
     private final String BASE_URL = "192.168.1.220";
     private final int PORT = 5000;
     private final String ENDPOINT = "websocket-endpoint";
+    private final String WEBSOCKET_PREFIX = "/chat/messaggio/live/";
     private long unreadMessageCount = 0;
     private HashMap<String, Boolean> isCurrentUtenteUtenteOneInBackendHashMap = new HashMap<>();
 
@@ -131,8 +131,10 @@ public class UserStompClient extends java.util.Observable {
     private Callable<Void> getSyncChatsCallable(){
         Callable<Void> syncChatsCallable = () -> {
             List<ChatDBEntity> chats = chatRepository.getAllChatsNonLiveDataBlocking();
-            String currentUtenteId = getCurrentUserId();
+            String currentUtenteId = getCurrentUtenteId();
             List<Chat> remoteChats = DAOChat.getAllChatWithUtente(currentUtenteId);
+            //Ottenere tutte le chat remote, iterare attraverso loro per controllare che siano
+            //inserite nel DB locale
             for (Chat remoteChat : remoteChats){
                 boolean found = false;
                 for (ChatDBEntity chat : chats){
@@ -145,6 +147,7 @@ public class UserStompClient extends java.util.Observable {
                         break;
                     }
                 } if (found) continue;
+                //Se la chat non è stata trovata, si procede all'inserimento
                 String otherUserId;
                 boolean isCurrentUtenteUtenteOneInBackend;
                 if (currentUtenteId.equals(remoteChat.getUtenteOneId())){
@@ -155,12 +158,15 @@ public class UserStompClient extends java.util.Observable {
                     otherUserId = remoteChat.getUtenteOneId();
                 }
                 Utente otherUtente = DAOUtente.getUtenteByEmail(otherUserId);
-                String displayName = otherUtente.getNome() + " " + otherUtente.getCognome();
+                String displayName = otherUtente.getDisplayName();
                 ChatDBEntity newLocalChat = new
                         ChatDBEntity(otherUserId, displayName, isCurrentUtenteUtenteOneInBackend);
                 chatRepository.insertBlocking(newLocalChat);
                 chats.add(newLocalChat);
             }
+            //Fine aggiornamento delle chat
+            //Si procede con l'aggiornamento dei messaggi, e con essi,
+            //l'aggiornamento del numero dei messaggi non letti.
             long newMessaggioCount = 0;
             long localUnreadMessageCount = 0;
             for (ChatDBEntity localDBChat : chats){
@@ -208,16 +214,15 @@ public class UserStompClient extends java.util.Observable {
         @SuppressLint("CheckResult")
         Callable<Void> connectCallable = () -> {
             stompClient.connect();
-            stompClient.topic("/chat/messaggio/live/" + getCurrentUserId())
+            stompClient.topic(WEBSOCKET_PREFIX + getCurrentUtenteId())
                     .subscribe(topicMessage -> {
                         Object obj;
                         final MessaggioDBEntity messaggioDBEntity;
                         try{
                             obj = objectMapper.readValue(topicMessage.getPayload(), DTOMessaggio.class);
                             String sender = ((DTOMessaggio)obj).getSender();
-                            messaggioDBEntity = convertToMessaggioDBEntity(((DTOMessaggio)obj));
-
-                            Callable<Void> callable = () -> {
+                            messaggioDBEntity = MessaggioUtils.convertToMessaggioDBEntity(((DTOMessaggio)obj));
+                            Callable<Void> onMessageReceivedCallable = () -> {
                                 setChanged();
                                 boolean doesChatWithUserExistLocally = chatRepository
                                         .doesChatWithUserExistBlocking(sender);
@@ -226,7 +231,7 @@ public class UserStompClient extends java.util.Observable {
                                     String id = utente.getEmail();
                                     String nomeChat = utente.getDisplayName();
                                     Utente inputCurrentUtente = new Utente
-                                            (getCurrentUserId(), "", "", false);
+                                            (getCurrentUtenteId(), "", "", false);
                                     Chat chat = DAOChat.getChatByUtente(utente, inputCurrentUtente);
                                     //Se la chat non è stata ancora inserita nel backend, annulla l'operazione
                                     if (chat == null) return null;
@@ -239,11 +244,11 @@ public class UserStompClient extends java.util.Observable {
 
                                 return null;
                             };
-                            Completable.fromCallable(callable)
+                            Completable.fromCallable(onMessageReceivedCallable)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(()-> notifyObservers(++unreadMessageCount),
-                                            error -> System.out.println(error.getMessage()));
+                                            error -> Log.e("UserStompClient", error.getMessage(), error));
                         }
                         //Supponiamo che si sia verificata un eccezione per errore di conversione
                         catch (Exception firstException){
@@ -251,8 +256,10 @@ public class UserStompClient extends java.util.Observable {
                                 obj = objectMapper.readValue(topicMessage.getPayload(),
                                         DTOMessaggioInsertResponse.class);
                                 MessaggioChatIdPair messaggioChatIdPair = selfMessaggioChatIdPairBuffer.peekFirst();
-                                MessaggioDBEntity messaggioDBEntityToInsert  = convertToMessaggioDBEntity
-                                        ((DTOMessaggioInsertResponse) obj, messaggioChatIdPair);
+                                MessaggioDBEntity messaggioDBEntityToInsert  = MessaggioUtils.convertToMessaggioDBEntity
+                                                ((DTOMessaggioInsertResponse) obj,
+                                                messaggioChatIdPair.getMessaggio(),
+                                                messaggioChatIdPair.getChatId());
                                 selfMessaggioChatIdPairBuffer.removeFirst();
                                 Callable<Void> insertMessaggioCallable = () ->
                                 {
@@ -263,14 +270,16 @@ public class UserStompClient extends java.util.Observable {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe( () -> {},
-                                                error -> System.out.println(error.getMessage()));
+                                                error ->  Log.e("UserStompClient", error.getMessage(), error));
                             }
                             catch (Exception secondException)
                             {
                                 obj = secondException;
+                                setChanged();
+                                notifyObservers(obj);
                             }
                         }
-                        //notifyObservers(obj);
+
                     });
             return null;
         };
@@ -278,45 +287,24 @@ public class UserStompClient extends java.util.Observable {
     }
 
 
-    public void send(String receiver, String text) throws JsonProcessingException {
+    public void send(String receiver, String text) throws JsonProcessingException, NoSuchUserInUtenteOneHashMap {
         Boolean isCurrentUtenteUtenteOneInBackend = isCurrentUtenteUtenteOneInBackendHashMap.get(receiver);
-        if (isCurrentUtenteUtenteOneInBackend == null) return; //TODO: throw exception
+        if (isCurrentUtenteUtenteOneInBackend == null)
+            throw new NoSuchUserInUtenteOneHashMap(receiver);
         Messaggio messaggio = new Messaggio(0,
                 text,
                 OffsetDateTime.now(),
                 isCurrentUtenteUtenteOneInBackend);
         selfMessaggioChatIdPairBuffer.add(new MessaggioChatIdPair(messaggio, receiver));
         String subpath = isCurrentUtenteUtenteOneInBackend
-                ? getCurrentUserId() + "/" + receiver
-                : receiver + "/" + getCurrentUserId();
-        stompClient.send("/chat/messaggio/live/" + subpath,
+                ? getCurrentUtenteId() + "/" + receiver
+                : receiver + "/" + getCurrentUtenteId();
+        stompClient.send(WEBSOCKET_PREFIX + subpath,
                 objectMapper.writeValueAsString(messaggio)).subscribe();
 
     }
 
-    private MessaggioDBEntity convertToMessaggioDBEntity(DTOMessaggio dtoMessaggio){
-        String sender = dtoMessaggio.getSender();
-        Messaggio messaggio = dtoMessaggio.getMessaggio();
-        long id = messaggio.getId();
-        String testo = messaggio.getTesto();
-        OffsetDateTime timestamp = messaggio.getTimestamp();
-        return new MessaggioDBEntity
-                (id, sender, testo, timestamp, false);
-    }
-
-    private MessaggioDBEntity convertToMessaggioDBEntity
-            (DTOMessaggioInsertResponse dtoMessaggioInsertResponse,
-             MessaggioChatIdPair messaggioChatIdPair){
-        Messaggio messaggio = messaggioChatIdPair.getMessaggio();
-        String sender = messaggioChatIdPair.getChatId();
-        long id = dtoMessaggioInsertResponse.getId();
-        String testo = messaggio.getTesto();
-        OffsetDateTime timestamp = messaggio.getTimestamp();
-        return new MessaggioDBEntity
-                (id, sender, testo, timestamp, true);
-    }
-
-    private String getCurrentUserId(){
+    private String getCurrentUtenteId(){
         return UserSessionManager.getInstance().getUserId();
     }
 

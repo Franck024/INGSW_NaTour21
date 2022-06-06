@@ -1,4 +1,4 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.Manifest;
 import android.app.Activity;
@@ -39,18 +39,18 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.example.natour21.AddressAutoSearchComponent;
+import com.example.natour21.addressautosearchcomponent.AddressAutoSearchComponent;
 import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOItinerario;
-import com.example.natour21.PermissionUtils;
+import com.example.natour21.permissions.PermissionUtils;
 import com.example.natour21.R;
 import com.example.natour21.entities.Itinerario;
 import com.example.natour21.enums.DifficoltaItinerario;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.exceptions.InvalidGeoPointStringFormatException;
-import com.example.natour21.map.MapActivity;
-import com.example.natour21.map.MapConverter;
-import com.example.natour21.network.TrackUploadWorker;
+import com.example.natour21.map.ControllerMap;
+import com.example.natour21.map.MapConverterUtils;
+import com.example.natour21.work.WorkerTrackUpload;
 import com.example.natour21.sharedprefs.UserSessionManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +72,7 @@ import io.ticofab.androidgpxparser.parser.domain.Gpx;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class ControllerAddItin extends AppCompatActivity implements java.util.Observer {
+public class ControllerAddNewItinerario extends AppCompatActivity implements java.util.Observer {
     private Button btnAnnulla, btnProssimo;
     private EditText editTextNomePercorso, editTextOre, editTextDurataMinuti, editTextPuntoIniziale, editTextDescrizione;
     private RadioGroup radioGroupDifficolta;
@@ -121,7 +121,8 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
             DAOItinerario = DAOFactory.getDAOItinerario();
         }
         catch (InvalidConnectionSettingsException icse){
-            showUserFriendlyErrorMessageAndLogThrowable("Impossibile aggiungere un itinerario", icse);
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"AddNewItinerario", "Impossibile aggiungere un itinerario", icse);
             finish();
         }
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
@@ -138,7 +139,7 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
 
         addressAutoSearchComponent.addObserver(this);
 
-        setContentView(R.layout.frame_aggiungi_itinerario);
+        setContentView(R.layout.activity_aggiungi_itinerario);
 
         //Sostituzione dell'EditText con la nostra AutoCompleteTextView
         editTextPuntoIniziale = findViewById(R.id.autoCompleteEditTextView);
@@ -173,20 +174,19 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() != Activity.RESULT_OK) return;
-
                         Intent intent = result.getData();
                         if (intent == null) return;
                         Bundle bundle = intent.getExtras();
                         String geoPointListString = bundle.getString("GEO_POINT_LIST");
                         tracciatoToUpload =  new ByteArrayInputStream
-                                (geoPointListString.getBytes(MapConverter.getCHARSET()));
+                                (geoPointListString.getBytes(MapConverterUtils.getCHARSET()));
                         try{
-                            puntoIniziale = MapConverter.getPuntoInizialeFromByteArrayInputStream(tracciatoToUpload);
+                            puntoIniziale = MapConverterUtils.getPuntoInizialeFromByteArrayInputStream(tracciatoToUpload);
                             showAccessibilityAlertDialogAndThenUpload(true);
                         }
                         catch (InvalidGeoPointStringFormatException igpsfe){
-                            showUserFriendlyErrorMessageAndLogThrowable
-                                    ("Errore nella conversione del tracciato.", igpsfe);
+                            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                    (getApplicationContext(),"AddNewItinerario", "Errore nella conversione del tracciato.", igpsfe);
 
                         }
                     }
@@ -214,16 +214,19 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                             GPXParser gpxParser = new GPXParser();
                             Gpx gpx = gpxParser.parse(fileInputStream);
                             if (gpx.getTracks().size() != 1) {
-                                showUserFriendlyErrorMessageAndLogThrowable("Il file .gpx scelto ha più di un tracciato. Solo un tracciato può essere associato" +
-                                                "ad un itinerario.", null);
+                                ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                        (getApplicationContext(),"AddNewItinerario",
+                                                "Il file .gpx scelto ha più di un tracciato. " +
+                                                        "Solo un tracciato può essere associato ad un itinerario.", null);
                                 return;
                             }
-                            tracciatoToUpload = MapConverter.gpxToByteArrayInputStream(gpx);
-                            puntoIniziale = MapConverter.getPuntoInizialeFromByteArrayInputStream(tracciatoToUpload);
+                            tracciatoToUpload = MapConverterUtils.gpxToByteArrayInputStream(gpx);
+                            puntoIniziale = MapConverterUtils.getPuntoInizialeFromByteArrayInputStream(tracciatoToUpload);
                             showAccessibilityAlertDialogAndThenUpload(true);
                         }
                         catch (IOException | XmlPullParserException | InvalidGeoPointStringFormatException e){
-                            showUserFriendlyErrorMessageAndLogThrowable("Errore nella conversione del tracciato.",
+                            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                    (getApplicationContext(),"AddNewItinerario", "Errore nella conversione del tracciato.",
                                     e);
                         }
                     }
@@ -250,16 +253,17 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                     if (radioBtnChosenTracciatoId == R.id.radioBtnNonInserire) {
                         showAccessibilityAlertDialogAndThenUpload(false);
                     } else if (radioBtnChosenTracciatoId == R.id.radioBtnMappa) {
-                        Intent intent = new Intent(ControllerAddItin.this,
-                                MapActivity.class);
+                        Intent intent = new Intent(ControllerAddNewItinerario.this,
+                                ControllerMap.class);
                         if (addressAutoSearchComponent.isResultReady()){
                             intent.putExtra("PUNTO_INIZIALE_LAT", puntoIniziale.getLatitude());
                             intent.putExtra("PUNTO_INIZIALE_LONG", puntoIniziale.getLongitude());
+                            Log.i("DEBUGNEWITIN", puntoIniziale.getLatitude() +  " " + puntoIniziale.getLongitude());
                         }
                         startForMapResult.launch
                                 (intent);
                     } else if (radioBtnChosenTracciatoId == R.id.radioBtnGPX) {
-                        if(ContextCompat.checkSelfPermission(ControllerAddItin.this,
+                        if(ContextCompat.checkSelfPermission(ControllerAddNewItinerario.this,
                                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                             startForGPXResult.launch(null);
                         }
@@ -271,14 +275,14 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
 
         btnAnnulla.setOnClickListener(v -> {
             // prossimo.startAnimation(anim_btn);
-            startActivity(new Intent(ControllerAddItin.this, Controller_Home.class));
+            startActivity(new Intent(ControllerAddNewItinerario.this, ControllerHome.class));
         });
 
     }
 
     @Override
     public void update(java.util.Observable observable, Object o) {
-        Log.i("AddItin", "Observable update received");
+        Log.i("AddNewItinerario", "Observable update received");
         if (!(o instanceof Boolean)) return;
         if (progressBar == null) return;
         Boolean isSearchingAddress = (Boolean) o;
@@ -335,9 +339,14 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
             editTextOre.requestFocus();
             return false;
         }
+        Double pointLat = null, pointLong = null;
+        if (puntoIniziale != null){
+            pointLat = puntoIniziale.getLatitude();
+            pointLong = puntoIniziale.getLongitude();
+        }
         int durata = Integer.parseInt(ore) * 60 + Integer.parseInt(minuti);
         chosenItinerario = new Itinerario(0, UserSessionManager.getInstance().getUserId(),
-                nomePercorso, puntoIniziale.getLatitude(), puntoIniziale.getLongitude(), address,
+                nomePercorso, pointLat, pointLong, address,
                 durata, difficolta, descrizione, null, null, null);
         return true;
     }
@@ -349,20 +358,14 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
-    private void showUserFriendlyErrorMessageAndLogThrowable(String s, Throwable throwable){
-        if (throwable != null) Log.e("ITINERARIO", throwable.getMessage(), throwable);
-        else Log.e("ITINERARIO", s);
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
-
     private void showAccessibilityAlertDialogAndThenUpload(boolean isTracciatoPresent){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ControllerAddNewItinerario.this);
         builder.setTitle("Accessibilità");
 
-        String[] animals = {"Questo percorso è accessibile a persone con disabilità motorie.",
+        String[] items = {"Questo percorso è accessibile a persone con disabilità motorie.",
                 "Questo percorso è accessibile a persone con disabilità visive."};
         boolean[] isCheckedArray = {false, false};
-        builder.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 isCheckedArray[which] = isChecked;
@@ -376,7 +379,7 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                 chosenItinerario.setAccessibleVisualImpairment(isCheckedArray[1]);
                 if (isTracciatoPresent)  uploadItinerarioWithTracciato();
                 else uploadItinerarioWithoutTracciato();
-                startActivity(new Intent(ControllerAddItin.this, Controller_Home.class));
+                startActivity(new Intent(ControllerAddNewItinerario.this, ControllerHome.class));
             }
         });
         builder.setNegativeButton("Annulla", null);
@@ -392,6 +395,7 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
             if (results == null || results.isEmpty()) return null;
             else return results.get(0).getAddressLine(0);
         };
+
         Observable.fromCallable(getAddressNameCallable)
                 .map(nomePuntoIniziale -> {
                     chosenItinerario.setNomePuntoIniziale(nomePuntoIniziale);
@@ -401,7 +405,8 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(trueValue -> {}, error ->
-                        showUserFriendlyErrorMessageAndLogThrowable("Impossibile caricare l'itinerario", error));
+                        ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                (getApplicationContext(),"AddNewItinerario", "Impossibile caricare l'itinerario", error));
     }
 
     private void uploadItinerarioWithoutTracciato(){
@@ -415,14 +420,15 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
                 .subscribe( () -> Toast
                                 .makeText(getApplicationContext(), "Itinerario caricato con successo.", Toast.LENGTH_SHORT)
                                 .show(),
-                        error -> showUserFriendlyErrorMessageAndLogThrowable
-                                ("Impossibile caricare l'itinerario.", error));
+                        error -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                (getApplicationContext(),"AddNewItinerario", "Impossibile caricare l'itinerario.", error));
     }
 
     private void buildAndEnqueueWorkRequest() throws JsonProcessingException {
         String inputItinerario = new ObjectMapper().writeValueAsString(chosenItinerario);
         byte[] tracciato = new byte[tracciatoToUpload.available()];
         tracciatoToUpload.read(tracciato, 0, tracciato.length);
+        tracciatoToUpload.reset();
         Data data = new Data.Builder()
                 .putString("ITINERARIO", inputItinerario)
                 .putByteArray("TRACCIATO", tracciato)
@@ -431,7 +437,7 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
-        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(TrackUploadWorker.class)
+        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(WorkerTrackUpload.class)
                 .setInputData(data)
                 .setConstraints(constraints)
                 .build();
@@ -444,7 +450,31 @@ public class ControllerAddItin extends AppCompatActivity implements java.util.Ob
         if (addressAutoSearchComponent != null) addressAutoSearchComponent.deleteObserver(this);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (chosenItinerario == null) return;
+        String stringItinerario;
+        try{
+            stringItinerario = new ObjectMapper().writeValueAsString(chosenItinerario);
+        } catch (JsonProcessingException jpe){
+            Log.e("AddNewItinerario", "onSaveInstanceState can't parse itinerario", jpe);
+            return;
+        }
+        outState.putString("ITINERARIO", stringItinerario);
+    }
 
-
-
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (!savedInstanceState.containsKey("ITINERARIO")) return;
+        String stringItinerario = savedInstanceState.getString("ITINERARIO");
+        try{
+            chosenItinerario = new ObjectMapper().readValue(stringItinerario, Itinerario.class);
+        }
+        catch (JsonProcessingException jpe){
+            Log.e("AddNewItinerario", "onRestoreIstanceState can't map itinerario", jpe);
+            return;
+        }
+    }
 }

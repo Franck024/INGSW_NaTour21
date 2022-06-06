@@ -30,6 +30,8 @@ public abstract class ChatDatabase extends RoomDatabase {
     private static final ExecutorService executorService =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    public static final  String databaseName = "chat_database";
+
     public static ChatDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (ChatDatabase.class) {
@@ -71,6 +73,8 @@ public abstract class ChatDatabase extends RoomDatabase {
     public static ExecutorService getExecutorService(){
         return executorService;
     }
+
+    public static String getDatabaseName() { return databaseName;}
 
 
 }

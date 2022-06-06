@@ -1,60 +1,45 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 
-import com.amplifyframework.auth.AuthException;
-import com.amplifyframework.auth.result.AuthSignUpResult;
-import com.amplifyframework.rx.RxAmplify;
-import com.example.natour21.DAOs.DAOUtente;
+
 import com.example.natour21.R;
-import com.example.natour21.sharedprefs.UserSessionManager;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class ConfirmationCodeDialogFragment extends DialogFragment {
-    EditText editTextOTP1, editTextOTP2, editTextOTP3, editTextOTP4,
+public class DialogFragmentControllerConfirmationCode extends DialogFragment {
+    private EditText editTextOTP1, editTextOTP2, editTextOTP3, editTextOTP4,
             editTextOTP5, editTextOTP6;
-    TextView textViewError;
-    List<EditText> listOTPEditText = new LinkedList<>();
+    private TextView textViewError;
+    private List<EditText> listOTPEditText = new LinkedList<>();
 
-    String userEmail;
-    OnSuccessfulCodeConfirmationDismissListener onSuccessfulCodeConfirmationDismissListener;
+    private OnSuccessfulCodeConfirmationDismissListener onSuccessfulCodeConfirmationDismissListener;
 
     public interface OnSuccessfulCodeConfirmationDismissListener{
-        public void onSuccessfulCodeConfirmationDismiss(AuthSignUpResult authSignUpResult);
+        public void onSuccessfulCodeConfirmationDismiss(String code);
     }
 
-    public ConfirmationCodeDialogFragment(String email, OnSuccessfulCodeConfirmationDismissListener onSuccessfulCodeConfirmationDismissListener){
-        userEmail = email;
+    public DialogFragmentControllerConfirmationCode(OnSuccessfulCodeConfirmationDismissListener onSuccessfulCodeConfirmationDismissListener){
         this.onSuccessfulCodeConfirmationDismissListener = onSuccessfulCodeConfirmationDismissListener;
     }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -142,49 +127,12 @@ public class ConfirmationCodeDialogFragment extends DialogFragment {
             }
             code += text;
         }
-        AlertDialog alertDialog = ((AlertDialog) getDialog());
-        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(false);
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-        RxAmplify.Auth.confirmSignUp(userEmail, code)
-                .flatMap(result -> {
-                    if (!result.isSignUpComplete()) throw new Exception("Invalid signup state.");
-                    if (onSuccessfulCodeConfirmationDismissListener != null)
-                        onSuccessfulCodeConfirmationDismissListener.onSuccessfulCodeConfirmationDismiss(result);
-                    Dialog dialog = getDialog();
-                    dialog.dismiss();
-                    return Single.just(true);
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(unusedResult -> {}, error -> onErrorSignUp(error));
+        onSuccessfulCodeConfirmationDismissListener.onSuccessfulCodeConfirmationDismiss(code);
     }
 
-    private void onErrorSignUp(Throwable error){
-        AlertDialog alertDialog = ((AlertDialog) getDialog());
-        if (error instanceof AuthException.CodeMismatchException){
-            textViewError.setText("Codice errato.");
-            textViewError.setVisibility(View.VISIBLE);
-            alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
-            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-        } else if (error instanceof AuthException.CodeExpiredException){
-            Completable
-                    .fromCallable(()-> RxAmplify.Auth.resendSignUpCode(userEmail))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        textViewError.setText("Il codice inserito è scaduto. Un altro codice è stato inviato alla tua email.");
-                        textViewError.setVisibility(View.VISIBLE);
-                        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-                        }
-                    , codeResendError -> {
-                        textViewError.setText("Il codice inserito è scaduto, ma è impossibile mandare un altro codice. Riprova più tardi.");
-                        textViewError.setVisibility(View.VISIBLE);
-                        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
-                        Log.e("ConfirmationCodeDialog", codeResendError.getMessage(), codeResendError);
-                    });
-        }
+    public void setTextViewErrorTextAndShow(String text){
+        textViewError.setText(text);
+        textViewError.setVisibility(View.VISIBLE);
     }
 
     private class EditTextOTPListener implements View.OnKeyListener {
@@ -232,9 +180,6 @@ public class ConfirmationCodeDialogFragment extends DialogFragment {
             if (text.length() == 1 && nextEditText != null){
                 nextEditText.requestFocus();
             }
-//            else if (text.length() == 0 && previousEditText != null){
-//                previousEditText.requestFocus();
-//            }
         }
     }
 }

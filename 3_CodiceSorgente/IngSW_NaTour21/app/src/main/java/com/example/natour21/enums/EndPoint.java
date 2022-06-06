@@ -1,6 +1,6 @@
 package com.example.natour21.enums;
 
 public enum EndPoint {
-    LOCAL,
+    LOCAL_TESTING,
     EC2
 }

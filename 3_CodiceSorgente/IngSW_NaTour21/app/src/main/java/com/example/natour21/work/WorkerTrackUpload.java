@@ -1,4 +1,4 @@
-package com.example.natour21.network;
+package com.example.natour21.work;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOItinerario;
 import com.example.natour21.R;
 import com.example.natour21.entities.Itinerario;
-import com.example.natour21.enums.BLOBStorage;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.exceptions.WrappedCRUDException;
 import com.example.natour21.notification.NotificationUtils;
@@ -27,7 +26,6 @@ import java.io.ByteArrayInputStream;
 import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

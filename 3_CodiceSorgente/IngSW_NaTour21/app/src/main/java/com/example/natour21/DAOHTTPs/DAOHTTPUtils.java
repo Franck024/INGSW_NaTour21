@@ -1,4 +1,4 @@
-package com.example.natour21.DAOHTTP;
+package com.example.natour21.DAOHTTPs;
 
 import com.example.natour21.exceptions.WrappedCRUDException;
 

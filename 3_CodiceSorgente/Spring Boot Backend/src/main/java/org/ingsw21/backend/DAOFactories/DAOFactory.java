@@ -30,6 +30,8 @@ public class DAOFactory {
 	DAOSQLItinerario DAOSQLItinerario;
 	@Autowired
 	DAOSQLStatistiche DAOSQLStatistiche;
+	@Autowired
+	DAOSQLCorrezioneItinerario DAOSQLCorrezioneItinerario;
 	
 	
 	@Value("${ingsw21.connection.datasourcetype}")
@@ -62,6 +64,12 @@ public class DAOFactory {
 	public DAOStatistiche getDAOStatistiche() throws InvalidDataSourceException{
 		if(dataSourceType.toString().contains("POSTGRE")) 
 			return DAOSQLStatistiche;
+		throw new InvalidDataSourceException("Invalid data source: " + dataSourceType.toString());
+	}
+	
+	public DAOCorrezioneItinerario getDAOCorrezioneItinerario() throws InvalidDataSourceException{
+		if(dataSourceType.toString().contains("POSTGRE")) 
+			return DAOSQLCorrezioneItinerario;
 		throw new InvalidDataSourceException("Invalid data source: " + dataSourceType.toString());
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.ingsw21.backend.exceptions.*;
 import org.ingsw21.backend.DAOFactories.DAOFactory;
 import org.ingsw21.backend.DAOs.DAOItinerario;
+import org.ingsw21.backend.DTO.DTOTracciatoKey;
 import org.ingsw21.backend.entities.Itinerario;
 import org.ingsw21.backend.entities.Utente;
 
@@ -69,6 +70,36 @@ public class ItinerarioController {
 	
 	}
 	
+	
+	//vedi DAOItinerario.getItinerarioByProperties
+	@GetMapping("/propertiesQuery")
+	public List<Itinerario> getPropertiesItinerario
+	(
+			@RequestParam(required = false) Double pointLat,
+			@RequestParam(required = false) Double pointLong,
+			@RequestParam(required = false) Double distanceWithin,
+			@RequestParam(required = false) Boolean[] difficoltaArray,
+			@RequestParam(required = false) Integer durationToBeCompared,
+			@RequestParam(required = false) Boolean shouldBeLessThanGivenDuration,
+			@RequestParam(required = false) Boolean isAccessibleMobilityImpairment,
+			@RequestParam(required = false) Boolean isAccessibleVisualImpairment
+	) throws Exception
+	{
+		
+		try {
+			DAOItinerario = DAOFactory.getDAOItinerario();
+			return DAOItinerario.getItinerarioByProperties
+					(pointLat, pointLong, distanceWithin, 
+					difficoltaArray, 
+					durationToBeCompared, shouldBeLessThanGivenDuration, 
+					isAccessibleMobilityImpairment, isAccessibleVisualImpairment
+					);
+		}
+		catch (WrappedCRUDException wcrude) {
+			throw (wcrude.getWrappedException());
+		}
+	}
+	
 	@PostMapping
 	public boolean insertItinerario
 	(
@@ -79,6 +110,17 @@ public class ItinerarioController {
 			DAOItinerario = DAOFactory.getDAOItinerario();
 			DAOItinerario.insertItinerario(itinerario);
 			return true;
+		}
+		catch (WrappedCRUDException wcrude) {
+			throw (wcrude.getWrappedException());
+		}
+	}
+	
+	@GetMapping("/tracciatoKey")
+	public DTOTracciatoKey getUniqueTracciatoKey()  throws Exception{
+		try {
+			DAOItinerario = DAOFactory.getDAOItinerario();
+			return new DTOTracciatoKey(DAOItinerario.getUniqueTracciatoKey());
 		}
 		catch (WrappedCRUDException wcrude) {
 			throw (wcrude.getWrappedException());

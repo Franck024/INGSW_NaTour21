@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.natour21.R;
 
-public class MessaggioViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolderMessaggio extends RecyclerView.ViewHolder {
     private TextView textViewMessaggio, textViewOrario;
 
-    public MessaggioViewHolder(@NonNull View itemView, int value) {
+    public ViewHolderMessaggio(@NonNull View itemView, int value) {
         super(itemView);
         if (value == VIEW_TYPE_RECEIVED) {
             textViewMessaggio = itemView.findViewById(R.id.textViewMessaggioReceived);
@@ -26,7 +26,7 @@ public class MessaggioViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    static MessaggioViewHolder create(ViewGroup parent, int viewType) {
+    static ViewHolderMessaggio create(ViewGroup parent, int viewType) {
         View view;
         if (viewType == VIEW_TYPE_RECEIVED){
             view = LayoutInflater.from(parent.getContext())
@@ -34,7 +34,7 @@ public class MessaggioViewHolder extends RecyclerView.ViewHolder {
         }
         else view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_container_sent_message, parent, false);
-        return new MessaggioViewHolder(view, viewType);
+        return new ViewHolderMessaggio(view, viewType);
     }
 
     public void bind(String testo, String orario){

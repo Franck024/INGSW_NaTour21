@@ -13,20 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.natour21.R;
 
 
-public class ChatViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolderChat extends RecyclerView.ViewHolder {
     private TextView textViewNome;
     private ConstraintLayout constraintLayout;
 
-    public ChatViewHolder(@NonNull View itemView) {
+    public ViewHolderChat(@NonNull View itemView) {
         super(itemView);
         textViewNome = itemView.findViewById(R.id.textViewChatName);
         constraintLayout = itemView.findViewById(R.id.cardListChat);
     }
 
-    static ChatViewHolder create(ViewGroup parent) {
+    static ViewHolderChat create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_chat, parent, false);
-        return new ChatViewHolder(view);
+                .inflate(R.layout.item_chat, parent, false);
+        return new ViewHolderChat(view);
     }
 
     public void bind(String txtNome, double unreadMessageCount){

@@ -1,8 +1,7 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +25,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Controller_Statistiche extends AppCompatActivity {
+public class ControllerStatistiche extends AppCompatActivity {
 
 
     private enum StatisticheColumnNames{
@@ -69,7 +68,7 @@ public class Controller_Statistiche extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_statistiche);
+        setContentView(R.layout.activity_statistiche);
 
         barChart = findViewById(R.id.barChart);
 
@@ -106,7 +105,8 @@ public class Controller_Statistiche extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(statistiche -> onNewStatisticheReceived(statistiche),
-                        error -> showErrorMessage(error.getMessage()));
+                        error -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                (getApplicationContext(),"Settings", "Impossibile caricare le statistiche.", error));
     }
 
     private void onNewStatisticheReceived(Statistiche statistiche){
@@ -128,7 +128,4 @@ public class Controller_Statistiche extends AppCompatActivity {
         barChart.invalidate();
     }
 
-    private void showErrorMessage(String s){
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
 }

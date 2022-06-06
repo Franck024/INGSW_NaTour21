@@ -1,7 +1,7 @@
-package com.example.natour21.DAOHTTP;
+package com.example.natour21.DAOHTTPs;
 
 import com.example.natour21.DAOs.DAOItinerario;
-import com.example.natour21.DTO.DTOTracciatoKey;
+import com.example.natour21.DTOs.DTOTracciatoKey;
 import com.example.natour21.entities.Itinerario;
 import com.example.natour21.exceptions.WrappedCRUDException;
 

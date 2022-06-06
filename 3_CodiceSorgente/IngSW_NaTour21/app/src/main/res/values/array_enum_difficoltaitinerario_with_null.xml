@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="difficoltaitinerario">
+        <item>Nessuna scelta</item>
+        <item>Facile</item>
+        <item>Media</item>
+        <item>Difficile</item>
+    </string-array>
 </resources>

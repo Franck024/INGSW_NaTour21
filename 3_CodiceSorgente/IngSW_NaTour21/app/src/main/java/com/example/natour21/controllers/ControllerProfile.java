@@ -1,4 +1,4 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,29 +8,24 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOItinerario;
 import com.example.natour21.DAOs.DAOUtente;
-import com.example.natour21.ParentItemUtil;
-import com.example.natour21.PostAdapter;
-import com.example.natour21.ParentItem;
+import com.example.natour21.post.AdapterPost;
+import com.example.natour21.post.Post;
 import com.example.natour21.R;
 import com.example.natour21.chat.stompclient.UserStompClient;
 import com.example.natour21.entities.Itinerario;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -40,71 +35,74 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class Controller_Utente extends AppCompatActivity implements java.util.Observer {
-    private Button playlist, foto;
-    private ImageButton btnStartChat, btnAddItin, btnSettings, btnRicerca,
-            messaggi, home;
-    private RecyclerView RVutente;
-    private ArrayList<ParentItem> parentItemArrayList;
+public class ControllerProfile extends AppCompatActivity implements java.util.Observer {
+    private Button btnPlaylist, btnFoto;
+    private ImageButton imageBtnStartChat, imageBtnAddItin, imageBtnSettings, imageBtnRicerca,
+            imageBtnInbox, imageBtnHome;
+    private RecyclerView recyclerViewPost;
+    private ArrayList<Post> postArrayList;
     private Animation btn_menu = null;
     private DAOItinerario DAOItinerario;
     private DAOUtente DAOUtente;
     private String PROFILE_UTENTE_ID;
     private String PROFILE_UTENTE_DISPLAY_NAME;
-    private TextView textViewUnreadMessaggiCount;
+    private TextView textViewUnreadMessaggiCount, textViewNomeUtente;
 
     @SuppressLint({"SetTextI18n", "UnsafeOptInUsageError"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
+        setContentView(R.layout.activity_profile);
 
-        RVutente = findViewById(R.id.PostUtente);
+        recyclerViewPost = findViewById(R.id.PostUtente);
         try{
             DAOItinerario = DAOFactory.getDAOItinerario();
             DAOUtente = DAOFactory.getDAOUtente();
         }
         catch (InvalidConnectionSettingsException icse){
-            showErrorMessage(icse.getMessage());
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Profile", "Impossibile visualizzare il profilo.", icse);
             finish();
         }
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) PROFILE_UTENTE_ID = bundle.getString("USER_ID");
         if (PROFILE_UTENTE_ID == null){
-            showErrorMessage("Impossibile visualizzare il profilo.");
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Profile", "Impossibile visualizzare il profilo.", null);
             finish();
         }
 
         String CURRENT_USER_ID = UserSessionManager.getInstance().getUserId();
 
 
-        playlist = findViewById(R.id.btnPlaylist);
-        foto = findViewById(R.id.btnFoto);
-        btnAddItin = findViewById(R.id.btn_add_itin2);
-        btnStartChat = findViewById(R.id.btn_startChat);
-        btnSettings = findViewById(R.id.btnSettings);
-        textViewUnreadMessaggiCount = findViewById(R.id.textViewUnreadMessaggiCount);
+        textViewNomeUtente = findViewById(R.id.textViewNomeUtente);
+        btnPlaylist = findViewById(R.id.btnPlaylist);
+        btnFoto = findViewById(R.id.btnFoto);
+        imageBtnAddItin = findViewById(R.id.imageBtnAddItinerario);
+        imageBtnStartChat = findViewById(R.id.btn_startChat);
+        imageBtnSettings = findViewById(R.id.imageBtnSettings);
+        textViewUnreadMessaggiCount = findViewById(R.id.textViewUnreadMessaggioCount);
 
 
         /// Click post
-        PostAdapter postAdapter = new PostAdapter(this,parentItemArrayList);
-        RVutente.setAdapter(postAdapter);
-        RVutente.setLayoutManager(new LinearLayoutManager(this));
+        AdapterPost adapterPost = new AdapterPost(postArrayList);
+        recyclerViewPost.setAdapter(adapterPost);
+        recyclerViewPost.setLayoutManager(new LinearLayoutManager(this));
 
-        home = findViewById(R.id.btn_home);
-        messaggi = findViewById(R.id.btnMessaggi);
-        btnRicerca = findViewById(R.id.btnRicerca);
-        playlist = findViewById(R.id.btnPlaylist);
-        foto = findViewById(R.id.btnFoto);
+        imageBtnHome = findViewById(R.id.imageBtnHome);
+        imageBtnInbox = findViewById(R.id.imageBtnInbox);
+        imageBtnRicerca = findViewById(R.id.imageBtnSearch);
+        btnPlaylist = findViewById(R.id.btnPlaylist);
+        btnFoto = findViewById(R.id.btnFoto);
 
         if (CURRENT_USER_ID.equals(UserSessionManager.getInstance().getUserId())){
-            btnStartChat.setVisibility(View.GONE);
+            imageBtnStartChat.setVisibility(View.GONE);
         }
         else{
-            btnStartChat.setOnClickListener(new View.OnClickListener() {
+            imageBtnStartChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Controller_Utente.this, Controller_ChatUtente.class);
+                    Intent intent = new Intent(ControllerProfile.this, ControllerChat.class);
                     intent.putExtra("OTHER_USER_ID", PROFILE_UTENTE_ID);
                     intent.putExtra("CHAT_NAME", PROFILE_UTENTE_DISPLAY_NAME);
                     startActivity(intent);
@@ -131,66 +129,66 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
 
 
 
-        home.setOnClickListener(view -> {
-            home.animate().rotationY(360).withEndAction(
+        imageBtnHome.setOnClickListener(view -> {
+            imageBtnHome.animate().rotationY(360).withEndAction(
                     new Runnable()
                     {
                         @Override
                         public void run()
                         {
-                            startActivity(new Intent(Controller_Utente.this, Controller_Home.class));
+                            startActivity(new Intent(ControllerProfile.this, ControllerHome.class));
                         }
                     });
         });
 
-        messaggi.setOnClickListener(v -> {
-            messaggi.animate().rotationY(360).withEndAction(
+        imageBtnInbox.setOnClickListener(v -> {
+            imageBtnInbox.animate().rotationY(360).withEndAction(
                     new Runnable()
                     {
                         @Override
                         public void run()
                         {
-                            startActivity(new Intent(Controller_Utente.this, Controller_listChat.class));
+                            startActivity(new Intent(ControllerProfile.this, ControllerInbox.class));
                         }
                     });
         });
 
-        btnRicerca.setOnClickListener(view -> {
-            btnRicerca.animate().rotationY(360).withEndAction(() -> startActivity(new Intent
-                    (Controller_Utente.this, Controller_Ricerca.class)));
+        imageBtnRicerca.setOnClickListener(view -> {
+            imageBtnRicerca.animate().rotationY(360).withEndAction(() -> startActivity(new Intent
+                    (ControllerProfile.this, ControllerSearchItinerario.class)));
         });
 
 
-        playlist.setOnClickListener(new View.OnClickListener() {
+        btnPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Toast.makeText(Controller_Utente.this,
+                    Toast.makeText(ControllerProfile.this,
                             "Le playlist saranno implementate in un futuro aggiornamento !",
                             Toast.LENGTH_LONG).show();
             }
         });
 
-        foto.setOnClickListener(new View.OnClickListener() {
+        btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Controller_Utente.this,
+                Toast.makeText(ControllerProfile.this,
                         "La raccolta foto sarà implementata in un futuro aggiornamento !",
                         Toast.LENGTH_LONG).show();
             }
         });
 
-        Animation anim_btn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_bottone);
+        Animation anim_btn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_btn);
 
-        btnAddItin.setOnClickListener(new View.OnClickListener() {
+        imageBtnAddItin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAddItin.startAnimation(anim_btn);
-                startActivity(new Intent(Controller_Utente.this, ControllerAddItin.class));
+                imageBtnAddItin.startAnimation(anim_btn);
+                startActivity(new Intent(ControllerProfile.this, ControllerAddNewItinerario.class));
             }
         });
 
-        btnSettings.setOnClickListener(view -> {
-            startActivity(new Intent(Controller_Utente.this, SettingsActivity.class));
+        imageBtnSettings.setOnClickListener(view -> {
+            startActivity(new Intent(ControllerProfile.this, ControllerSettings.class));
         });
 
         getAndSetItinerariUtente();
@@ -198,31 +196,30 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
     }
 
     private void getAndSetItinerariUtente(){
-        Callable<ArrayList<ParentItem>> getItinerariUtenteCallable = () -> {
+        Callable<ArrayList<Post>> getItinerariUtenteCallable = () -> {
             if (PROFILE_UTENTE_DISPLAY_NAME == null){
                 Utente utente = DAOUtente.getUtenteByEmail(PROFILE_UTENTE_ID);
-                PROFILE_UTENTE_DISPLAY_NAME = utente.getNome() + " " + utente.getCognome();
+                PROFILE_UTENTE_DISPLAY_NAME = utente.getDisplayName();
             }
-            ArrayList<ParentItem> parentItemList = new ArrayList<>();
+            ArrayList<Post> postList = new ArrayList<>();
             for (Itinerario itinerario : DAOItinerario.getItinerarioByUtenteId(PROFILE_UTENTE_ID)){
-                parentItemList.add(ParentItemUtil.itinerarioToParentItem(itinerario, PROFILE_UTENTE_DISPLAY_NAME));
+                postList.add(new Post(itinerario, PROFILE_UTENTE_DISPLAY_NAME));
             }
-            return parentItemList;
+            return postList;
         };
         Observable.fromCallable(getItinerariUtenteCallable)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( parentItems -> {
-                    PostAdapter postAdapter = new PostAdapter(this, parentItems);
-                    RVutente.setAdapter(postAdapter);
-                    RVutente.setLayoutManager(new LinearLayoutManager(this));
-                }, error -> showErrorMessage(error.getMessage())
+                    AdapterPost adapterPost = new AdapterPost(parentItems);
+                    recyclerViewPost.setAdapter(adapterPost);
+                    recyclerViewPost.setLayoutManager(new LinearLayoutManager(this));
+                    textViewNomeUtente.setText(PROFILE_UTENTE_DISPLAY_NAME);
+                }, error -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                        (getApplicationContext(),"Profile", "Errore nel caricamento degli itinerari.", error)
                 );
     }
 
-    private void showErrorMessage(String s){
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
 
 
 
@@ -246,7 +243,7 @@ public class Controller_Utente extends AppCompatActivity implements java.util.Ob
     @Override
     public void onBackPressed(){
         Intent feedIntent = new Intent
-                (Controller_Utente.this, Controller_Home.class);
+                (ControllerProfile.this, ControllerHome.class);
         startActivity(feedIntent);
     }
 }

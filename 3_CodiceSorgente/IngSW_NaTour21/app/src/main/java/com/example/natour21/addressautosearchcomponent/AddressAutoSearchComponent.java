@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.addressautosearchcomponent;
 
 import android.content.Context;
 import android.location.Address;

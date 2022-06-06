@@ -13,12 +13,12 @@ import com.example.natour21.chat.room.entities.ChatDBEntity;
 
 import java.util.List;
 
-public class ChatViewModel extends AndroidViewModel {
+public class ViewModelChat extends AndroidViewModel {
 
     private ChatRepository chatRepository;
     private final LiveData<List<ChatDBEntity>> chats;
 
-    public ChatViewModel(Application application){
+    public ViewModelChat(Application application){
         super(application);
         chatRepository = new ChatRepository(application);
         chats = chatRepository.getAllChats();

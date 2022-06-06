@@ -1,4 +1,4 @@
-package com.example.natour21.DTO;
+package com.example.natour21.DTOs;
 
 public class DTOMessaggioInsertResponse {
     private long id;

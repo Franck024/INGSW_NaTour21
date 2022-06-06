@@ -1,5 +1,7 @@
 package com.example.natour21.map;
 
+import android.util.Log;
+
 import com.example.natour21.exceptions.InvalidGeoPointStringFormatException;
 
 import org.locationtech.proj4j.BasicCoordinateTransform;
@@ -24,7 +26,7 @@ import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.domain.WayPoint;
 
-public class MapConverter {
+public class MapConverterUtils {
     private enum ReadMode{
         LATITUDE,
         LONGITUDE
@@ -79,6 +81,7 @@ public class MapConverter {
             output.add(geoPointStringToGeoPointList(bufferString));
             string = string.substring(endTrackSeparatorIndex+1);
         }
+        input.reset();
         return output;
     }
 
@@ -92,10 +95,11 @@ public class MapConverter {
         double[] values = new double[2];
         if (index == -1) throw new InvalidGeoPointStringFormatException();
         values[0] = Double.valueOf(string.substring(0, index));
+        string = string.substring(index+1);
         index = string.indexOf((LONGITUDE_SEPARATOR).toCharArray()[0]);
-        string.substring(index+1);
         if (index == -1) throw new InvalidGeoPointStringFormatException();
         values[1] = Double.valueOf(string.substring(0, index));
+        input.reset();
         return new GeoPoint(values[0], values[1]);
     }
 
@@ -157,6 +161,7 @@ public class MapConverter {
                 output.add(newGeoPoint);
             }
         }
+        input.reset();
         return output;
     }
 
@@ -219,5 +224,15 @@ public class MapConverter {
             output.add(new GeoPoint(dstCoord.y, dstCoord.x));
         }
         return output;
+    }
+
+    public static GeoPoint geoPointEPSG4326ToEPSG3857(GeoPoint geoPointEPSG4326){
+        CRSFactory crsFactory = new CRSFactory();
+        CoordinateReferenceSystem dstCrs = crsFactory.createFromName("EPSG:3857");
+        CoordinateReferenceSystem srcCrs = crsFactory.createFromName("EPSG:4326");
+        ProjCoordinate srcCoord = new ProjCoordinate(geoPointEPSG4326.getLongitude(), geoPointEPSG4326.getLatitude());
+        ProjCoordinate dstCoord = new ProjCoordinate();
+        new BasicCoordinateTransform(srcCrs, dstCrs).transform(srcCoord, dstCoord);
+        return new GeoPoint(dstCoord.y, dstCoord.x);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.post;
 
 import com.example.natour21.entities.Itinerario;
 import com.example.natour21.enums.DifficoltaItinerario;

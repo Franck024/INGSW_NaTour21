@@ -11,4 +11,9 @@
         app:title="Logout"
         app:icon="@drawable/logout_icon" />
 
+    <Preference
+        app:key="adminaccess"
+        app:title="Statistiche amministratore"
+        app:icon="@drawable/stats_icon"/>
+
 </PreferenceScreen>

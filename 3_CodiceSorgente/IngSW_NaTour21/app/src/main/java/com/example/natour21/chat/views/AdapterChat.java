@@ -13,23 +13,23 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.natour21.chat.room.entities.ChatDBEntity;
 import com.example.natour21.controllers.ControllerChat;
 
-public class ListChatAdapter extends ListAdapter<ChatDBEntity, ChatViewHolder>{
+public class AdapterChat extends ListAdapter<ChatDBEntity, ViewHolderChat>{
 
-    public ListChatAdapter(@NonNull DiffUtil.ItemCallback<ChatDBEntity> diffCallback){
+    public AdapterChat(@NonNull DiffUtil.ItemCallback<ChatDBEntity> diffCallback){
         super(diffCallback);
     }
 
     @NonNull
     @Override
-    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return ChatViewHolder.create(parent);
+    public ViewHolderChat onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return ViewHolderChat.create(parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderChat holder, int position) {
         ChatDBEntity chatDBEntity = getItem(position);
         holder.bind(chatDBEntity.getNomeChat(), chatDBEntity.getUnreadMessageCount());
-        ConstraintLayout layout = holder.getMainLayout();
+        ConstraintLayout layout = holder.getConstraintLayout();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +42,7 @@ public class ListChatAdapter extends ListAdapter<ChatDBEntity, ChatViewHolder>{
         });
     }
 
-    public static class ChatDiff extends DiffUtil.ItemCallback<ChatDBEntity> {
+    public static class DiffChat extends DiffUtil.ItemCallback<ChatDBEntity> {
 
         @Override
         public boolean areItemsTheSame(@NonNull ChatDBEntity oldItem, @NonNull ChatDBEntity newItem) {

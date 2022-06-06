@@ -6,12 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class MessaggioViewModelFactory extends ViewModelProvider.AndroidViewModelFactory {
+public class ViewModelFactoryMessaggio extends ViewModelProvider.AndroidViewModelFactory {
 
     private String otherUserId;
     private Application application;
 
-    public MessaggioViewModelFactory(@NonNull Application application) {
+    public ViewModelFactoryMessaggio(@NonNull Application application) {
         super(application);
     }
 
@@ -21,6 +21,6 @@ public class MessaggioViewModelFactory extends ViewModelProvider.AndroidViewMode
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        return (T) new MessaggioViewModel(application, otherUserId);
+        return (T) new ViewModelMessaggio(application, otherUserId);
     }
 }

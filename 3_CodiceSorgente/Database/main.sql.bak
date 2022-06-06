@@ -32,10 +32,13 @@ CREATE TABLE Itinerario
 	authorId text,
 	nome text NOT NULL,
 	durata integer NOT NULL,
+	puntoIniziale geography(POINT),
 	nomePuntoIniziale text NOT NULL,
 	difficolta difficoltaItinerario NOT NULL,
 	descrizione text,
 	tracciatoKey text UNIQUE,
+	isAccessibleMobilityImpairment boolean,
+	isAccessibleVisualImpairment boolean,
 	CONSTRAINT ITINERARIO_PK PRIMARY KEY(id),
 	CONSTRAINT ITINERARIO_FK_AUTHOR FOREIGN KEY (authorId) REFERENCES Utente(email),
 	CONSTRAINT ITINERARIO_DURATA_MIN CHECK (durata > 0),
@@ -86,7 +89,7 @@ AS $$
 	DECLARE
 		nextId bigint;
 	BEGIN
-		SELECT C.messageCount INTO nextId
+		SELECT C.messaggioCount INTO nextId
 		FROM Chat as C
 		WHERE C.utenteOne = utenteOneId AND C.utenteTwo = utenteTwoId;
 		RETURN (nextId + 1);
@@ -128,4 +131,16 @@ CREATE TRIGGER ON_MESSAGE_INSERT
 	FOR EACH ROW
 	EXECUTE PROCEDURE increase_chat_message_count_and_set_message_id()
 	
+
 	
+CREATE TABLE CorrezioneItinerario
+(
+	authorId text,
+	itinerarioId bigint,
+	durata integer,
+	difficolta difficoltaItinerario,
+	CONSTRAINT CORREZIONEITINERARIO_PK PRIMARY KEY(authorId, idItinerario),
+	CONSTRAINT CORREZIONEITINERARIO_FK_ITINERARIOID FOREIGN KEY (itinerarioId) REFERENCES Itinerario(id),
+	CONSTRAINT CORREZIONEITINERARIO_FK_AUTHORID FOREIGN KEY (authorId) REFERENCES Utente(email),
+	CONSTRAINT CORREZIONEITINERARIO_NOT_NULL CHECK ((durata IS NOT NULL) OR (difficolta IS NOT NULL))
+);	

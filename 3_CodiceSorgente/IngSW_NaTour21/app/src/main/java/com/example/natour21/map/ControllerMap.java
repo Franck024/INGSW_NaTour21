@@ -33,8 +33,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.natour21.AddressAutoSearchComponent;
-import com.example.natour21.PermissionUtils;
+import com.example.natour21.addressautosearchcomponent.AddressAutoSearchComponent;
+import com.example.natour21.permissions.PermissionUtils;
 import com.example.natour21.R;
 import com.example.natour21.exceptions.ProviderDisabledException;
 
@@ -59,19 +59,21 @@ import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 
 
-public class MapActivity extends AppCompatActivity implements java.util.Observer {
+public class ControllerMap extends AppCompatActivity implements java.util.Observer {
 
 
     private MapView map;
     private ImageButton btnDeletePath, btnSend, btnCenterOnUserLocation;
-    private ProgressBar autoSearchProgressBar;
-    private ScrollView scrollView;
+    private ProgressBar progressBarSearch;
+    private ScrollView scrollViewSearch;
     private List<PolylineMarkerPair> polylineMarkerPairs = new LinkedList<PolylineMarkerPair>();
     private final int MAX_RESULTS = 5;
-    private final int DEFAULT_COLOR = Color.rgb(0, 80, 0);
-    private final double DEFAULT_ZOOM = 17.5;
+    private final int DEFAULT_PATH_COLOR = Color.rgb(0, 80, 0);
+    private final double DEFAULT_MAP_ZOOM = 17.5;
     private final int DEFAULT_REQUIRED_LOCATION_ACCURACY = 60;
     private AddressAutoSearchComponent addressAutoSearchComponent;
+
+    private  ActivityResultLauncher<String> requestLocationPermissionLauncher;
 
     private enum MapMode {
         MARKER_INSERT,
@@ -119,7 +121,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
 
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        setContentView(R.layout.map_activity);
+        setContentView(R.layout.activity_map);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         GeoPoint puntoIniziale = null;
@@ -127,6 +129,22 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
             puntoIniziale = new GeoPoint(bundle.getDouble("PUNTO_INIZIALE_LAT"),
                     bundle.getDouble("PUNTO_INIZIALE_LONG"));
         }
+
+        requestLocationPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        try{
+                            zoomOntoUserLocation();
+                        }
+                        catch(SecurityException | ProviderDisabledException e){
+                            Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG);
+                        }
+                    } else {
+                        Toast.makeText(ctx, "Autorizzazione negatata.", Toast.LENGTH_SHORT);
+                        Log.w("Permessi", "Negati");
+                        finish();
+                    }
+                });
         btnSend = findViewById(R.id.btnSendPath);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +155,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
                 List<GeoPoint> geoPoints = mainPolylineMarkerPair
                         .getPolyline().getActualPoints();
                 Bundle bundle = new Bundle();
-                geoPoints = MapConverter.geoPointListEPSG3857ToGeoPointListEPSG4326(geoPoints);
-                bundle.putString("GEO_POINT_LIST", MapConverter
+                bundle.putString("GEO_POINT_LIST", MapConverterUtils
                         .geoPointsToString(geoPoints));
                 intent.putExtras(bundle);
                 setResult(Activity.RESULT_OK, intent);
@@ -157,7 +174,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
                 //Ergo, dobbiamo garantire la presenza di un nuovo tracciato.
                 PolylineMarkerPair newPolylineMarkerPair = new PolylineMarkerPair();
                 polylineMarkerPairs.add(newPolylineMarkerPair);
-                newPolylineMarkerPair.setPolylineColor(DEFAULT_COLOR);
+                newPolylineMarkerPair.setPolylineColor(DEFAULT_PATH_COLOR);
                 map.getOverlays().add(newPolylineMarkerPair.getPolyline());
 
             }
@@ -167,43 +184,28 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
             @Override
             public void onClick(View view) {
                 if (PermissionUtils.shouldAskForPermissions()) {
-                    ActivityResultLauncher<String> requestPermissionLauncher =
-                            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                                if (isGranted) {
-                                    try{
-                                        getUserLocation();
-                                    }
-                                    catch(SecurityException | ProviderDisabledException e){
-                                        Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG);
-                                    }
-                                } else {
-                                    Toast.makeText(ctx, "Autorizzazione negatata.", Toast.LENGTH_SHORT);
-                                    Log.w("Permessi", "Negati");
-                                    finish();
-                                }
-                            });
                     if (ContextCompat.checkSelfPermission(
                             ctx, Manifest.permission.ACCESS_FINE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED) {
                         try{
-                            getUserLocation();
+                            zoomOntoUserLocation();
                         }
                         catch(SecurityException | ProviderDisabledException e){
                             Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG);
                         }
                     } else {
-                        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+                        requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
                     }
                 }
                 else try{
-                    getUserLocation();
+                    zoomOntoUserLocation();
                 }
                 catch(SecurityException | ProviderDisabledException e){
                     Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG);
                 }
             }
         });
-        scrollView = new ScrollView(ctx);
+        scrollViewSearch = new ScrollView(ctx);
         LinearLayout myLayout = findViewById(R.id.linearLayout);
 
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener(){
@@ -240,17 +242,17 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
         progressBarLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, addressAutoCompleteTextViewId);
         progressBarLayoutParams.addRule(RelativeLayout.ALIGN_RIGHT, addressAutoCompleteTextViewId);
 
-        autoSearchProgressBar = new ProgressBar(ctx);
-        autoSearchProgressBar.setLayoutParams(progressBarLayoutParams);
-        autoSearchProgressBar.setIndeterminate(true);
-        autoSearchProgressBar.setVisibility(View.INVISIBLE);
+        progressBarSearch = new ProgressBar(ctx);
+        progressBarSearch.setLayoutParams(progressBarLayoutParams);
+        progressBarSearch.setIndeterminate(true);
+        progressBarSearch.setVisibility(View.INVISIBLE);
 
         if (mapMode.equals(MapMode.MARKER_INSERT)) polylineMarkerPairs.add(new PolylineMarkerPair());
         //else polylineMarkerPairs.addAll(inputPolylineMarkerPairs);
 
         autoSearchRelativeLayout.addView(addressAutoCompleteTextView);
-        autoSearchRelativeLayout.addView(autoSearchProgressBar);
-        myLayout.addView(scrollView);
+        autoSearchRelativeLayout.addView(progressBarSearch);
+        myLayout.addView(scrollViewSearch);
         map = new MapView(ctx);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
@@ -289,7 +291,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
         });
 
         for (PolylineMarkerPair p : polylineMarkerPairs){
-            p.setPolylineColor(DEFAULT_COLOR);
+            p.setPolylineColor(DEFAULT_PATH_COLOR);
             map.getOverlays().add(p.getPolyline());
         }
         if (puntoIniziale != null) {
@@ -300,6 +302,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
             mainPolylineMarkerPair.getMarkers().add(marker);
             map.getOverlays().add(marker);
             mainPolylineMarkerPair.getPolyline().addPoint(puntoIniziale);
+            zoomOntoGeoPoint(puntoIniziale);
             map.invalidate();
         }
 
@@ -310,13 +313,13 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
     public void update(Observable observable, Object o) {
         Log.i("Map", "Observable update received");
         if (!(o instanceof Boolean)) return;
-        if (autoSearchProgressBar == null) return;
+        if (progressBarSearch == null) return;
         Boolean isSearchingAddress = (Boolean) o;
-        runOnUiThread( () -> autoSearchProgressBar.setVisibility
+        runOnUiThread( () -> progressBarSearch.setVisibility
                 (isSearchingAddress ? View.VISIBLE : View.INVISIBLE));
     }
 
-    private void getUserLocation() throws SecurityException, ProviderDisabledException {
+    private void zoomOntoUserLocation() throws SecurityException, ProviderDisabledException {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             throw new ProviderDisabledException("Abilitare il seguente provider:" + LocationManager.GPS_PROVIDER);
@@ -335,7 +338,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
         if (map != null){
             GeoPoint startPoint = new GeoPoint(location);
             IMapController mapController = map.getController();
-            mapController.setZoom(DEFAULT_ZOOM);
+            mapController.setZoom(DEFAULT_MAP_ZOOM);
             mapController.setCenter(startPoint);
 
         }
@@ -343,7 +346,7 @@ public class MapActivity extends AppCompatActivity implements java.util.Observer
 
     private void zoomOntoGeoPoint(GeoPoint geoPoint){
         IMapController mapController = map.getController();
-        mapController.setZoom(DEFAULT_ZOOM);
+        mapController.setZoom(DEFAULT_MAP_ZOOM);
         mapController.animateTo(geoPoint);
     }
 

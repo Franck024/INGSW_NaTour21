@@ -11,8 +11,9 @@ AS $$
 $$
 
 CREATE OR REPLACE FUNCTION get_last_n_itinerario(numberOfItinerarioToGet integer)
-RETURNS TABLE (id bigint, authorId text, nome text, durata integer, nomePuntoIniziale text,
-difficolta difficoltaItinerario, descrizione text, tracciatoKey text)
+RETURNS TABLE (id bigint, authorId text, nome text, durata integer, puntoIniziale geography(POINT), nomePuntoIniziale text,
+difficolta difficoltaItinerario, descrizione text, tracciatoKey text, isAccessibleMobilityImpairment boolean, 
+isAccessibleVisualImpairment boolean)
 LANGUAGE plpgsql
 AS $$
 	BEGIN
@@ -21,8 +22,9 @@ AS $$
 $$
 
 CREATE OR REPLACE FUNCTION get_last_n_itinerario_newer_than(newestId bigint, numberOfItinerarioToGet integer)
-RETURNS TABLE (id bigint, authorId text, nome text, durata integer, nomePuntoIniziale text,
-difficolta difficoltaItinerario, descrizione text, tracciatoKey text)
+RETURNS TABLE (id bigint, authorId text, nome text, durata integer, puntoIniziale geography(POINT), nomePuntoIniziale text,
+difficolta difficoltaItinerario, descrizione text, tracciatoKey text, isAccessibleMobilityImpairment boolean, 
+isAccessibleVisualImpairment boolean)
 LANGUAGE plpgsql
 AS $$
 	BEGIN
@@ -32,8 +34,9 @@ AS $$
 $$
 
 CREATE OR REPLACE FUNCTION get_last_n_itinerario_starting_from(startingFrom bigint, numberOfItinerarioToGet integer)
-RETURNS TABLE (id bigint, authorId text, nome text, durata integer, nomePuntoIniziale text,
-difficolta difficoltaItinerario, descrizione text, tracciatoKey text)
+RETURNS TABLE (id bigint, authorId text, nome text, durata integer, puntoIniziale geography(POINT), nomePuntoIniziale text,
+difficolta difficoltaItinerario, descrizione text, tracciatoKey text, isAccessibleMobilityImpairment boolean, 
+isAccessibleVisualImpairment boolean)
 LANGUAGE plpgsql
 AS $$
 	BEGIN

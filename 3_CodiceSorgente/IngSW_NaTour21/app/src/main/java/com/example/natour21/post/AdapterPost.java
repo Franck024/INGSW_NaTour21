@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.post;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.natour21.R;
 import com.example.natour21.controllers.ControllerItinerarioDetails;
 import com.example.natour21.controllers.ControllerProfile;
 import com.example.natour21.map.MapSnapshotUtil;

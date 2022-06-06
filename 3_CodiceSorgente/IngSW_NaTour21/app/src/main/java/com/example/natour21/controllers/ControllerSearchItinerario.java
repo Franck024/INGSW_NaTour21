@@ -1,9 +1,8 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -21,17 +20,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.natour21.AddressAutoSearchComponent;
+import com.example.natour21.addressautosearchcomponent.AddressAutoSearchComponent;
 import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOItinerario;
 import com.example.natour21.DAOs.DAOUtente;
-import com.example.natour21.ParentItem;
-import com.example.natour21.ParentItemUtil;
-import com.example.natour21.PostAdapter;
+import com.example.natour21.post.Post;
+import com.example.natour21.post.AdapterPost;
 import com.example.natour21.R;
 import com.example.natour21.entities.Itinerario;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -44,12 +43,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Controller_Ricerca extends AppCompatActivity implements java.util.Observer {
+public class ControllerSearchItinerario extends AppCompatActivity implements java.util.Observer {
 
     private GeoPoint selectedGeoPoint;
 
-    private LinearLayout mainLayout, searchParamsLayout;
-    private ImageButton back;
+    private LinearLayout layoutMain, layoutSearchParams;
+    private ImageButton imageButtonBack;
     private Button btnCerca;
     private EditText editTextRaggio, editTextOre, editTextMinuti;
     private CheckBox checkBoxFacile, checkBoxMedia, checkBoxDifficile;
@@ -59,10 +58,12 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
     private AutoCompleteTextView addressAutoCompleteTextView;
     private ProgressBar progressBar;
 
-    RecyclerView recyclerViewPosts;
+    private RecyclerView recyclerViewPostResult;
 
     private DAOItinerario DAOItinerario;
     private DAOUtente DAOUtente;
+
+    private FirebaseAnalytics firebaseAnalyticsInstance;
 
     private final int BOX_FACILE_UNCHECKED_COLOR = Color.rgb(170, 221, 170);
     private final int BOX_FACILE_CHECKED_COLOR = Color.rgb(170, 255, 170);
@@ -82,7 +83,7 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ricerca_itinerario);
+        setContentView(R.layout.activity_search_itinerario);
         AdapterView.OnItemClickListener addressAutoSearchComponentClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,12 +95,14 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
             DAOItinerario = DAOFactory.getDAOItinerario();
             DAOUtente = DAOFactory.getDAOUtente();
         } catch (InvalidConnectionSettingsException icse) {
-            Log.e("Ricerca -InvalidConnectionSettingsException", icse.getMessage(), icse);
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable(
+                    getApplicationContext(), "Ricerca",
+                    "Impossibile visualizzare la scheda di ricerca.", icse);
         }
 
-        mainLayout = findViewById(R.id.linearLayoutRicerca);
-        searchParamsLayout = findViewById(R.id.searchParamsLayout);
-        back = findViewById(R.id.back_ricerca);
+        layoutMain = findViewById(R.id.linearLayoutRicerca);
+        layoutSearchParams = findViewById(R.id.searchParamsLayout);
+        imageButtonBack = findViewById(R.id.back_ricerca);
         addressAutoCompleteTextView = findViewById(R.id.autoCompleteTextViewArea);
         editTextRaggio = findViewById(R.id.editTextRaggioArea);
         editTextOre = findViewById(R.id.editTextDurataOre);
@@ -118,11 +121,13 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
 
         addressAutoSearchComponent.addObserver(this);
 
+        firebaseAnalyticsInstance = FirebaseAnalytics.getInstance(ControllerSearchItinerario.this);
 
-        back.setOnClickListener(new View.OnClickListener() {
+
+        imageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                back.animate().rotationY(360).withEndAction(
+                imageButtonBack.animate().rotationY(360).withEndAction(
                         () -> goBack());
             }
         });
@@ -214,15 +219,20 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
         Integer ore = null, minuti = null, duration = null;
         Boolean shouldBeLessThanGivenDuration = null;
         try{
-            ore = Integer.parseInt(editTextOre.getText().toString());
-            if (ore < 0) ore = 0;
+            try{
+                ore = Integer.parseInt(editTextOre.getText().toString());
+                if (ore < 0) ore = 0;
+            }
+            catch (NumberFormatException nfeore) {
+                ore = 0;
+            }
             minuti = Integer.parseInt(editTextMinuti.getText().toString());
             if (minuti < 0) minuti = null;
             duration = (minuti != null) ? (ore*60) + minuti : null;
             shouldBeLessThanGivenDuration = spinnerDurata.getSelectedItemPosition() == 0;
         }
-        catch (NumberFormatException nfe){
-
+        catch (NumberFormatException nfeminuti){
+            //la durata rimane null, quindi non c'è bisogno di fare nulla
         }
 
         Boolean isAccessibleMobilityImpairment = switchDisabilitaMotoria.isChecked() ? true : null;
@@ -234,10 +244,10 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
         Boolean[] finalDifficoltaArray = difficoltaArray;
         Integer finalDuration = duration;
         Boolean finalShouldBeLessThanGivenDuration = shouldBeLessThanGivenDuration;
-        Callable<List<ParentItem>> callable = () -> {
+        Callable<List<Post>> callable = () -> {
             List<Itinerario> itinerarioList;
             Utente utente;
-            List<ParentItem> parentItems = new LinkedList<>();
+            List<Post> parentItems = new LinkedList<>();
             itinerarioList = DAOItinerario.getItinerarioByProperties
                     (
                             finalPointLat, finalPointLong, finalDistanceWithin,
@@ -248,7 +258,7 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
                     );
             for (Itinerario i : itinerarioList){
                 utente = DAOUtente.getUtenteByEmail(i.getAuthorId());
-                parentItems.add(ParentItemUtil.itinerarioToParentItem(i, utente.getDisplayName()));
+                parentItems.add(new Post(i, utente.getDisplayName()));
             }
             return parentItems;
 
@@ -264,22 +274,30 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
                                 "Nessun risultato.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    AdapterPost.OnPostClickListener onPostClickListener = p -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, Long.toString(p.getIdItinerario()));
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "itinerario_search");
+                        firebaseAnalyticsInstance.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    };
+
                     //Sostituzione layout ricerca con itinerari trovati
-                    PostAdapter postAdapter = new PostAdapter(this, new ArrayList<>());
-                    recyclerViewPosts =  new RecyclerView(getBaseContext());
-                    recyclerViewPosts.setAdapter(postAdapter);
-                    recyclerViewPosts.setLayoutManager(new LinearLayoutManager(this));
+                    AdapterPost adapterPost = new AdapterPost(new ArrayList<>(), onPostClickListener);
+                    recyclerViewPostResult =  new RecyclerView(getBaseContext());
+                    recyclerViewPostResult.setAdapter(adapterPost);
+                    recyclerViewPostResult.setLayoutManager(new LinearLayoutManager(this));
                     RecyclerView.LayoutParams params = new RecyclerView.LayoutParams
                             (RecyclerView.LayoutParams.MATCH_PARENT,
                                     RecyclerView.LayoutParams.WRAP_CONTENT);
-                    recyclerViewPosts.setLayoutParams(params);
-                    postAdapter.addAll(resultParentItems);
+                    recyclerViewPostResult.setLayoutParams(params);
+                    adapterPost.addAll(resultParentItems);
                     hideRicercaLayout();
                     progressBar.setVisibility(View.INVISIBLE);
                 }, error -> {
-                    Toast.makeText(getApplicationContext(),
-                            "Errore.", Toast.LENGTH_SHORT);
-                    Log.e("Ricerca", error.getMessage(), error);
+                    ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                            (getApplicationContext(), "Ricerca",
+                                    "Impossibile completare la ricerca.", error);
                 });
     }
 
@@ -292,29 +310,29 @@ public class Controller_Ricerca extends AppCompatActivity implements java.util.O
 
     private void goBack(){
         if (ricercaState.equals(RicercaState.INSERTING_PARAMS))
-            startActivity(new Intent(Controller_Ricerca.this, Controller_Home.class));
+            startActivity(new Intent(ControllerSearchItinerario.this, ControllerHome.class));
         else showRicercaLayout();
     }
 
     private void showRicercaLayout(){
-        if (recyclerViewPosts != null) {
-            mainLayout.removeView(recyclerViewPosts);
-            recyclerViewPosts = null;
+        if (recyclerViewPostResult != null) {
+            layoutMain.removeView(recyclerViewPostResult);
+            recyclerViewPostResult = null;
         }
         ricercaState = RicercaState.INSERTING_PARAMS;
-        if (searchParamsLayout == null) return;
+        if (layoutSearchParams == null) return;
         runOnUiThread(() -> {
-            searchParamsLayout.setVisibility(View.VISIBLE);
+            layoutSearchParams.setVisibility(View.VISIBLE);
         });
 
     }
 
     private void hideRicercaLayout(){
-        if (searchParamsLayout == null) return;
+        if (layoutSearchParams == null) return;
         ricercaState = RicercaState.RESULT;
         runOnUiThread(() ->  {
-            searchParamsLayout.setVisibility(View.GONE);
-            if (recyclerViewPosts != null) mainLayout.addView(recyclerViewPosts);
+            layoutSearchParams.setVisibility(View.GONE);
+            if (recyclerViewPostResult != null) layoutMain.addView(recyclerViewPostResult);
         });
     }
 }

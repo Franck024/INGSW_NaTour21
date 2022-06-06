@@ -129,10 +129,6 @@
            android:layout_height="20sp"
            app:layout_constraintTop_toBottomOf="@id/btnVisualizzaItinerario"
            app:layout_constraintStart_toStartOf="parent"/>
-
-
-
-
    </androidx.constraintlayout.widget.ConstraintLayout>
 
 

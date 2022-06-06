@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textViewInsertCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inserisci il codice di conferma inviato alla tua email."
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+   <LinearLayout
+       android:id="@+id/linearLayoutCode"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/textViewInsertCode">
+       <EditText
+           android:id="@+id/editTextOTP1"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:cursorVisible="false"
+           android:inputType="number"
+           />
+
+       <EditText
+           android:id="@+id/editTextOTP2"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:cursorVisible="false"
+           android:inputType="number"
+           />
+
+       <EditText
+           android:id="@+id/editTextOTP3"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:inputType="number"
+           android:cursorVisible="false"
+           />
+
+       <EditText
+           android:id="@+id/editTextOTP4"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:inputType="number"
+           android:cursorVisible="false"
+           />
+
+       <EditText
+           android:id="@+id/editTextOTP5"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:cursorVisible="false"
+           android:inputType="number"
+           />
+
+       <EditText
+           android:id="@+id/editTextOTP6"
+           android:layout_width="30sp"
+           android:layout_height="wrap_content"
+           android:maxLength="1"
+           android:gravity="center"
+           android:textSize="20sp"
+           android:cursorVisible="false"
+           android:inputType="number"
+           />
+   </LinearLayout>
+    <TextView
+        android:id="@+id/textViewError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

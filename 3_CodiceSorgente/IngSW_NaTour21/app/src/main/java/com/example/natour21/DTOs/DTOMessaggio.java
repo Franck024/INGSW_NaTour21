@@ -1,4 +1,4 @@
-package com.example.natour21.DTO;
+package com.example.natour21.DTOs;
 
 import com.example.natour21.entities.Messaggio;
 

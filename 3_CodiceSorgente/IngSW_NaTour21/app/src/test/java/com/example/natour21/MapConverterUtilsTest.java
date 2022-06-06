@@ -1,17 +1,16 @@
 package com.example.natour21;
 
 import com.example.natour21.exceptions.InvalidGeoPointStringFormatException;
-import com.example.natour21.map.MapConverter;
+import com.example.natour21.map.MapConverterUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.osmdroid.util.GeoPoint;
 
 import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class MapConverterTest {
+public class MapConverterUtilsTest {
 
     @Test
     public void testConversioneDiInputStreamRappresentanteTestoFormattatoCorrettamenteAListaDiGeoPoint(){
@@ -20,8 +19,8 @@ public class MapConverterTest {
         GeoPoint geoPoint1 = new GeoPoint(41.890513698459486, 12.492230900227057);
         GeoPoint geoPoint2 = new GeoPoint(48.85844772540616, 2.294481298309358);
         try{
-            List<GeoPoint> output = MapConverter.byteArrayInputStreamToGeoPoints(new ByteArrayInputStream
-                    (testo.getBytes(MapConverter.getCHARSET())));
+            List<GeoPoint> output = MapConverterUtils.byteArrayInputStreamToGeoPoints(new ByteArrayInputStream
+                    (testo.getBytes(MapConverterUtils.getCHARSET())));
             if (output == null) Assert.fail("Nessun output");
             if (output.size() != 2){
                 Assert.fail("Dimensione output è " + output.size() + ", deve essere 2");
@@ -40,8 +39,8 @@ public class MapConverterTest {
             throws InvalidGeoPointStringFormatException{
         String testo = "41.890513698459486$12.492230900227057#"
                 +"48.85844772540616$2.294481298309358";
-        MapConverter.byteArrayInputStreamToGeoPoints(new ByteArrayInputStream
-                (testo.getBytes(MapConverter.getCHARSET())));
+        MapConverterUtils.byteArrayInputStreamToGeoPoints(new ByteArrayInputStream
+                (testo.getBytes(MapConverterUtils.getCHARSET())));
         Assert.fail("Convertito senza errore");
     }
 
@@ -53,7 +52,7 @@ public class MapConverterTest {
                 +"50.1222212$78.1912921#"
                 +"69.0$21#"
                 +"41.32392$15.01212#%";
-        ByteArrayInputStream input = new ByteArrayInputStream(testo.getBytes(MapConverter.getCHARSET()));
+        ByteArrayInputStream input = new ByteArrayInputStream(testo.getBytes(MapConverterUtils.getCHARSET()));
         GeoPoint geoPoint1Track1 = new GeoPoint(41.890513698459486, 12.492230900227057);
         GeoPoint geoPoint2Track1 = new GeoPoint(48.85844772540616, 2.294481298309358);
         GeoPoint geoPoint1Track2 = new GeoPoint(69, 70.21121233);
@@ -61,7 +60,7 @@ public class MapConverterTest {
         GeoPoint geoPoint2Track3 = new GeoPoint(69.0, 21);
         GeoPoint geoPoint3Track3 = new GeoPoint(41.32392, 15.01212);
         try{
-            List<List<GeoPoint>> output = MapConverter.byteArrayInputStreamToGeoPointLists(input);
+            List<List<GeoPoint>> output = MapConverterUtils.byteArrayInputStreamToGeoPointLists(input);
             if (output.size() != 3) Assert.fail("Dimensione output è " + output.size() + ", deve essere 3");
             List<GeoPoint> geoPointList = output.get(0);
             if (!(geoPointList.get(0).equals(geoPoint1Track1)) ||

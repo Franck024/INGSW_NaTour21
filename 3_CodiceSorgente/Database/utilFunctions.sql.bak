@@ -37,7 +37,7 @@ difficolta difficoltaItinerario, descrizione text, tracciatoKey text)
 LANGUAGE plpgsql
 AS $$
 	BEGIN
-		RETURN QUERY EXECUTE ('SELECT * FROM Itinerario WHERE Itinerario.id < $1 ORDER BY Itinerario.id DESC LIMIT $2') 
+		RETURN QUERY EXECUTE ('SELECT * FROM Itinerario WHERE Itinerario.id <= $1 ORDER BY Itinerario.id DESC LIMIT $2') 
 		USING startingFrom, numberOfItinerarioToGet;
 	END
 $$

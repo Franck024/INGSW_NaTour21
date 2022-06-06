@@ -4,11 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-import com.example.natour21.DTO.DTOMessaggio;
-import com.example.natour21.DTO.DTOMessaggioInsertResponse;
-import com.example.natour21.chat.room.entities.ChatDBEntity;
-import com.example.natour21.entities.Messaggio;
-
 import java.time.OffsetDateTime;
 
 @Entity(tableName = "Messaggio",

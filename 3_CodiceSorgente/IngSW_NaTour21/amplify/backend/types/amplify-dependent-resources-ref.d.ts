@@ -11,5 +11,11 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string"
         }
+    },
+    "storage": {
+        "s3trackstore": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }

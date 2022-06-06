@@ -1,11 +1,10 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -14,38 +13,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.AuthProvider;
 import com.amplifyframework.auth.result.AuthSignInResult;
-import com.amplifyframework.auth.result.AuthSignUpResult;
 import com.amplifyframework.auth.result.step.AuthSignInStep;
-import com.amplifyframework.auth.result.step.AuthSignUpStep;
-import com.amplifyframework.core.Amplify;
 import com.amplifyframework.rx.RxAmplify;
 import com.example.natour21.DAOFactory.DAOFactory;
+import com.example.natour21.DAOs.DAOStatistiche;
 import com.example.natour21.DAOs.DAOUtente;
 import com.example.natour21.R;
-import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
+import com.google.android.gms.common.util.ArrayUtils;
+
 import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ControllerLogin extends AppCompatActivity{
-    private EditText email, password;
-    private TextView registrazione, pass_dim, txt_reg, accesso_admin;
-    private Button login, fb, google, eye;
-    private Animation anim_btn = null, anim_txtview = null;
-    private int counter = 0, r;
+    private EditText editTextEmail, editTextPassword;
+    private TextView textViewClickToRegister, textViewRetrievePassword, textViewRegister, accesso_admin;
+    private Button btnLogin, btnSignInWithFacebook, btnSignInWithGoogle, btnHidePassword;
+    private Animation animationBtn = null, animationTextView = null;
+
+    private boolean shouldHidePassword = false;
 
     private DAOUtente DAOUtente;
-    private String confirmingCodeUtenteId;
+    private DAOStatistiche DAOStatistiche;
 
     private enum FederatedSignInResult{
         NOT_FOUND_IN_BACKEND,
@@ -56,85 +53,73 @@ public class ControllerLogin extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frame_login);
+        setContentView(R.layout.activity_login);
 
         try{
             DAOUtente = DAOFactory.getDAOUtente();
+            DAOStatistiche = DAOFactory.getDAOStatistiche();
         }
         catch (InvalidConnectionSettingsException icse){
-            showUserFriendlyErrorMessageAndLogThrowable("Errore. Riavviare l'applicazione.", icse);
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Login", "Errore. Riavviare l'applicazione.", icse);
         }
 
-        email = findViewById(R.id.editTextUsername);
-        password = findViewById(R.id.editTextPassword);
-        registrazione = findViewById(R.id.textViewSignUp);
-        pass_dim = findViewById(R.id.textViewPasswordRecovery);
-        login = findViewById(R.id.buttonLogin);
-        fb = findViewById(R.id.btnFbLogin);
-        google = findViewById(R.id.btnGoogleLogin);
-        eye = findViewById(R.id.eye);
-        txt_reg = findViewById(R.id.textViewRegister);
-        accesso_admin = findViewById(R.id.accesso_admin);
+        editTextEmail = findViewById(R.id.editTextUsername);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        textViewClickToRegister = findViewById(R.id.textViewClickToRegister);
+        textViewRetrievePassword = findViewById(R.id.textViewPasswordRecovery);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignInWithFacebook = findViewById(R.id.btnSignInWithFacebook);
+        btnSignInWithGoogle = findViewById(R.id.btnSignInWithGoogle);
+        btnHidePassword = findViewById(R.id.btnHidePassword);
+        textViewRegister = findViewById(R.id.textViewRegister);
 
         String userId = UserSessionManager.getInstance().getUserId();
-        if (userId != null) email.setText(userId);
+        String[] federatedSignInSubDomains = {"gmail.com"};
+        if (userId != null && !ArrayUtils.contains(federatedSignInSubDomains, userId.substring(userId.indexOf('@')+1)))
+            editTextEmail.setText(userId);
 
-        anim_btn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_bottone);
-        anim_txtview = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_textview);
+        animationBtn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_btn);
+        animationTextView = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation_textview);
 
         animazioni();
 
-        eye.setOnClickListener(v -> {
-            counter++;
-            r= counter %2;
-            if(r !=0 ){
-                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                eye.getBackground().setAlpha(50);
-            }else{
-                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                eye.getBackground().setAlpha(200);
-            }
+        btnHidePassword.setOnClickListener(v -> {
+            shouldHidePassword = !shouldHidePassword;
+            editTextPassword.setTransformationMethod(shouldHidePassword
+                    ? HideReturnsTransformationMethod.getInstance()
+                    : PasswordTransformationMethod.getInstance());
+            btnHidePassword.getBackground().setAlpha(shouldHidePassword
+                    ? 50
+                    : 200);
         });
 
-        //Click TextView
-        email.setOnClickListener(v -> email.startAnimation(anim_txtview));
-        password.setOnClickListener(v -> password.startAnimation(anim_txtview));
+        editTextEmail.setOnClickListener(v -> editTextEmail.startAnimation(animationTextView));
+        editTextPassword.setOnClickListener(v -> editTextPassword.startAnimation(animationTextView));
 
-        //Click EditView
-        registrazione.setOnClickListener(view -> startActivity(new Intent(ControllerLogin.this, ControllerRegistrazione.class)));
-        pass_dim.setOnClickListener(view -> startActivity(new Intent(ControllerLogin.this, ControllerRecovery.class)));
+        textViewClickToRegister.setOnClickListener(view -> startActivity(new Intent(ControllerLogin.this, ControllerRegister.class)));
+        textViewRetrievePassword.setOnClickListener(view -> startActivity(new Intent(ControllerLogin.this, ControllerRecovery.class)));
 
-        //Click bottoni
-        login.setOnClickListener(v -> onLoginClick());
-        fb.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Il login con Facebook verrà implementato successivamente.", Toast.LENGTH_SHORT)
+        btnLogin.setOnClickListener(v -> onLoginClick());
+        btnSignInWithFacebook.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Il login con Facebook verrà implementato successivamente.", Toast.LENGTH_SHORT)
                 .show());
 
-        google.setOnClickListener(v -> RxAmplify.Auth.signInWithSocialWebUI(AuthProvider.google(), this)
+        btnSignInWithGoogle.setOnClickListener(v -> RxAmplify.Auth.signInWithSocialWebUI(AuthProvider.google(), this)
         .subscribe(
-                result -> {
-                    if (result.isSignInComplete()){
-                        onSignInComplete(RxAmplify.Auth.getCurrentUser().getUserId());
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "Impossibile completare il login.", Toast.LENGTH_LONG).show();
-                        Log.e("LOGIN", "Step mancante nel login: " + result.getNextStep());
-                    }
-                },
-                error -> showUserFriendlyErrorMessageAndLogThrowable("Errore nell'accesso.", error)
+                result -> onFederatedSignInResult(result, RxAmplify.Auth.getCurrentUser().getUserId()),
+                error -> runOnUiThread(() -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                        (getApplicationContext(),"Login", "Errore nell'accesso.", error))
         ));
-        accesso_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(ControllerLogin.this, Controller_AccessoAdmin.class));
-            }
-        });
-
-        accesso_admin.setVisibility(View.INVISIBLE);
 
     }
 
-    private void onSignInComplete(String email)
+    private void onFederatedSignInResult(AuthSignInResult result, String email)
     {
+        if (!result.isSignInComplete()){
+            Toast.makeText(getApplicationContext(), "Impossibile completare il login.", Toast.LENGTH_LONG).show();
+            Log.e("Login", "Step mancante nel login: " + result.getNextStep());
+            return;
+        }
         UserSessionManager userSessionManager = UserSessionManager.getInstance();
         userSessionManager.setKeys(email);
         userSessionManager.setLoggedIn(true);
@@ -143,14 +128,16 @@ public class ControllerLogin extends AppCompatActivity{
                 (DAOUtente.getUtenteByEmail(email) != null)
                         ? FederatedSignInResult.FOUND
                         : FederatedSignInResult.NOT_FOUND_IN_BACKEND;
-        Callable<FederatedSignInResult> userSessionManagerSaveUserCallable = () ->
-                (userSessionManager.saveUserSessionBlocking())
-                        ? FederatedSignInResult.FOUND
-                        : FederatedSignInResult.CANT_SAVE_SESSION_LOCALLY;
+        Callable<FederatedSignInResult> increaseAccessCountStatAndSaveUserSessionCallable = () -> {
+            DAOStatistiche.incrementUtenteAccess();
+            return (userSessionManager.saveUserSessionBlocking())
+                    ? FederatedSignInResult.FOUND
+                    : FederatedSignInResult.CANT_SAVE_SESSION_LOCALLY;
+        };
         Observable.fromCallable(doesUtenteExistInBackendCallable)
                 .flatMap(firstResult -> {
                     if (firstResult == FederatedSignInResult.FOUND){
-                        return Observable.fromCallable(userSessionManagerSaveUserCallable);
+                        return Observable.fromCallable(increaseAccessCountStatAndSaveUserSessionCallable);
                     } else return Observable.just(FederatedSignInResult.NOT_FOUND_IN_BACKEND);
                 })
                 .subscribeOn(Schedulers.io())
@@ -158,29 +145,24 @@ public class ControllerLogin extends AppCompatActivity{
                 .subscribe(finalResult -> {
                     if (finalResult == FederatedSignInResult.FOUND
                             || finalResult == FederatedSignInResult.CANT_SAVE_SESSION_LOCALLY){
-                        login.startAnimation(anim_btn);
-                        startActivity(new Intent(ControllerLogin.this, Controller_Home.class));
+                        btnLogin.startAnimation(animationBtn);
+                        startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
                     } else if (finalResult == FederatedSignInResult.NOT_FOUND_IN_BACKEND){
-                        Intent newFederatedUserIntent = new Intent(ControllerLogin.this, ControllerRegistrazione.class);
+                        Intent newFederatedUserIntent = new Intent(ControllerLogin.this, ControllerRegister.class);
                         newFederatedUserIntent.putExtra("FEDERATED_ACCOUNT_EMAIL", email);
                         startActivity(newFederatedUserIntent);
                     }
-                }, error -> showUserFriendlyErrorMessageAndLogThrowable("Impossibile salvare le informazioni d'accesso", error));
+                }, error -> runOnUiThread(() -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                        (getApplicationContext(),"Login", "Impossibile salvare le informazioni d'accesso", error)));
     }
 
     private void onLoginClick(){
-        String userEmail =  email.getText().toString().trim();
-        String userPassword = password.getText().toString().trim();
+        String userEmail =  editTextEmail.getText().toString().trim();
+        String userPassword = editTextPassword.getText().toString().trim();
         RxAmplify.Auth.signIn(userEmail, userPassword)
                 .subscribe(result -> onSignInResult(result, userEmail),
-                        error -> showUserFriendlyErrorMessageAndLogThrowable("Errore nell'accesso.", error)
+                        error -> runOnUiThread(() -> onSignInError(error))
                 );
-    }
-
-    private void showUserFriendlyErrorMessageAndLogThrowable(String s, Throwable throwable){
-        if (throwable != null) Log.e("LOGIN", throwable.getMessage(), throwable);
-        else Log.e("LOGIN", s);
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
 
     private void onSignInResult(AuthSignInResult result, String utenteId){
@@ -191,30 +173,35 @@ public class ControllerLogin extends AppCompatActivity{
                         if (!isUtenteInserted){
                             RxAmplify.Auth.deleteUser()
                                     .subscribe(()-> {
-                                        Toast.makeText(getApplicationContext(), "Impossibile completare la registrazione. "
-                                         + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show();
-                                    }, error ->
-                                            showUserFriendlyErrorMessageAndLogThrowable("Errore. Contattare l'assistenza.", error));
+                                        runOnUiThread( () -> Toast.makeText(getApplicationContext(), "Impossibile completare la registrazione. "
+                                                + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show());
+                                    }, error -> runOnUiThread(() -> onSignInError(error)));
+
                             return Observable.just(false);
                         }
                         UserSessionManager.getInstance().setKeys(utenteId);
-                        return Observable.just(UserSessionManager.getInstance().saveUserSessionBlocking());
+                        UserSessionManager.getInstance().setLoggedIn(true);
+                        Callable<Boolean> increaseAccessCountStatAndSaveUserSessionCallable = () -> {
+                            DAOStatistiche.incrementUtenteAccess();
+                            return UserSessionManager.getInstance().saveUserSessionBlocking();
+                        };
+                        return Observable.fromCallable(increaseAccessCountStatAndSaveUserSessionCallable);
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(finalResult -> {
-                                if (finalResult) startActivity(new Intent(ControllerLogin.this, Controller_Home.class));
+                                if (finalResult) startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
                             },
-                            error -> showUserFriendlyErrorMessageAndLogThrowable("Errore nella registrazione.", error));
+                            error -> onSignInError(error));
 
         }
         else if (result.getNextStep().getSignInStep().equals(AuthSignInStep.CONFIRM_SIGN_UP)){
             RxAmplify.Auth.deleteUser()
                     .subscribe(()-> {
-                        Toast.makeText(getApplicationContext(), "Registrazione incompleta."
-                                + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show();
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Registrazione incompleta."
+                                + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show());
                     }, error ->
-                            showUserFriendlyErrorMessageAndLogThrowable("Errore. Contattare l'assistenza.", error));
+                            runOnUiThread(() -> onSignInError(error)));
         }
     }
 
@@ -222,37 +209,42 @@ public class ControllerLogin extends AppCompatActivity{
 
     private void onSignInError(Throwable error){
         if (error instanceof AuthException.UserNotFoundException)
-            showUserFriendlyErrorMessageAndLogThrowable("Utente non trovato.", error);
-        if (error instanceof AuthException.InvalidPasswordException)
-            showUserFriendlyErrorMessageAndLogThrowable("Password errata.", error);
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Login", "Utente non trovato.", error);
+        if (error instanceof AuthException.InvalidPasswordException
+        || error instanceof AuthException.NotAuthorizedException)
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Login", "Password errata.", error);
         if (error instanceof AuthException.UserNotConfirmedException){
             RxAmplify.Auth.deleteUser()
                     .subscribe(()-> {
-                        Toast.makeText(getApplicationContext(), "Registrazione incompleta."
-                                + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show();
-                    }, deleteUserError ->
-                            showUserFriendlyErrorMessageAndLogThrowable("Errore. Contattare l'assistenza.", deleteUserError));
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Registrazione incompleta."
+                                + "Eseguirla di nuovo.", Toast.LENGTH_LONG).show());
+                    }, deleteUserError -> runOnUiThread(() -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                            (getApplicationContext(),"Login", "Errore. Contattare l'assistenza.", deleteUserError)));
         }
+        ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                (getApplicationContext(),"Login", "Errore. Contattare l'assistenza.", error);
     }
     private void animazioni(){
-        email.setTranslationX(1000);
-        email.animate().translationX(0).setDuration(800).setStartDelay(400).start();
-        password.setTranslationX(1000);
-        password.animate().translationX(0).setDuration(800).setStartDelay(600).start();
-        login.setTranslationX(1000);
-        login.animate().translationX(0).setDuration(800).setStartDelay(800).start();
-        pass_dim.setTranslationX(1000);
-        pass_dim.animate().translationX(0).setDuration(800).setStartDelay(1000).start();
-        eye.setTranslationX(1000);
-        eye.animate().translationX(0).setDuration(1000).setStartDelay(600).start();
-        fb.setTranslationY(1000);
-        fb.animate().translationY(0).setDuration(800).setStartDelay(400).start();
-        google.setTranslationY(1000);
-        google.animate().translationY(0).setDuration(800).setStartDelay(600).start();
-        txt_reg.setTranslationY(1000);
-        txt_reg.animate().translationY(0).setDuration(800).setStartDelay(800).start();
-        registrazione.setTranslationY(1000);
-        registrazione.animate().translationY(0).setDuration(800).setStartDelay(1000).start();
+        editTextEmail.setTranslationX(1000);
+        editTextEmail.animate().translationX(0).setDuration(800).setStartDelay(400).start();
+        editTextPassword.setTranslationX(1000);
+        editTextPassword.animate().translationX(0).setDuration(800).setStartDelay(600).start();
+        btnLogin.setTranslationX(1000);
+        btnLogin.animate().translationX(0).setDuration(800).setStartDelay(800).start();
+        textViewRetrievePassword.setTranslationX(1000);
+        textViewRetrievePassword.animate().translationX(0).setDuration(800).setStartDelay(1000).start();
+        btnHidePassword.setTranslationX(1000);
+        btnHidePassword.animate().translationX(0).setDuration(1000).setStartDelay(600).start();
+        btnSignInWithFacebook.setTranslationY(1000);
+        btnSignInWithFacebook.animate().translationY(0).setDuration(800).setStartDelay(400).start();
+        btnSignInWithGoogle.setTranslationY(1000);
+        btnSignInWithGoogle.animate().translationY(0).setDuration(800).setStartDelay(600).start();
+        textViewRegister.setTranslationY(1000);
+        textViewRegister.animate().translationY(0).setDuration(800).setStartDelay(800).start();
+        textViewClickToRegister.setTranslationY(1000);
+        textViewClickToRegister.animate().translationY(0).setDuration(800).setStartDelay(1000).start();
 
     }
 }

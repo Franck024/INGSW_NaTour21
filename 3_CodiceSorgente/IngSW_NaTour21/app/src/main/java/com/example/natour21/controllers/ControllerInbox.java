@@ -11,39 +11,39 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.natour21.chat.views.ListChatAdapter;
+import com.example.natour21.chat.views.AdapterChat;
 import com.example.natour21.R;
-import com.example.natour21.chat.views.viewmodels.ChatViewModel;
+import com.example.natour21.chat.views.viewmodels.ViewModelChat;
 
-public class ControllerMessageInbox extends AppCompatActivity {
-    TextView nomeUtente;
-    RecyclerView RVlistChat;
-    ChatViewModel chatViewModel;
-    ImageView back;
+public class ControllerInbox extends AppCompatActivity {
+    private TextView textViewNomeUtente;
+    private RecyclerView recyclerViewChat;
+    private ViewModelChat viewModelChat;
+    private ImageView imageViewBack;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_message);
+        setContentView(R.layout.activity_inbox);
 
-        nomeUtente = findViewById(R.id.nome_utente);
-        RVlistChat = findViewById(R.id.RVchat);
-        back = findViewById(R.id.backListaMess);
+        textViewNomeUtente = findViewById(R.id.nome_utente);
+        recyclerViewChat = findViewById(R.id.RVchat);
+        imageViewBack = findViewById(R.id.backListaMess);
 
-        nomeUtente.setText("Chat");
+        textViewNomeUtente.setText("Chat");
 
-        chatViewModel = new ViewModelProvider(this).get(ChatViewModel.class);
-        ListChatAdapter listChatAdapter = new ListChatAdapter(new ListChatAdapter.ChatDiff());
-        RVlistChat.setAdapter(listChatAdapter);
-        RVlistChat.setLayoutManager(new LinearLayoutManager(this));
+        viewModelChat = new ViewModelProvider(this).get(ViewModelChat.class);
+        AdapterChat adapterChat = new AdapterChat(new AdapterChat.DiffChat());
+        recyclerViewChat.setAdapter(adapterChat);
+        recyclerViewChat.setLayoutManager(new LinearLayoutManager(this));
 
-        chatViewModel.getChats().observe(this, chats ->
-            listChatAdapter.submitList(chats));
-        back.setOnClickListener(new View.OnClickListener() {
+        viewModelChat.getChats().observe(this, chats ->
+            adapterChat.submitList(chats));
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ControllerMessageInbox.this, ControllerHome.class));
+                startActivity(new Intent(ControllerInbox.this, ControllerHome.class));
             }
         });
     }

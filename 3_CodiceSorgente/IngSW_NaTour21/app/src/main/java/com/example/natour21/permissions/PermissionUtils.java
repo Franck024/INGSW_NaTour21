@@ -1,4 +1,4 @@
-package com.example.natour21;
+package com.example.natour21.permissions;
 
 import android.os.Build;
 

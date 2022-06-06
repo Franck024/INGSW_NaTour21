@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,19 +17,21 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
+import androidx.work.Configuration;
 
 import com.amplifyframework.*;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.rx.RxAmplify;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+import com.example.natour21.BuildConfig;
 import com.example.natour21.R;
 import com.example.natour21.chat.stompclient.UserStompClient;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.notification.NotificationUtils;
 import com.example.natour21.sharedprefs.UserSessionManager;
 
-public class NaTourApplication extends Application implements
-        LifecycleEventObserver {
+public class ApplicationNaTour extends Application implements
+        LifecycleEventObserver, Configuration.Provider {
 
 
     public void onCreate(){
@@ -43,6 +46,7 @@ public class NaTourApplication extends Application implements
             UserStompClient.init(this);
             Log.i("NaTourApplication", "Initialized UserStompClient");
             ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+            org.osmdroid.config.Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
         } catch (AmplifyException error) {
             Log.e("NaTourApplication", "Could not initialize Amplify", error);
         }
@@ -92,5 +96,13 @@ public class NaTourApplication extends Application implements
     private void onAppToBackground(){
         if (!(UserStompClient.getInstance().isConnected())) return;
         UserStompClient.getInstance().disconnect();
+    }
+
+    @NonNull
+    @Override
+    public Configuration getWorkManagerConfiguration() {
+        return new Configuration.Builder()
+                .setMinimumLoggingLevel(android.util.Log.INFO)
+                .build();
     }
 }

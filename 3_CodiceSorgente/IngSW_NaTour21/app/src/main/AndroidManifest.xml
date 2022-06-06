@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.natour21">
 
     <queries>
@@ -20,7 +21,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".application.NaTourApplication"
+        android:name=".application.ApplicationNaTour"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,7 +29,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity"
+        <activity android:name=".controllers.ControllerStartup"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,21 +48,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".controller.ControllerLogin" />
-        <activity android:name=".controller.ControllerRegistrazione" />
-        <activity android:name=".controller.ControllerRecovery" />
-        <activity android:name=".controller.ControllerAddItin"/>
-        <activity android:name=".map.MapActivity" />
-        <activity android:name=".controller.Controller_Home" />
-        <activity android:name=".controller.Controller_listChat"/>
-        <activity android:name=".controller.Controller_Utente"/>
-        <activity android:name=".controller.Controller_itinerario"/>
-        <activity android:name=".controller.Controller_AccessoAdmin"/>
-        <activity android:name=".controller.Controller_Statistiche"/>
-        <activity android:name=".controller.Controller_ChatUtente"/>
-        <activity android:name=".SkipLoginController" />
-        <activity android:name=".controller.SettingsActivity"/>
-        <activity android:name=".controller.Controller_Ricerca"/>
+        <activity android:name=".controllers.ControllerLogin"/>
+        <activity android:name=".controllers.ControllerRegister" />
+        <activity android:name=".controllers.ControllerRecovery" />
+        <activity android:name=".controllers.ControllerAddNewItinerario"/>
+        <activity android:name=".map.ControllerMap" />
+        <activity android:name=".controllers.ControllerHome" />
+        <activity android:name=".controllers.ControllerInbox"/>
+        <activity android:name=".controllers.ControllerProfile"/>
+        <activity android:name=".controllers.ControllerItinerarioDetails"/>
+        <activity android:name=".controllers.ControllerStatistiche"/>
+        <activity android:name=".controllers.ControllerChat"/>
+        <activity android:name=".controllers.ControllerSettings"/>
+        <activity android:name=".controllers.ControllerSearchItinerario"/>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
     </application>
 
-</manifest>
+
+
+
+    </manifest>

@@ -83,7 +83,7 @@
             android:src="@mipmap/user_menu2" />
 
         <TextView
-            android:id="@+id/txtNomeUtente"
+            android:id="@+id/textViewNomeUtente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nome Utente"

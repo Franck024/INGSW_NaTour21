@@ -13,7 +13,7 @@ import com.example.natour21.chat.room.repositories.MessaggioRepository;
 
 import java.util.List;
 
-public class MessaggioViewModel extends AndroidViewModel {
+public class ViewModelMessaggio extends AndroidViewModel {
 
     private MessaggioRepository messaggioRepository;
 
@@ -21,7 +21,7 @@ public class MessaggioViewModel extends AndroidViewModel {
 
     private final String otherUserId;
 
-    public MessaggioViewModel(Application application, String otherUserId){
+    public ViewModelMessaggio(Application application, String otherUserId){
         super(application);
         messaggioRepository = new MessaggioRepository(application, otherUserId);
         this.otherUserId = otherUserId;

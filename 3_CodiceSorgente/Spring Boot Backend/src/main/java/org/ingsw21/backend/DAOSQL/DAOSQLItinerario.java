@@ -33,15 +33,24 @@ public class DAOSQLItinerario implements DAOItinerario {
 	getLastNItinerarioStatement, 
 	getLastNItinerarioStartingFromStatement,
 	getLastNItinerarioNewerThanStatement,
-	getItinerarioByUtenteStatement;
+	getItinerarioByUtenteStatement,
+	getUniqueTracciatoKeyStatement;
+	
+	private String attributes = "id, authorId, nome, durata, "
+			+ "ST_X(puntoIniziale::geometry) AS puntoInizialeLong, ST_Y(puntoIniziale::geometry) AS puntoInizialeLat,"
+			+ "nomePuntoIniziale, difficolta, descrizione, tracciatoKey, isAccessibleMobilityImpairment,"
+			+ "isAccessibleVisualImpairment";
 	
 	public DAOSQLItinerario() {
-		insertItinerarioStatement = "INSERT INTO Itinerario VALUES(DEFAULT, ?, ?, ?, ?, ?::difficoltaItinerario, ?, ?)";
-		getItinerarioByIdStatement = "SELECT * FROM Itinerario AS I WHERE I.id = ?";
-		getLastNItinerarioStatement = "SELECT * FROM get_last_n_itinerario(?)";
-		getLastNItinerarioStartingFromStatement = "SELECT * FROM get_last_n_itinerario_starting_from(?, ?)";
-		getLastNItinerarioNewerThanStatement = "SELECT * FROM get_last_n_itinerario_newer_than(?, ?)";
-		getItinerarioByUtenteStatement = "SELECT * FROM Itinerario AS I WHERE I.authorId = ?";
+		insertItinerarioStatement = "INSERT INTO Itinerario VALUES"
+				+ "(DEFAULT, ?, ?, ?, ?::geography, ?, ?::difficoltaItinerario, ?, ?, ?, ?)";
+		getItinerarioByIdStatement = "SELECT " + attributes + " FROM Itinerario AS I WHERE I.id = ?";
+		getLastNItinerarioStatement = "SELECT " + attributes + " FROM get_last_n_itinerario(?)";
+		getLastNItinerarioStartingFromStatement = "SELECT " + attributes + 
+				" FROM get_last_n_itinerario_starting_from(?, ?)";
+		getLastNItinerarioNewerThanStatement = "SELECT " + attributes + " FROM get_last_n_itinerario_newer_than(?, ?)";
+		getItinerarioByUtenteStatement = "SELECT " + attributes + " FROM Itinerario AS I WHERE I.authorId = ?";
+		getUniqueTracciatoKeyStatement = "SELECT ('tracciato/' || gen_random_uuid::text) AS tracciatoKey FROM gen_random_uuid()";
 	
 	}
 	
@@ -57,26 +66,39 @@ public class DAOSQLItinerario implements DAOItinerario {
 			itinerario.setId(rs.getLong("id"));
 			itinerario.setAuthorId(rs.getString("authorId"));
 			itinerario.setNome(rs.getString("nome"));
+			itinerario.setPuntoInizialeLat(rs.getDouble("puntoInizialeLat"));
+			itinerario.setPuntoInizialeLong(rs.getDouble("puntoInizialeLong"));
 			itinerario.setNomePuntoIniziale(rs.getString("nomePuntoIniziale"));
 			itinerario.setDurata(rs.getInt("durata"));
 			itinerario.setDifficoltaItinerario(DifficoltaItinerario.valueOf(rs.getString("difficolta")));
 			itinerario.setDescrizione(rs.getString("descrizione"));
 			itinerario.setTracciatoKey(rs.getString("tracciatoKey"));
+			itinerario.setIsAccessibleMobilityImpairment(rs.getBoolean("isAccessibleMobilityImpairment"));
+			itinerario.setIsAccessibleVisualImpairment(rs.getBoolean("isAccessibleVisualImpairment"));
 			return itinerario;
 		}
 	}
 
 	@Override
 	public void insertItinerario(Itinerario itinerario) throws WrappedCRUDException {
+	
+		String pointString;
+		Double pointLong = itinerario.getPuntoInizialeLong();
+		Double pointLat = itinerario.getPuntoInizialeLat();
+		pointString = (pointLong != null && pointLat != null) ? "POINT(" + itinerario.getPuntoInizialeLong() 
+		+ " " + itinerario.getPuntoInizialeLat() + ")" : null;
 		try {
 			jdbcTemplate.update(insertItinerarioStatement,
 					itinerario.getAuthorId(),
 					itinerario.getNome(),
 					itinerario.getDurata(),
+					pointString,
 					itinerario.getNomePuntoIniziale(),
 					itinerario.getDifficoltaItinerario().toString(),
 					itinerario.getDescrizione(),
-					itinerario.getTracciatoKey());
+					itinerario.getTracciatoKey(),
+					itinerario.getIsAccessibleMobilityImpairment(),
+					itinerario.getIsAccessibleVisualImpairment());
 		}
 		catch (DataAccessException dae) {
 			throw new WrappedCRUDException(dae);
@@ -141,6 +163,85 @@ public class DAOSQLItinerario implements DAOItinerario {
 			throw new WrappedCRUDException(dae);
 		}
 	}
+	
+	@Override
+	public List<Itinerario> getItinerarioByProperties(Double pointLat, Double pointLong, Double distanceWithin,
+			Boolean[] difficoltaArray, Integer durationToBeCompared, Boolean shouldBeLessThanGivenDuration,
+			Boolean isAccessibleMobilityImpairment, Boolean isAccessibleVisualImpairment) throws WrappedCRUDException {
+		String finalQuery = "SELECT " + attributes + " FROM Itinerario";
+		String additionalParams = "";
+		boolean isFirstParamAdded = true;
+		if (pointLat != null && pointLong != null && distanceWithin != null){
+			additionalParams += " ST_DWithin('POINT("
+			+ pointLong + " " + pointLat + ")'::geography, puntoIniziale," + distanceWithin + ")";
+			isFirstParamAdded = false;
+		}
+		if (difficoltaArray != null) {
+			DifficoltaItinerario[] difficoltaItinerarioValuesArray = DifficoltaItinerario.values();
+			int difficoltaParamCount = 0;
+			for (int i = 0; i < difficoltaItinerarioValuesArray.length; i++){
+				if (difficoltaArray[i] != null && difficoltaArray[i] == true){
+					if (difficoltaParamCount == 0){
+						if (!isFirstParamAdded) {
+							additionalParams += " AND";
+						} else isFirstParamAdded = false;
+						additionalParams += " (";
+					}
+					else additionalParams += " OR";
+					difficoltaParamCount++;
+					additionalParams += " difficolta::text LIKE '" + 
+					difficoltaItinerarioValuesArray[i].toString().toLowerCase() + "'";
+				}
+				
+			}
+			if (difficoltaParamCount > 0) additionalParams += ")";
+		}
+		if (durationToBeCompared != null && shouldBeLessThanGivenDuration != null){
+			if (!isFirstParamAdded) additionalParams += " AND";
+			else isFirstParamAdded = false;
+			additionalParams += " durata " + (shouldBeLessThanGivenDuration ? "< " : "> ") + durationToBeCompared;
+		}
+		
+		if (isAccessibleMobilityImpairment != null){
+			if (!isFirstParamAdded) additionalParams += " AND";
+			else isFirstParamAdded = false;
+			additionalParams += " isAccessibleMobilityImpairment = " + isAccessibleMobilityImpairment;
+		}
+		
+		if (isAccessibleVisualImpairment != null){
+			if (!isFirstParamAdded) additionalParams += " AND";
+			else isFirstParamAdded = false;
+			additionalParams += " isAccessibleVisualImpairment = " + isAccessibleVisualImpairment;
+		}
+		
+		if (!isFirstParamAdded) finalQuery += " WHERE" + additionalParams;
+		System.out.println(finalQuery);
+		try {
+			return jdbcTemplate.query(finalQuery, new ItinerarioMapper());
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
+	
+	@Override
+	public String getUniqueTracciatoKey() throws WrappedCRUDException{
+		try {
+			List<String> result = jdbcTemplate.query(getUniqueTracciatoKeyStatement, new RowMapper<String>() {
+
+				@Override
+				public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+					return rs.getString("tracciatoKey");
+				}
+				
+			});
+			if (result == null || result.isEmpty()) return null;
+			else return result.get(0);
+		}
+		catch (DataAccessException dae) {
+			throw new WrappedCRUDException(dae);
+		}
+	}
 
 	@Override
 	public void deleteItinerario(Itinerario itinerario) throws WrappedCRUDException {
@@ -167,5 +268,7 @@ public class DAOSQLItinerario implements DAOItinerario {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 }

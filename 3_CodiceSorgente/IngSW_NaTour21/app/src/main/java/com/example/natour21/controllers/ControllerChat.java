@@ -1,4 +1,4 @@
-package com.example.natour21.controller;
+package com.example.natour21.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,75 +8,68 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.natour21.chat.stompclient.UserStompClient;
-import com.example.natour21.chat.views.AdapterMessage;
+import com.example.natour21.chat.views.AdapterMessaggio;
 import com.example.natour21.R;
-import com.example.natour21.chat.views.viewmodels.MessaggioViewModel;
-import com.example.natour21.chat.views.viewmodels.MessaggioViewModelFactory;
-import com.example.natour21.entities.Messaggio;
+import com.example.natour21.chat.views.viewmodels.ViewModelMessaggio;
+import com.example.natour21.chat.views.viewmodels.ViewModelFactoryMessaggio;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-
-public class Controller_ChatUtente extends AppCompatActivity {
-    TextView nome_chat;
-    ImageView back, invia;
-    EditText editTextNewMessaggio;
-    RecyclerView RVmessaggi;
-    ProgressBar progressBar;
-
-    MessaggioViewModel messaggioViewModel;
-
-    ArrayList<Messaggio> listMessage;
+public class ControllerChat extends AppCompatActivity {
+    private TextView textViewChatName;
+    private ImageView imageViewBack, imageViewSend;
+    private EditText editTextNewMessaggio;
+    private RecyclerView recyclerViewMessaggio;
+    private ProgressBar progressBar;
+    private ViewModelMessaggio viewModelMessaggio;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        nome_chat = findViewById(R.id.nomeChat);
-        back = findViewById(R.id.backChat);
-        editTextNewMessaggio = findViewById(R.id.messageSend);
-        invia = findViewById(R.id.inviaChat);
-        RVmessaggi = findViewById(R.id.chatRecycleView);
+        textViewChatName = findViewById(R.id.textViewChatName);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        editTextNewMessaggio = findViewById(R.id.editTextNewMessaggio);
+        imageViewSend = findViewById(R.id.imageViewSend);
+        recyclerViewMessaggio = findViewById(R.id.recyclerViewMessaggio);
         progressBar = findViewById(R.id.progressBar);
 
         Bundle bundle = getIntent().getExtras();
         if (!(bundle.containsKey("OTHER_USER_ID") && bundle.containsKey("CHAT_NAME"))){
-            showErrorMessage("Errore nell'inizializzare la chat.");
+            ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                    (getApplicationContext(),"Chat", "Errore nell'inizializzare la chat.", null);
             finish();
         }
         String otherUserId = bundle.getString("OTHER_USER_ID");
-        nome_chat.setText(bundle.getString("CHAT_NAME"));
+        textViewChatName.setText(bundle.getString("CHAT_NAME"));
 
-        back.setOnClickListener(
-                view -> startActivity(new Intent(Controller_ChatUtente.this, Controller_listChat.class)));
+        imageViewBack.setOnClickListener(
+                view -> startActivity(new Intent(ControllerChat.this, ControllerInbox.class)));
 
         // Creazione lista messaggi
-        MessaggioViewModelFactory messaggioViewModelFactory = new MessaggioViewModelFactory(getApplication());
-        messaggioViewModelFactory.setOtherUserId(otherUserId);
-        messaggioViewModel = new ViewModelProvider(this, messaggioViewModelFactory)
-                .get(MessaggioViewModel.class);
+        ViewModelFactoryMessaggio viewModelFactoryMessaggio = new ViewModelFactoryMessaggio(getApplication());
+        viewModelFactoryMessaggio.setOtherUserId(otherUserId);
+        viewModelMessaggio = new ViewModelProvider(this, viewModelFactoryMessaggio)
+                .get(ViewModelMessaggio.class);
 
         // VISUALIZZAZIONI
         progressBar.setVisibility(View.GONE);
-        RVmessaggi.setVisibility(View.VISIBLE);
+        recyclerViewMessaggio.setVisibility(View.VISIBLE);
 
-        AdapterMessage listMessageAdapter = new AdapterMessage(new AdapterMessage.MessageDiff());
-        RVmessaggi.setAdapter(listMessageAdapter);
+        AdapterMessaggio listMessageAdapter = new AdapterMessaggio(new AdapterMessaggio.MessaggioDiff());
+        recyclerViewMessaggio.setAdapter(listMessageAdapter);
 
-        messaggioViewModel.getAllMessaggi().observe(this, messaggi ->{
+        viewModelMessaggio.getAllMessaggi().observe(this, messaggi ->{
             listMessageAdapter.submitList(messaggi);
         });
 
         // Invio messaggi
-        invia.setOnClickListener(new View.OnClickListener() {
+        imageViewSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!TextUtils.isEmpty(editTextNewMessaggio.getText())){
@@ -86,18 +79,16 @@ public class Controller_ChatUtente extends AppCompatActivity {
                         editTextNewMessaggio.setText(null);
                     }
                     catch (JsonProcessingException jpe){
-                        showErrorMessage(jpe.getMessage());
+                        ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                                (getApplicationContext(),"Chat", "Impossibile mandare il messaggio.", jpe);
                     }
                 }
             }
         });
 
-        messaggioViewModel.setChatRead(otherUserId);
+        viewModelMessaggio.setChatRead(otherUserId);
 
     }
 
-    private void showErrorMessage(String s){
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
 
 }

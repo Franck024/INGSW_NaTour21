@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mapTopLayout"
     android:orientation="vertical"
     android:background="@color/white"
@@ -48,7 +46,8 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:clickable="true"
-                    android:src="@mipmap/cestino" />
+                    android:src="@mipmap/cestino"
+                    android:focusable="true" />
 
                 <ImageButton
                     android:id="@+id/btnCenterOnUserLocation"

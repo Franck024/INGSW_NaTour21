@@ -22,6 +22,7 @@ import com.example.natour21.exceptions.WrappedCRUDException;
 
 import java.util.concurrent.Callable;
 
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -29,7 +30,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DialogFragmentControllerAddNewSegnalazione extends DialogFragment {
 
     private EditText editTextTitolo, editTextDescrizione;
-    long idItinerario;
+    private long idItinerario;
     private String segnalazioneAuthorId;
 
 

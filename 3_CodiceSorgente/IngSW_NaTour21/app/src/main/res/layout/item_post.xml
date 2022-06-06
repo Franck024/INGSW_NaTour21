@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/CardView">
+
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/constraintLayoutPost"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <TextView
+           android:id="@+id/textViewNome"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Nome Percorso"
+           android:textColor="@color/green"
+           android:textSize="25sp"
+           android:paddingLeft="10sp"
+           android:drawableLeft="@drawable/location_icon"
+           android:drawablePadding="5sp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txtUtentePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome Utente"
+            android:textColor="@color/blue"
+            android:textSize="22sp"
+            android:paddingLeft="10sp"
+            android:drawableLeft="@drawable/person_icon"
+            android:drawablePadding="5sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewNome"/>
+
+       <View
+           android:id="@+id/horizontalSeparatingLine"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           app:layout_constraintTop_toBottomOf="@+id/txtUtentePost"
+           app:layout_constraintStart_toStartOf="parent"
+           android:background="@android:color/darker_gray"/>
+
+       <ProgressBar
+           android:id="@+id/progressBar"
+           android:layout_width="match_parent"
+           android:layout_height="180sp"
+           android:indeterminate="true"
+           android:indeterminateTint="@color/blue"
+           app:layout_constraintTop_toBottomOf="@id/horizontalSeparatingLine"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"/>
+
+       <View
+           android:id="@+id/secondHorizontalSeparatingLine"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           app:layout_constraintTop_toBottomOf="@id/progressBar"
+           app:layout_constraintStart_toStartOf="parent"
+           android:background="@android:color/darker_gray"/>
+
+       <TextView
+           android:id="@+id/txtViewRisultatoArea"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:drawableLeft="@mipmap/inizio"
+           android:text="Punto iniziale"
+           android:textSize="20sp"
+           android:textColor="@color/black"
+           android:paddingTop="5sp"
+           android:paddingLeft="15sp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/secondHorizontalSeparatingLine"/>
+
+       <TextView
+           android:id="@+id/txtViewRisultatoDifficolta"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:drawableLeft="@mipmap/difficolta"
+           android:text="Difficoltà"
+           android:textSize="20sp"
+           android:textColor="@color/black"
+           android:paddingTop="5sp"
+           android:paddingLeft="15sp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/txtViewRisultatoArea"/>
+
+       <TextView
+           android:id="@+id/txtViewRisultatoTempo"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:drawableLeft="@mipmap/tempo"
+           android:text="Durata"
+
+           android:textSize="20sp"
+           android:textColor="@color/black"
+           android:paddingTop="5sp"
+           android:paddingLeft="15sp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/txtViewRisultatoDifficolta"/>
+
+       <Button
+           android:id="@+id/btnVisualizzaItinerario"
+           android:layout_width="120sp"
+           android:layout_height="wrap_content"
+           android:background="@drawable/btn_white_bord"
+           android:backgroundTint="@color/green"
+           android:padding="20sp"
+           android:layout_marginEnd="20dp"
+           android:text="Visualizza"
+           android:textColor="@color/white"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/txtViewRisultatoTempo" />
+
+       <View
+           android:layout_width="wrap_content"
+           android:layout_height="20sp"
+           app:layout_constraintTop_toBottomOf="@id/btnVisualizzaItinerario"
+           app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>
+

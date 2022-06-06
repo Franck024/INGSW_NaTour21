@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutAggiungiItinerario"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/textViewNomeItinerario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="Nome percorso"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeItinerario" />
+
+    <TextView
+        android:id="@+id/textViewDurata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Durata"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
+
+    <TextView
+        android:id="@+id/textViewDurataOre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Ore:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
+
+    <EditText
+        android:id="@+id/editTextDurataOre"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textViewDurataOre"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+
+    <TextView
+        android:id="@+id/textViewDurataMinuti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:text="Minuti:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextDurataOre"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata" />
+
+    <EditText
+        android:id="@+id/editTextDurataMinuti"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textViewDurataMinuti"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDurata"></EditText>
+
+    <TextView
+        android:id="@+id/textViewPuntoIniziale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="25dp"
+        android:text="Punto di inizio"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDurataOre"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarPuntoIniziale"
+        android:layout_width="21dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:visibility="invisible"
+        android:indeterminate="true"
+        app:layout_constraintStart_toEndOf="@+id/textViewPuntoIniziale"
+        app:layout_constraintTop_toTopOf="@+id/textViewPuntoIniziale" />
+
+    <TextView
+        android:id="@+id/textViewPuntoInizialeSubText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:text="Questo campo può essere non indicato se si inserisce un tracciato."
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoIniziale" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteEditTextView"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPuntoInizialeSubText" />
+
+
+    <TextView
+        android:id="@+id/textViewDifficolta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="Difficoltà"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteEditTextView" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroupDifficolta"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDifficolta">
+
+        <RadioButton
+            android:id="@+id/radioBtnFacile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="25dp"
+            android:text="Facile"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radioBtnMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Media"
+            android:layout_marginLeft="20dp"/>
+
+        <RadioButton
+            android:id="@+id/radioBtnDifficile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:text="Difficile"
+            android:layout_marginLeft="20dp" />
+    </RadioGroup>
+    <TextView
+        android:id="@+id/textViewDescrizione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descrizione (opzionale)"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupDifficolta" />
+
+    <EditText
+        android:id="@+id/editTextDescrizione"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:paddingLeft="10dp"
+        android:gravity="top"
+        android:background="@drawable/btn_white_bord"
+        android:inputType="textMultiLine"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescrizione" />
+
+    <TextView
+        android:id="@+id/textViewTracciato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:text="Tracciato (opzionale)"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescrizione"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutRadioButtonGroup"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutRadioButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTracciato"
+        app:layout_constraintBottom_toTopOf="@id/btnIndietro">
+
+        <RadioGroup
+            android:id="@+id/radioBtnGroupTracciato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioBtnNonInserire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:checked="true"
+                android:text="Non voglio inserire un tracciato" />
+
+            <RadioButton
+                android:id="@+id/radioBtnMappa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:text="Inserimento con mappa" />
+
+            <RadioButton
+                android:id="@+id/radioBtnGPX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0dp"
+                android:text="Inserimento con file GPX" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnIndietro"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/btn_white_bord"
+        android:backgroundTint="@color/red"
+        android:text="INDIETRO"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnProssimo"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="25dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/btn_white_bord"
+        android:backgroundTint="@color/green"
+        android:text="PROSSIMO"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

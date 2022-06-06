@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutRicerca"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingHorizontal="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginTop="10dp">
+
+        <ImageButton
+            android:id="@+id/back_ricerca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@mipmap/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ricerca itinerario"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/suppRicerca"
+            app:layout_constraintStart_toEndOf="@+id/back_ricerca"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/suppRicerca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            android:visibility="invisible"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/searchParamsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Area"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:textColor="@color/blue"/>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextViewArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vicino a..."
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextRaggioArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="10dp"
+                android:hint="Nel raggio di..."
+                android:padding="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDifficolta"
+            android:text="Difficoltà"
+            android:includeFontPadding="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/blue"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+
+                android:id="@+id/checkBoxFacile"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:background="#AADDAA"
+                android:button="@null"
+                android:text="Facile"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toStartOf="@id/checkBoxMedia"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/checkBoxMedia"
+                android:layout_width="85dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:background="#DDDDAA"
+                android:button="@null"
+                android:text="Media"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>/>
+
+            <CheckBox
+                android:id="@+id/checkBoxDifficile"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                android:background="#DD9EB2"
+                android:button="@null"
+                android:text="Difficile"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/checkBoxMedia"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Durata"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/blue"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinnerDurata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:entries="@array/tempo"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+            <EditText
+                android:id="@+id/editTextDurataOre"
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:hint="Ore"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/editTextDurataMinuti"
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Minuti"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accesso per disabili"
+            android:inputType="number"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/blue"/>
+        <Switch
+            android:id="@+id/switchDisabilitaMotoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ricerca solo percorsi accessibili a persone con disabilità motorie"
+            android:checked="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <Switch
+            android:id="@+id/switchDisabilitaVisiva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ricerca solo percorsi accessibili a persone con disabilità visive"
+            android:checked="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+                android:id="@+id/btnIndietro"
+                android:visibility="gone"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/red"
+                android:text="INDIETRO"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnCerca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15sp"
+                android:background="@drawable/btn_white_bord"
+                android:backgroundTint="@color/green"
+                android:text="CERCA"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

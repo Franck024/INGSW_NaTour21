@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "565989109316",
+    "project_id": "natour21-342817",
+    "storage_bucket": "natour21-342817.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565989109316:android:c44adebe1ed6f32f295611",
+        "android_client_info": {
+          "package_name": "com.example.natour21"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565989109316-ic1a3d35oo8dqt736ssffgptkq5hr85d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc26O21XsOeCzFAntE8GFf9WItGXEgGYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565989109316-ic1a3d35oo8dqt736ssffgptkq5hr85d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

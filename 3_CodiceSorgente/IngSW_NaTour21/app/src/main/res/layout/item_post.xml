@@ -17,7 +17,8 @@
    <androidx.constraintlayout.widget.ConstraintLayout
        android:id="@+id/constraintLayoutPost"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+       android:layout_height="wrap_content"
+       >
 
        <TextView
            android:id="@+id/textViewNome"
@@ -26,8 +27,11 @@
            android:text="Nome Percorso"
            android:textColor="@color/green"
            android:textSize="25sp"
+           android:textStyle="bold"
            android:paddingLeft="10sp"
+           android:paddingTop="7sp"
            android:drawableLeft="@drawable/location_icon"
+           android:drawableTint="@color/green"
            android:drawablePadding="5sp"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toTopOf="parent"/>
@@ -38,9 +42,12 @@
             android:layout_height="wrap_content"
             android:text="Nome Utente"
             android:textColor="@color/blue"
-            android:textSize="22sp"
-            android:paddingLeft="10sp"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:paddingVertical="2sp"
+            android:paddingLeft="40sp"
             android:drawableLeft="@drawable/person_icon"
+            android:drawableTint="@color/blue"
             android:drawablePadding="5sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewNome"/>
@@ -76,6 +83,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:drawableLeft="@mipmap/inizio"
+           android:drawablePadding="10sp"
            android:text="Punto iniziale"
            android:textSize="20sp"
            android:textColor="@color/black"
@@ -89,6 +97,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:drawableLeft="@mipmap/difficolta"
+           android:drawablePadding="10sp"
            android:text="Difficoltà"
            android:textSize="20sp"
            android:textColor="@color/black"
@@ -103,7 +112,7 @@
            android:layout_height="wrap_content"
            android:drawableLeft="@mipmap/tempo"
            android:text="Durata"
-
+           android:drawablePadding="10sp"
            android:textSize="20sp"
            android:textColor="@color/black"
            android:paddingTop="5sp"
@@ -113,14 +122,17 @@
 
        <Button
            android:id="@+id/btnVisualizzaItinerario"
-           android:layout_width="120sp"
+           android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:background="@drawable/btn_white_bord"
            android:backgroundTint="@color/green"
-           android:padding="20sp"
+           android:paddingHorizontal="20sp"
+           android:paddingVertical="10sp"
            android:layout_marginEnd="20dp"
            android:text="Visualizza"
+           android:textStyle="bold"
            android:textColor="@color/white"
+           android:layout_marginTop="5sp"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintTop_toBottomOf="@id/txtViewRisultatoTempo" />
 

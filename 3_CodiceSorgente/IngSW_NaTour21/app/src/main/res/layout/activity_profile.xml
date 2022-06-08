@@ -66,24 +66,25 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageButton
             android:id="@+id/btn_startChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/btn_sfera_grigia"
+            android:backgroundTint="@color/silver"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/silver"
-            android:layout_gravity="end"
             android:src="@mipmap/message"
-            android:background="@drawable/btn_sfera_grigia"
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="100sp"
             android:layout_height="100sp"
+            android:layout_gravity="center"
             android:src="@mipmap/user_menu2" />
 
         <TextView
@@ -199,14 +200,12 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_white_bord"
             android:backgroundTint="@color/white"
-            android:tint="@color/blue"
             android:padding="10dp"
             android:src="@mipmap/home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageBtnProfile"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseAppTint" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/imageBtnProfile"
@@ -216,11 +215,13 @@
             android:background="@drawable/btn_white_bord"
             android:backgroundTint="@color/white"
             android:padding="10dp"
+            android:tint="@color/blue"
             android:src="@mipmap/utente_home"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toStartOf="@id/imageBtnInbox"
             app:layout_constraintStart_toEndOf="@id/imageBtnHome"
-            app:layout_constraintTop_toTopOf="@+id/view" />
+            app:layout_constraintTop_toTopOf="@+id/view"
+            tools:ignore="UseAppTint" />
 
         <ImageButton
             android:id="@+id/imageBtnInbox"

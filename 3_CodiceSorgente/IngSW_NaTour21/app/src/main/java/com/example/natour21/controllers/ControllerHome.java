@@ -361,6 +361,12 @@ public class ControllerHome extends AppCompatActivity implements java.util.Obser
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
+
+    @Override
     public void onDestroy(){
         super.onDestroy();
         UserStompClient.getInstance().deleteObserver(this);

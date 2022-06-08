@@ -61,7 +61,7 @@ public class ChatController {
 	//Se la trova, da in output la combinazione ordinata com'è nel DB.
 	//Altrimenti, da in output null
 	@GetMapping
-	public List<String> getChat
+	public Chat getChat
 	(
 			@RequestParam String utenteOneId,
 			@RequestParam String utenteTwoId
@@ -79,11 +79,7 @@ public class ChatController {
 			if (outputChat == null) {
 				outputChat = DAOChat.getChatByUtente(inputUtenteTwo, inputUtenteOne);
 			}
-			if (outputChat == null) return null;
-			LinkedList<String> outputOrderedIDs = new LinkedList<String>();
-			outputOrderedIDs.add(outputChat.getUtenteOneId());
-			outputOrderedIDs.add(outputChat.getUtenteTwoId());
-			return outputOrderedIDs;
+			return outputChat;
 		}
 		catch (WrappedCRUDException wcrude) {
 			throw (wcrude.getWrappedException());
@@ -190,6 +186,17 @@ public class ChatController {
 			reciever = utenteOneId;
 		}
 		try {
+			//Controllo esistenza chat
+			Utente utenteOne = new Utente();
+			utenteOne.setEmail(inputChat.getUtenteOneId());
+			Utente utenteTwo = new Utente();
+			utenteTwo.setEmail(inputChat.getUtenteTwoId());
+			Chat chat = DAOChat.getChatByUtente(utenteOne, utenteTwo);
+			if (chat == null) {
+				System.out.println("OKAY!");
+				DAOChat.insertChat(inputChat);
+			}
+			//Inserimento messaggio
 			long id = DAOChat.insertMessaggio(inputChat, messaggio);
 			DTOMessaggio DTOMessaggio = new DTOMessaggio(sender, messaggio);
 			this.messagingTemplate.convertAndSend("/chat/messaggio/live/" + sender, new DTOMessaggioInsertResponse(id));

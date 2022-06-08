@@ -17,6 +17,7 @@ import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOSegnalazione;
 import com.example.natour21.R;
 import com.example.natour21.entities.Segnalazione;
+import com.example.natour21.enums.DifficoltaItinerario;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.exceptions.WrappedCRUDException;
 
@@ -30,13 +31,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DialogFragmentControllerAddNewSegnalazione extends DialogFragment {
 
     private EditText editTextTitolo, editTextDescrizione;
-    private long idItinerario;
-    private String segnalazioneAuthorId;
 
+    public interface OnPositiveButtonClickListener{
+        public void onPositiveButtonClick(boolean areFieldsProperlyFilled,
+                                          String segnalazioneTitolo, String segnalazioneDescrizione);
+    }
 
-    public DialogFragmentControllerAddNewSegnalazione(long idItinerario, String segnalazioneAuthorId){
-        this.idItinerario = idItinerario;
-        this.segnalazioneAuthorId = segnalazioneAuthorId;
+    private OnPositiveButtonClickListener onPositiveButtonClickListener;
+
+    public DialogFragmentControllerAddNewSegnalazione(OnPositiveButtonClickListener onPositiveButtonClickListener){
+        this.onPositiveButtonClickListener = onPositiveButtonClickListener;
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,13 +53,11 @@ public class DialogFragmentControllerAddNewSegnalazione extends DialogFragment {
                 .setPositiveButton("Invia", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        try{
-                            insertSegnalazione();
-                        }
-                        catch (InvalidConnectionSettingsException | WrappedCRUDException exception){
-                            Context context = getActivity().getApplicationContext();
-                            Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                        String segnalazioneTitolo = editTextTitolo.getText().toString();
+                        String segnalazioneDescrizione = editTextDescrizione.getText().toString();
+                        onPositiveButtonClickListener.onPositiveButtonClick(
+                                !segnalazioneTitolo.isEmpty(),
+                                segnalazioneTitolo, segnalazioneDescrizione);
 
                     }
                 })
@@ -67,27 +69,4 @@ public class DialogFragmentControllerAddNewSegnalazione extends DialogFragment {
         return builder.create();
     }
 
-    private void insertSegnalazione() throws InvalidConnectionSettingsException, WrappedCRUDException {
-        DAOSegnalazione DAOSegnalazione = DAOFactory.getDAOSegnalazione();
-        Segnalazione segnalazione = new Segnalazione(segnalazioneAuthorId,
-                idItinerario,
-                editTextTitolo.getText().toString(),
-                editTextDescrizione.getText().toString());
-
-        Callable<Void> insertCallable = () ->{
-            DAOSegnalazione.insertSegnalazione(segnalazione);
-            return null;
-        };
-
-        Completable.fromCallable(insertCallable)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( () -> Toast.makeText(requireActivity().getApplicationContext(),
-                        "Segnalazione inserita!", Toast.LENGTH_SHORT).show(), error -> {
-                    if (error instanceof WrappedCRUDException) throw error;
-                    Toast.makeText(requireActivity().getApplicationContext(),
-                            "Impossibile inserire la segnalazione.", Toast.LENGTH_SHORT).show();
-                    Log.e("Segnalazione", error.getMessage(), error);
-                });
-    }
 }

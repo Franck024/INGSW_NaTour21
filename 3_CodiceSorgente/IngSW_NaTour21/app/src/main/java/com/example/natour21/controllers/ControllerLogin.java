@@ -23,6 +23,7 @@ import com.example.natour21.DAOFactory.DAOFactory;
 import com.example.natour21.DAOs.DAOStatistiche;
 import com.example.natour21.DAOs.DAOUtente;
 import com.example.natour21.R;
+import com.example.natour21.chat.stompclient.UserStompClient;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
 import com.google.android.gms.common.util.ArrayUtils;
@@ -146,6 +147,7 @@ public class ControllerLogin extends AppCompatActivity{
                     if (finalResult == FederatedSignInResult.FOUND
                             || finalResult == FederatedSignInResult.CANT_SAVE_SESSION_LOCALLY){
                         btnLogin.startAnimation(animationBtn);
+                        UserStompClient.getInstance().setEnabled(true);
                         startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
                     } else if (finalResult == FederatedSignInResult.NOT_FOUND_IN_BACKEND){
                         Intent newFederatedUserIntent = new Intent(ControllerLogin.this, ControllerRegister.class);
@@ -190,7 +192,10 @@ public class ControllerLogin extends AppCompatActivity{
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(finalResult -> {
-                                if (finalResult) startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
+                                if (finalResult){
+                                    UserStompClient.getInstance().setEnabled(true);
+                                    startActivity(new Intent(ControllerLogin.this, ControllerHome.class));
+                                }
                             },
                             error -> onSignInError(error));
 
@@ -246,5 +251,11 @@ public class ControllerLogin extends AppCompatActivity{
         textViewClickToRegister.setTranslationY(1000);
         textViewClickToRegister.animate().translationY(0).setDuration(800).setStartDelay(1000).start();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

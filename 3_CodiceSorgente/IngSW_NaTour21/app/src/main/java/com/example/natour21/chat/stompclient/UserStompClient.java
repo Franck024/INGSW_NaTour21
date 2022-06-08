@@ -51,6 +51,8 @@ public class UserStompClient extends java.util.Observable {
     private final String ENDPOINT = "websocket-endpoint";
     private final String WEBSOCKET_PREFIX = "/chat/messaggio/live/";
     private long unreadMessageCount = 0;
+    //Usato per non permettere all'utente di collegarsi a meno che sia realmente autenticato.
+    private boolean isEnabled = false;
     private HashMap<String, Boolean> isCurrentUtenteUtenteOneInBackendHashMap = new HashMap<>();
 
     private class MessaggioChatIdPair{
@@ -101,9 +103,13 @@ public class UserStompClient extends java.util.Observable {
         DAOChat = DAOFactory.getDAOChat();
     }
 
+    public void setEnabled(boolean isEnabled){
+        this.isEnabled = isEnabled;
+    }
+
     @SuppressLint("CheckResult")
     public void connect(){
-        if (!(UserSessionManager.getInstance().isLoggedIn())) return;
+        if (!(UserSessionManager.getInstance().isLoggedIn()) || !isEnabled) return;
         Log.i("STOMP-CONNECT", "Connecting at time " + Calendar.getInstance().getTime());
         Completable.fromCallable(getSyncChatsCallable())
                 .subscribeOn(Schedulers.io())
@@ -263,9 +269,26 @@ public class UserStompClient extends java.util.Observable {
                                 selfMessaggioChatIdPairBuffer.removeFirst();
                                 Callable<Void> insertMessaggioCallable = () ->
                                 {
+                                    boolean doesChatWithUserExistLocally = chatRepository
+                                            .doesChatWithUserExistBlocking(messaggioChatIdPair.getChatId());
+                                    if (!doesChatWithUserExistLocally) {
+                                        Utente utente = DAOUtente.getUtenteByEmail(messaggioChatIdPair.getChatId());
+                                        String id = utente.getEmail();
+                                        String nomeChat = utente.getDisplayName();
+                                        Utente inputCurrentUtente = new Utente
+                                                (getCurrentUtenteId(), "", "", false);
+                                        Chat chat = DAOChat.getChatByUtente(utente, inputCurrentUtente);
+                                        //Se la chat non è stata ancora inserita nel backend, annulla l'operazione
+                                        if (chat == null) return null;
+                                        boolean isCurrentUtenteUtenteOneInBackend =
+                                                chat.getUtenteOneId().equals(inputCurrentUtente.getEmail());
+                                        chatRepository.insertBlocking(new ChatDBEntity
+                                                (id, nomeChat, isCurrentUtenteUtenteOneInBackend));
+                                    }
                                     messaggioRepository.insert(messaggioDBEntityToInsert);
                                     return null;
                                 };
+
                                 Completable.fromCallable(insertMessaggioCallable)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -289,8 +312,10 @@ public class UserStompClient extends java.util.Observable {
 
     public void send(String receiver, String text) throws JsonProcessingException, NoSuchUserInUtenteOneHashMap {
         Boolean isCurrentUtenteUtenteOneInBackend = isCurrentUtenteUtenteOneInBackendHashMap.get(receiver);
-        if (isCurrentUtenteUtenteOneInBackend == null)
-            throw new NoSuchUserInUtenteOneHashMap(receiver);
+        if (isCurrentUtenteUtenteOneInBackend == null){
+            isCurrentUtenteUtenteOneInBackend = true;
+            isCurrentUtenteUtenteOneInBackendHashMap.put(receiver, isCurrentUtenteUtenteOneInBackend);
+        }
         Messaggio messaggio = new Messaggio(0,
                 text,
                 OffsetDateTime.now(),

@@ -3,10 +3,12 @@ package com.example.natour21.controllers;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -74,7 +76,7 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (!bundle.containsKey("ITINERARIO_ID")) {
             ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
-                    (getApplicationContext(),"ItinerarioDetails",  "Impossibile visualizzare l'itinerario.", null);
+                    (getApplicationContext(), "ItinerarioDetails", "Impossibile visualizzare l'itinerario.", null);
             finish();
         }
 
@@ -115,15 +117,15 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
                             DifficoltaItinerario difficolta;
                             Integer durata;
 
-                            for (CorrezioneItinerario c : correzioni){
+                            for (CorrezioneItinerario c : correzioni) {
                                 difficolta = c.getDifficolta();
                                 durata = c.getDurata();
 
-                                if (difficolta != null){
+                                if (difficolta != null) {
                                     valutazioniDifficolta++;
                                     difficoltaScore += difficolta.ordinal();
                                 }
-                                if (durata != null){
+                                if (durata != null) {
                                     valutazioniDurata++;
                                     durataScore += durata;
                                 }
@@ -146,13 +148,13 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
                                 }
                             });
                             textViewDifficolta.setText(itinerario.getDifficoltaItinerario().toString()
-                            + (valutazioniDifficolta > 1 ? " (" + valutazioniDifficolta + ")" : ""));
+                                    + (valutazioniDifficolta > 1 ? " (" + valutazioniDifficolta + ")" : ""));
                             textViewNomePuntoIniziale.setText(itinerario.getNomePuntoIniziale());
                             textViewDurata.setText(itinerario.getDurataAsHourMinuteString()
-                            + (valutazioniDurata > 1 ? " (" + valutazioniDurata + ")" : ""));
+                                    + (valutazioniDurata > 1 ? " (" + valutazioniDurata + ")" : ""));
                             textViewNumeroSegnalazioni.setText(Integer.valueOf(segnalazioni.size()).toString());
                             textViewDescrizione.setText(itinerario.getDescrizione());
-                            if (itinerario.getAccessibleMobilityImpairment() != null){
+                            if (itinerario.getAccessibleMobilityImpairment() != null) {
                                 textViewAccessibilitaMotoria.setText
                                         (itinerario.getAccessibleMobilityImpairment()
                                                 ? "Sì"
@@ -160,7 +162,7 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
                                 layoutMobilityAccessibility.setVisibility(View.VISIBLE);
 
                             }
-                            if (itinerario.getAccessibleVisualImpairment() != null){
+                            if (itinerario.getAccessibleVisualImpairment() != null) {
                                 textViewAccessibilitaVisiva.setText
                                         (itinerario.getAccessibleVisualImpairment()
                                                 ? "Sì"
@@ -168,32 +170,78 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
                                 layoutVisualAccessibility.setVisibility(View.VISIBLE);
                             }
 
-                            if (itinerario.getAuthorId().equals(UserSessionManager.getInstance().getUserId())){
+                            if (itinerario.getAuthorId().equals(UserSessionManager.getInstance().getUserId())) {
                                 btnCorrezioneItinerario.setVisibility(View.INVISIBLE);
                                 btnSegnalazione.setVisibility(View.INVISIBLE);
                             }
                         }
                         , error -> ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
                                 (getApplicationContext(), "ItinerarioDetails", "Errore nella visualizzazione dell'itinerario.",
-                                error));
+                                        error));
 
 
         btnSegnalazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DialogFragmentControllerAddNewSegnalazione.OnPositiveButtonClickListener onPositiveButtonClickListener =
+                        new DialogFragmentControllerAddNewSegnalazione.OnPositiveButtonClickListener() {
+                            @Override
+                            public void onPositiveButtonClick(boolean areFieldsProperlyFilled, String segnalazioneTitolo, String segnalazioneDescrizione) {
+                                if (!areFieldsProperlyFilled) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Campi non riempiti correttamente. Riprova.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                Segnalazione segnalazione = new Segnalazione(UserSessionManager.getInstance().getUserId(), idItinerario,
+                                        segnalazioneTitolo, segnalazioneDescrizione);
+                                Completable.fromCallable(() -> DAOSegnalazione.insertSegnalazione(segnalazione))
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(() -> Toast.makeText(getApplicationContext(),
+                                                "Segnalazione inserita!", Toast.LENGTH_SHORT).show(), error -> {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Impossibile inserire la segnalazione. Forse ne hai già fatta una?", Toast.LENGTH_SHORT).show();
+                                            Log.e("Segnalazione", error.getMessage(), error);
+                                        });
+                            }
+            };
                 DialogFragment segnalazioneDialogFragment = new DialogFragmentControllerAddNewSegnalazione
-                        (itinerario.getId(),
-                                UserSessionManager.getInstance().getUserId());
+                        (onPositiveButtonClickListener);
                 segnalazioneDialogFragment.show(getSupportFragmentManager(), "segnalazione");
             }
         });
 
         btnCorrezioneItinerario.setOnClickListener(v -> {
-            DialogFragment correzioneDialogFragment = new DialogFragmentControllerAddNewCorrezioneItinerario
-                    (itinerario.getId(), UserSessionManager.getInstance().getUserId());
-            correzioneDialogFragment.show(getSupportFragmentManager(), "correzione");
+            DialogFragment correzioneDialogFragment;
+            DialogFragmentControllerAddNewCorrezioneItinerario.OnPositiveButtonClickListener
+                    onPositiveButtonClickListener =
+                    new DialogFragmentControllerAddNewCorrezioneItinerario.OnPositiveButtonClickListener() {
+                        @Override
+                        public void onPositiveButtonClick(boolean areFieldsProperlyFilled, Integer durata,
+                                                          DifficoltaItinerario difficoltaItinerario) {
+                            if (!areFieldsProperlyFilled) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Campi non riempiti correttamente. Riprova.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            CorrezioneItinerario correzioneItinerario =
+                                    new CorrezioneItinerario(UserSessionManager.getInstance().getUserId(),
+                                            idItinerario, difficoltaItinerario, durata);
+                            Completable.fromCallable(() -> DAOCorrezioneItinerario.insertCorrezioneItinerario(correzioneItinerario))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(() -> Toast.makeText(getApplicationContext(),
+                                            "Correzione inserita!", Toast.LENGTH_SHORT).show(),
+                                            error -> {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Impossibile inserire la correzione. Forse ne hai già fatta una?", Toast.LENGTH_SHORT).show();
+                                        Log.e("Correzione", error.getMessage(), error);
+                                    });
+                        }
+                    };
+            correzioneDialogFragment = new DialogFragmentControllerAddNewCorrezioneItinerario(onPositiveButtonClickListener);
+            correzioneDialogFragment.show(getSupportFragmentManager(), "correzioneitinerario");
         });
-
     }
 
 

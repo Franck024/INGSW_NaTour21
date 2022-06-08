@@ -29,10 +29,12 @@ import com.example.natour21.chat.stompclient.UserStompClient;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.notification.NotificationUtils;
 import com.example.natour21.sharedprefs.UserSessionManager;
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 
 public class ApplicationNaTour extends Application implements
-        LifecycleEventObserver, Configuration.Provider {
+        Application.ActivityLifecycleCallbacks, Configuration.Provider {
 
+    private int activityCounter = 0;
 
     public void onCreate(){
         super.onCreate();
@@ -45,7 +47,7 @@ public class ApplicationNaTour extends Application implements
             Log.i("NaTourApplication", "Initialized UserSessionManager");
             UserStompClient.init(this);
             Log.i("NaTourApplication", "Initialized UserStompClient");
-            ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+            registerActivityLifecycleCallbacks(this);
             org.osmdroid.config.Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
         } catch (AmplifyException error) {
             Log.e("NaTourApplication", "Could not initialize Amplify", error);
@@ -59,44 +61,6 @@ public class ApplicationNaTour extends Application implements
 
 
 
-    @Override
-    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-        if (isAppInForeground(event)) onAppToForeground();
-        else if (isAppInBackground(event)) onAppToBackground();
-
-    }
-
-    private boolean isAppInForeground(@NonNull Lifecycle.Event event){
-        if (event.equals(Lifecycle.Event.ON_START) &&
-                ProcessLifecycleOwner
-                        .get()
-                        .getLifecycle()
-                        .getCurrentState()
-                        .isAtLeast(Lifecycle.State.STARTED))
-            return true;
-        else return false;
-    }
-
-    private boolean isAppInBackground(@NonNull Lifecycle.Event event){
-        if (event.equals(Lifecycle.Event.ON_STOP) &&
-                ProcessLifecycleOwner
-                        .get()
-                        .getLifecycle()
-                        .getCurrentState()
-                        .equals(Lifecycle.State.CREATED))
-            return true;
-        else return false;
-    }
-
-    private void onAppToForeground(){
-        if (UserStompClient.getInstance().isConnected()) return;
-        UserStompClient.getInstance().connect();
-    }
-
-    private void onAppToBackground(){
-        if (!(UserStompClient.getInstance().isConnected())) return;
-        UserStompClient.getInstance().disconnect();
-    }
 
     @NonNull
     @Override
@@ -104,5 +68,44 @@ public class ApplicationNaTour extends Application implements
         return new Configuration.Builder()
                 .setMinimumLoggingLevel(android.util.Log.INFO)
                 .build();
+    }
+
+    @Override
+    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityStarted(@NonNull Activity activity) {
+        activityCounter++;
+        if (!UserStompClient.getInstance().isConnected() && activityCounter > 0)
+            UserStompClient.getInstance().connect();
+    }
+
+    @Override
+    public void onActivityResumed(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(@NonNull Activity activity) {
+        activityCounter--;
+        if (UserStompClient.getInstance().isConnected() && activityCounter == 0)
+            UserStompClient.getInstance().disconnect();
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(@NonNull Activity activity) {
+
     }
 }

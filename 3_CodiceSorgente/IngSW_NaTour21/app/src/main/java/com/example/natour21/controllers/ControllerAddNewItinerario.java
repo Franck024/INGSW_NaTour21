@@ -258,7 +258,6 @@ public class ControllerAddNewItinerario extends AppCompatActivity implements jav
                         if (addressAutoSearchComponent.isResultReady()){
                             intent.putExtra("PUNTO_INIZIALE_LAT", puntoIniziale.getLatitude());
                             intent.putExtra("PUNTO_INIZIALE_LONG", puntoIniziale.getLongitude());
-                            Log.i("DEBUGNEWITIN", puntoIniziale.getLatitude() +  " " + puntoIniziale.getLongitude());
                         }
                         startForMapResult.launch
                                 (intent);

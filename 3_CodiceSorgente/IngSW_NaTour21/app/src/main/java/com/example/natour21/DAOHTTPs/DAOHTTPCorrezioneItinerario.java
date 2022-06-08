@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -22,7 +23,7 @@ public class DAOHTTPCorrezioneItinerario implements DAOCorrezioneItinerario {
         @POST("/correzioneItinerario")
         public Call<Boolean> insertCorrezioneItinerario
                 (
-                        @Query("correzioneItinerario") CorrezioneItinerario correzioneItinerario
+                        @Body CorrezioneItinerario correzioneItinerario
                 );
 
         @GET("/correzioneItinerario")

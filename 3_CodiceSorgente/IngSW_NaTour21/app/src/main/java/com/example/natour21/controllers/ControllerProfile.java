@@ -3,6 +3,7 @@ package com.example.natour21.controllers;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +27,7 @@ import com.example.natour21.entities.Itinerario;
 import com.example.natour21.entities.Utente;
 import com.example.natour21.exceptions.InvalidConnectionSettingsException;
 import com.example.natour21.sharedprefs.UserSessionManager;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -95,8 +97,8 @@ public class ControllerProfile extends AppCompatActivity implements java.util.Ob
         btnPlaylist = findViewById(R.id.btnPlaylist);
         btnFoto = findViewById(R.id.btnFoto);
 
-        if (CURRENT_USER_ID.equals(UserSessionManager.getInstance().getUserId())){
-            imageBtnStartChat.setVisibility(View.GONE);
+        if (PROFILE_UTENTE_ID.equals(CURRENT_USER_ID)){
+            imageBtnStartChat.setVisibility(View.INVISIBLE);
         }
         else{
             imageBtnStartChat.setOnClickListener(new View.OnClickListener() {
@@ -207,11 +209,18 @@ public class ControllerProfile extends AppCompatActivity implements java.util.Ob
             }
             return postList;
         };
+        FirebaseAnalytics firebaseAnalyticsInstance = FirebaseAnalytics.getInstance(ControllerProfile.this);
         Observable.fromCallable(getItinerariUtenteCallable)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( parentItems -> {
                     AdapterPost adapterPost = new AdapterPost(parentItems);
+                    AdapterPost.OnPostClickListener onPostClickListener = p -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, Long.toString(p.getIdItinerario()));
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "itinerario_profile");
+                        firebaseAnalyticsInstance.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    };
                     recyclerViewPost.setAdapter(adapterPost);
                     recyclerViewPost.setLayoutManager(new LinearLayoutManager(this));
                     textViewNomeUtente.setText(PROFILE_UTENTE_DISPLAY_NAME);

@@ -2,7 +2,6 @@ package com.example.natour21.controllers.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,12 +32,15 @@ public class DialogFragmentControllerAddNewCorrezioneItinerario extends DialogFr
     private Integer durata;
     private DifficoltaItinerario difficoltaItinerario;
 
-    private long idItinerario;
-    private String correzioneAuthor;
+    public interface OnPositiveButtonClickListener{
+        public void onPositiveButtonClick(boolean areFieldsProperlyFilled,
+                                          Integer durata, DifficoltaItinerario difficoltaItinerario);
+    }
 
-    public DialogFragmentControllerAddNewCorrezioneItinerario(long idItinerario, String correzioneAuthor){
-       this.idItinerario = idItinerario;
-       this.correzioneAuthor = correzioneAuthor;
+    private OnPositiveButtonClickListener onPositiveButtonClick;
+
+    public DialogFragmentControllerAddNewCorrezioneItinerario(OnPositiveButtonClickListener onPositiveButtonClick){
+       this.onPositiveButtonClick = onPositiveButtonClick;
     }
 
     @Override
@@ -53,15 +55,7 @@ public class DialogFragmentControllerAddNewCorrezioneItinerario extends DialogFr
                 .setPositiveButton("Invia", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        if (!checkFields()) return;
-                        try{
-                            insertCorrezioneItinerario();
-                        }
-                        catch (InvalidConnectionSettingsException | WrappedCRUDException exception){
-                            Context context = getActivity().getApplicationContext();
-                            Toast.makeText(context, exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-
+                        onPositiveButtonClick.onPositiveButtonClick(checkFieldsAndSetVariables(), durata, difficoltaItinerario);
                     }
                 })
                 .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
@@ -72,7 +66,7 @@ public class DialogFragmentControllerAddNewCorrezioneItinerario extends DialogFr
         return builder.create();
     }
 
-    private boolean checkFields(){
+    private boolean checkFieldsAndSetVariables(){
         Integer ore = null, minuti = null;
         try{
             try{
@@ -95,27 +89,8 @@ public class DialogFragmentControllerAddNewCorrezioneItinerario extends DialogFr
         else difficoltaItinerario = DifficoltaItinerario.values()[selectedItem-1];
 
         if (difficoltaItinerario == null && durata == null){
-            Toast.makeText(getActivity().getApplicationContext(), "Non è stato riempito alcun campo. Aggiungi delle correzioni e riprova.",
-                    Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
-    }
-
-    public void insertCorrezioneItinerario() throws InvalidConnectionSettingsException, WrappedCRUDException{
-        DAOCorrezioneItinerario DAOCorrezioneItinerario = DAOFactory.getDAOCorrezioneItinerario();
-
-        CorrezioneItinerario correzioneItinerario =
-                new CorrezioneItinerario(correzioneAuthor, idItinerario, difficoltaItinerario, durata);
-        Completable.fromCallable(() -> DAOCorrezioneItinerario.insertCorrezioneItinerario(correzioneItinerario))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( () -> Toast.makeText(requireActivity().getApplicationContext(),
-                        "Correzione inserita!", Toast.LENGTH_SHORT).show(), error -> {
-                    if (error instanceof WrappedCRUDException) throw error;
-                    Toast.makeText(requireActivity().getApplicationContext(),
-                            "Impossibile inserire la correzione.", Toast.LENGTH_SHORT).show();
-                    Log.e("Correzione", error.getMessage(), error);
-                });
     }
 }

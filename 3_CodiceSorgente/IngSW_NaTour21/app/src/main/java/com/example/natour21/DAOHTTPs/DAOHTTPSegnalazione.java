@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -20,7 +21,7 @@ public class DAOHTTPSegnalazione implements DAOSegnalazione {
 
     private interface HTTPAPISegnalazione{
         @POST("/segnalazione")
-        public Call<Boolean> insertSegnalazione(@Query("segnalazione") Segnalazione segnalazione);
+        public Call<Boolean> insertSegnalazione(@Body Segnalazione segnalazione);
 
         @GET("/segnalazione")
         public Call<List<Segnalazione>> getSegnalazione(@Query("itinerarioId") long itinerarioId);

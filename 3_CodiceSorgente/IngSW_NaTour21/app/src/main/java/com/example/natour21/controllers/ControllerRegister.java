@@ -47,7 +47,7 @@ public class ControllerRegister extends AppCompatActivity implements DialogFragm
     private EditText editTextNome, editTextCognome, editTextEmail, editTextPassword,
             editTextConfirmPassword, editTextCitta, editTextPhoneNumber;
     private CheckBox checkBoxGDPR;
-    private Button btnTogglePasswordVisibility, btnToggleConfirmPasswordVisibility, btnRegister;
+    private Button btnTogglePasswordVisibility, btnToggleConfirmPasswordVisibility, btnRegister, btnCancel;
     private TextView textViewPasswordPolicy, textViewCreateAccount;
 
     boolean shouldHidePassword = false, shouldHideConfirmPassword = false;
@@ -85,6 +85,7 @@ public class ControllerRegister extends AppCompatActivity implements DialogFragm
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
 
         btnRegister = findViewById(R.id.btnRegister);
+        btnCancel = findViewById(R.id.btnCancel);
         btnTogglePasswordVisibility = findViewById(R.id.visPass);
         btnToggleConfirmPasswordVisibility = findViewById(R.id.visConPass);
 
@@ -138,6 +139,8 @@ public class ControllerRegister extends AppCompatActivity implements DialogFragm
             if (federatedAccountEmail == null || federatedAccountEmail.isEmpty()) registerUser();
             else registerFederatedUser();
         });
+
+        btnCancel.setOnClickListener(v -> startActivity(new Intent(ControllerRegister.this, ControllerLogin.class)));
 
         editTextNome.setOnClickListener(v -> editTextNome.startAnimation(animationTextView));
         editTextCognome.setOnClickListener(v -> editTextCognome.startAnimation(animationTextView));

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
     private LinearLayout layoutVisualAccessibility, layoutMobilityAccessibility;
 
     private Button btnSegnalazione, btnCorrezioneItinerario;
+    private ImageButton btnBack;
 
     private Itinerario itinerario;
     private List<Segnalazione> segnalazioni;
@@ -95,6 +97,7 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
         layoutVisualAccessibility = findViewById(R.id.layoutVisual);
         btnSegnalazione = findViewById(R.id.btnSegnalazione);
         btnCorrezioneItinerario = findViewById(R.id.btnCorreggi);
+        btnBack = findViewById(R.id.btnBack);
 
 
         Callable<Void> queryCallable = () -> {
@@ -242,6 +245,7 @@ public class ControllerItinerarioDetails extends AppCompatActivity {
             correzioneDialogFragment = new DialogFragmentControllerAddNewCorrezioneItinerario(onPositiveButtonClickListener);
             correzioneDialogFragment.show(getSupportFragmentManager(), "correzioneitinerario");
         });
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
 
 

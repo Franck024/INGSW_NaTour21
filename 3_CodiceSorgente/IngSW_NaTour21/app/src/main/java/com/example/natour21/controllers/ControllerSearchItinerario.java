@@ -127,8 +127,7 @@ public class ControllerSearchItinerario extends AppCompatActivity implements jav
         imageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageButtonBack.animate().rotationY(360).withEndAction(
-                        () -> goBack());
+                goBack();
             }
         });
 

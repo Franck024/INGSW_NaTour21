@@ -193,7 +193,6 @@ public class ChatController {
 			utenteTwo.setEmail(inputChat.getUtenteTwoId());
 			Chat chat = DAOChat.getChatByUtente(utenteOne, utenteTwo);
 			if (chat == null) {
-				System.out.println("OKAY!");
 				DAOChat.insertChat(inputChat);
 			}
 			//Inserimento messaggio

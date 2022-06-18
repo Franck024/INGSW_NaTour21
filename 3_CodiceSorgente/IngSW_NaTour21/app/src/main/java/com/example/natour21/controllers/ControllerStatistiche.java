@@ -2,6 +2,7 @@ package com.example.natour21.controllers;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,6 +63,7 @@ public class ControllerStatistiche extends AppCompatActivity {
     private BarEntry barEntryUtenti, barEntryAccessi, barEntryItinerari, barEntryChat, barEntryMessaggi;
     private ArrayList<BarEntry> barEntriesStatistiche = new ArrayList<>();
     private BarChart barChart;
+    private ImageButton btnBack;
     private final int GRAPH_Y_ANIMATION_DURATION_MS = 2000;
     private final int STATISTICHE_REFRESH_FREQUENCY_MS = 10000;
 
@@ -71,6 +73,8 @@ public class ControllerStatistiche extends AppCompatActivity {
         setContentView(R.layout.activity_statistiche);
 
         barChart = findViewById(R.id.barChart);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> onBackPressed());
 
         barEntryUtenti = new BarEntry(StatisticheColumnNames.UTENTI.ordinal(), 0);
         barEntryAccessi  = new BarEntry(StatisticheColumnNames.ACCESSI.ordinal(), 0);

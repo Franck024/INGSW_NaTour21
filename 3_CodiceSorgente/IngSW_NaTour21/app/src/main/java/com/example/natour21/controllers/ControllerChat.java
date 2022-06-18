@@ -69,25 +69,24 @@ public class ControllerChat extends AppCompatActivity {
         });
 
         // Invio messaggi
-        imageViewSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!TextUtils.isEmpty(editTextNewMessaggio.getText())){
-                    try{
-                        UserStompClient.getInstance().send(otherUserId,
-                                editTextNewMessaggio.getText().toString());
-                        editTextNewMessaggio.setText(null);
-                    }
-                    catch (JsonProcessingException jpe){
-                        ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
-                                (getApplicationContext(),"Chat", "Impossibile mandare il messaggio.", jpe);
-                    }
-                }
-            }
-        });
+        imageViewSend.setOnClickListener(v -> onSendClick(otherUserId));
 
         viewModelMessaggio.setChatRead(otherUserId);
 
+    }
+
+    private void onSendClick(String otherUserId){
+        if(!TextUtils.isEmpty(editTextNewMessaggio.getText())){
+            try{
+                UserStompClient.getInstance().send(otherUserId,
+                        editTextNewMessaggio.getText().toString());
+                editTextNewMessaggio.setText(null);
+            }
+            catch (JsonProcessingException jpe){
+                ControllerUtils.showUserFriendlyErrorMessageAndLogThrowable
+                        (getApplicationContext(),"Chat", "Impossibile mandare il messaggio.", jpe);
+            }
+        }
     }
 
 

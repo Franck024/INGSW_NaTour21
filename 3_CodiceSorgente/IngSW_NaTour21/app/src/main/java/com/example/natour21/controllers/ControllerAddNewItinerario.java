@@ -476,4 +476,11 @@ public class ControllerAddNewItinerario extends AppCompatActivity implements jav
             return;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ControllerAddNewItinerario.this, ControllerHome.class));
+
+    }
 }

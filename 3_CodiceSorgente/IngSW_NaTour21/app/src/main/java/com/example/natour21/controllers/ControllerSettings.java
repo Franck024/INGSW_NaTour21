@@ -2,6 +2,7 @@ package com.example.natour21.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.natour21.R;
 
 public class ControllerSettings extends AppCompatActivity {
+
+    ImageButton btnBack;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class ControllerSettings extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.settingsFrameLayout, settingsFragment)
                 .commit();
+
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
 
 }

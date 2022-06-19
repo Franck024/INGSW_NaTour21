@@ -217,6 +217,17 @@ public class ControllerRegister extends AppCompatActivity implements DialogFragm
             return;
         }
 
+        if(verificaNumerica(nameText, surnameText, cityText,telephoneText) == false) {
+            return ;
+        }
+
+        if(!telephoneText.isEmpty() && controlloCell(telephoneText) == false) {
+            editTextPhoneNumber.setError("Il numero deve essere formato da 10 numeri.");
+            editTextPhoneNumber.requestFocus();
+            return ;
+        }
+
+
         if (!(checkBoxGDPR.isChecked())) {
             Toast.makeText(ControllerRegister.this,
                     "Accettare i termini per continuare.",
@@ -334,6 +345,32 @@ public class ControllerRegister extends AppCompatActivity implements DialogFragm
         Matcher m = path.matcher(password);
         return m.matches();
     }
+
+    private boolean verificaNumerica(String nome, String cognome, String citta, String numero) {
+        if (nome.matches(".*\\d+.*")) {
+            editTextNome.setError("Il nome deve essere formato da sole lettere.");
+            editTextNome.requestFocus();
+            return false;
+        }
+        if (cognome.matches(".*\\d+.*")) {
+            editTextCognome.setError("Il cognome deve essere formato da sole lettere.");
+            editTextCognome.requestFocus();
+            return false;
+        }
+        if (citta.isEmpty() == false && citta.matches(".*\\d+.*")) {
+            editTextCitta.setError("La città deve essere formato da sole lettere.");
+            editTextCitta.requestFocus();
+            return false;
+
+        }return true;
+    }
+
+    private boolean controlloCell(String num){
+        if(num.length() != 10)
+            return false;
+        return true;
+    }
+
 
     private void animazioni() {
         textViewCreateAccount.setTranslationY(1000);
